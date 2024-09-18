@@ -1,0 +1,109 @@
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    background-image: url("images/ipd2.avif"); /* Path to your image */
+    background-size: cover;
+    background-attachment: fixed; /* Image stays fixed while content scrolls */
+    background-position: center center;
+    background-repeat: no-repeat;
+    min-height: 100vh; /* Set the minimum height of the page to the viewport height */
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* Slight transparency to see the background */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  header h1 {
+    text-align: center;
+    color: #064486;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  label {
+    margin-top: 15px;
+    font-size: 1.1rem;
+  }
+
+  input[type="text"],
+  input[type="date"],
+  input[type="number"],
+  textarea {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 5px;
+  }
+
+  textarea {
+    height: 100px;
+  }
+
+  input[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+
+  input[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+
+  /* Table Styling */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+
+  table th,
+  table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+
+  table th {
+    background-color: #007bff;
+    color: white;
+  }
+
+  table td {
+    background-color: #f9f9f9;
+  }
+
+  table tr:hover {
+    background-color: #f1f1f1;
+  }
+
+  /* Scroll fix */
+  html, body {
+    height: 100%;
+  }
+
+  /* Ensure the content scrolls and background is fixed */
+  body {
+    overflow-y: scroll; /* Adds scroll if content exceeds viewport */
+  }

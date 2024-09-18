@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OT Management System</title>
+    <link rel="stylesheet" href="otmanagement.css">
+</head>
+<body>
+    <header>
+        <h1>Operation Theater Management System</h1>
+    </header>
+
+    <main>
+        <section id="schedule">
+            <h2>Scheduling</h2>
+            <form id="scheduleForm">
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" required>
+                
+                <label for="time">Time:</label>
+                <input type="time" id="time" name="time" required>
+
+                <label for="surgeon">Surgeon:</label>
+                <select id="surgeon" name="surgeon">
+                    <option value="dr_smith">Dr. Smith</option>
+                    <option value="dr_jones">Dr. Jones</option>
+                </select>
+
+                <label for="operations">Choose a surgical operation:</label>
+                <select id="operations" name="operations">
+                    <option value="" disabled selected>Select an operation</option>
+                    <option value="appendectomy">Appendectomy</option>
+                    <option value="cholecystectomy">Cholecystectomy</option>
+                    <option value="hernia_repair">Hernia Repair</option>
+                    <option value="knee_replacement">Knee Replacement</option>
+                    <option value="hip_replacement">Hip Replacement</option>
+                </select>
+                <button type="button" onclick="scheduleOperation()">Schedule</button>
+            </form>
+        </section>
+
+        <section id="resources">
+            <h2>Resource Management</h2>
+            <form id="resourceForm">
+                <label for="resourceName">Resource Name:</label>
+                <input type="text" id="resourceName" name="resourceName" required>
+
+                <label for="resourceStatus">Status:</label>
+                <select id="resourceStatus" name="resourceStatus">
+                    <option value="Available">Available</option>
+                    <option value="In Use">In Use</option>
+                    <option value="Unavailable">Unavailable</option>
+                </select>
+                <button type="button" onclick="addResource()">Add Resource</button>
+            </form>
+            <br>
+            <table id="resourceTable">
+                <thead>
+                    <tr>
+                        <th>Resource</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Surgical Tools</td>
+                        <td>Available</td>
+                    </tr>
+                    <tr>
+                        <td>Anesthesia Machine</td>
+                        <td>In Use</td>
+                    </tr>
+                    <tr>
+                        <td>Defibrillator</td>
+                        <td>Unavailable</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="workflow">
+            <h2>Workflow</h2>
+            <div id="workflowSteps"></div>
+            <button onclick="showWorkflow()">Show Workflow</button>
+        </section>
+    </main>
+
+    <footer>
+       <center> <p>&copy; 2024 Hospital Management System</p></center>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        let selectedOperation = null;
+
+        function scheduleOperation() {
+            const operationSelect = document.getElementById('operations');
+            selectedOperation = operationSelect.value;
+
+            if (selectedOperation) {
+                // Reset the dropdown
+                operationSelect.selectedIndex = 0;
+            } else {
+                alert('Please select a surgical operation.');
+            }
+        }
+
+        function showWorkflow() {
+            const workflowStepsDiv = document.getElementById('workflowSteps');
+
+            if (selectedOperation) {
+                // Clear previous workflow steps
+                workflowStepsDiv.innerHTML = '';
+
+                // Display the workflow steps for the selected operation
+                const steps = getWorkflowSteps(selectedOperation);
+                const stepsList = document.createElement('ol');
+
+                steps.forEach(step => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = step;
+                    stepsList.appendChild(listItem);
+                });
+
+                workflowStepsDiv.appendChild(stepsList);
+            } else {
+                alert('Please select a surgical operation first.');
+            }
+        }
+
+        function getWorkflowSteps(operation) {
+            switch (operation) {
+                case 'appendectomy':
+                    return [
+                        "Pre-operative assessment",
+                        "Anesthesia administration",
+                        "Incision and access to the abdomen",
+                        "Removal of the appendix",
+                        "Closure of the incision",
+                        "Post-operative monitoring"
+                    ];
+                case 'cholecystectomy':
+                    return [
+                        "Pre-operative assessment",
+                        "Anesthesia administration",
+                        "Laparoscopic access to the gallbladder",
+                        "Removal of the gallbladder",
+                        "Closure of the incisions",
+                        "Post-operative monitoring"
+                    ];
+                case 'hernia_repair':
+                    return [
+                        "Pre-operative assessment",
+                        "Anesthesia administration",
+                        "Incision and access to the hernia site",
+                        "Repair of the hernia",
+                        "Closure of the incision",
+                        "Post-operative monitoring"
+                    ];
+                case 'knee_replacement':
+                    return [
+                        "Pre-operative assessment",
+                        "Anesthesia administration",
+                        "Incision and access to the knee joint",
+                        "Replacement of the knee joint",
+                        "Closure of the incision",
+                        "Post-operative monitoring"
+                    ];
+                case 'hip_replacement':
+                    return [
+                        "Pre-operative assessment",
+                        "Anesthesia administration",
+                        "Incision and access to the hip joint",
+                        "Replacement of the hip joint",
+                        "Closure of the incision",
+                        "Post-operative monitoring"
+                    ];
+                default:
+                    return [];
+            }
+        }
+
+        function addResource() {
+            const resourceNameInput = document.getElementById('resourceName');
+            const resourceStatusSelect = document.getElementById('resourceStatus');
+            const resourceName = resourceNameInput.value.trim();
+            const resourceStatus = resourceStatusSelect.value;
+
+            if (resourceName) {
+                const resourceTableBody = document.getElementById('resourceTable').getElementsByTagName('tbody')[0];
+                const newRow = resourceTableBody.insertRow();
+
+                const cell1 = newRow.insertCell(0);
+                const cell2 = newRow.insertCell(1);
+                cell1.textContent = resourceName;
+                cell2.textContent = resourceStatus;
+
+                // Clear the input fields
+                resourceNameInput.value = '';
+                resourceStatusSelect.selectedIndex = 0; // Reset to "Available"
+            } else {
+                alert('Please enter a resource name.');
+            }
+        }
+    </script>
+</body>
+</html>

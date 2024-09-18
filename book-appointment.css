@@ -1,0 +1,583 @@
+/* Global Styles */
+body {
+    font-family: 'Josefin Sans', sans-serif;
+    background: #eef8ff;
+    margin: 0;
+}
+
+/* Header Styling */
+header {
+    width: 100%;
+    background-color: #005c6e; /* Dark teal */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 10%;
+    color: #fff;
+}
+
+.menu a:hover {
+    color: #00a3a4; /* Light teal for hover effect */
+}
+
+.logo {
+    font-size: 28px;
+}
+
+.logo i {
+    margin-right: 10px; /* Space between icon and text */
+    color: #00bfae; /* Match your theme color */
+}
+
+.menu-btn {
+    display: none; /* Hide if not needed for desktop */
+    font-size: 30px;
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}
+
+.menu {
+    display: flex;
+    list-style: none;
+}
+
+.menu li {
+    margin: 0 10px;
+}
+
+.menu a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.menu a:hover {
+    color: #00bfae;
+}
+
+/* Login Button Styling */
+.login-btn {
+    background: linear-gradient(to right, #00bfae, #00d2ff); /* Aqua green to aqua blue gradient */
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+}
+
+.login-btn:hover {
+    background: linear-gradient(to right, #00a89c, #00b8d4); /* Slightly darker gradient on hover */
+    transform: scale(1.02); /* Slightly increase size on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Darker shadow on hover */
+}
+
+.login-btn:active {
+    background: linear-gradient(to right, #009688, #00a1c1); /* Even darker gradient when button is clicked */
+    transform: scale(1); /* Reset size to original when clicked */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Reset shadow */
+}
+
+/* Main Section */
+.booking-form-section {
+    margin-top: 130px; /* Account for fixed header */
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.header__form {
+    background: linear-gradient(to right, #e0f7fa, #b2ebf2); /* Light gradient for the form background */
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0.9, 0.9, 0.9, 0.9);
+    width: 100%;
+    max-width: 600px;
+    border: 1px solid #ddd; /* Light border for better definition */
+}
+
+.header__form form {
+    display: grid;
+    gap: 1.5rem; /* Increased gap for better spacing */
+}
+
+.header__form label {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    font-size: 0.9rem; /* Slightly smaller font size */
+    color: #333; /* Darker color for better contrast */
+}
+
+.header__form label i {
+    margin-right: 8px; /* Space between icon and label text */
+}
+
+.header__form input,
+.header__form select,
+.header__form textarea {
+    border: 1px solid #ccc;
+    padding: 12px; /* Increased padding for comfort */
+    border-radius: 8px; /* More rounded corners */
+    font-size: 1rem;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transitions */
+    margin-bottom: 16px; /* Ensure the form fields are aligned properly */
+}
+
+.header__form input:focus,
+.header__form select:focus,
+.header__form textarea:focus {
+    border-color: #003c4c; /* Focus color */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Focus shadow */
+    outline: none; /* Remove default focus outline */
+}
+
+.form__btn {
+    background: linear-gradient(to right, #00bfae, #00d2ff); /* Aqua green to aqua blue gradient */
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px; /* More rounded corners */
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+    font-size: 1rem; /* Consistent font size */
+}
+
+.form__btn:hover {
+    background: linear-gradient(to right, #00a89c, #00b8d4); /* Slightly darker gradient on hover */
+    transform: scale(1.02);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Subtle shadow effect */
+}
+
+.form__btn:active {
+    background: linear-gradient(to right, #009688, #00a1c1); /* Even darker gradient when button is clicked */
+    transform: scale(0.98);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form__btn:disabled {
+    background: linear-gradient(to right, #ccc, #ddd); /* Light grey gradient when disabled */
+    color: #666;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* Style for the input container */
+.input-container {
+    margin-top: 1rem;
+}
+
+.phone-input-wrapper {
+    position: relative;
+    display: flex;
+    padding: 20px 0px;
+    align-items: center;
+}
+
+#phone-input {
+    flex: 1;
+    padding: 12px; /* Increased padding for better usability */
+    border: 1px solid #ccc;
+    border-radius: 8px; /* More rounded corners */
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+/* Dropdown Styles */
+.content-wrapper {
+    position: relative;
+}
+
+.select-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px; /* Increased padding for better click area */
+    border: 1px solid #ccc;
+    border-radius: 8px; /* More rounded corners */
+    cursor: pointer;
+    background-color: #f9f9f9;
+    transition: background-color 0.3s, border-color 0.3s;
+    margin-bottom: 16px; /* Ensure the select button is aligned properly */
+}
+
+.select-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.content {
+    position: absolute;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    background-color:#fff;
+    border: 1px solid #ccc;
+    border-radius: 8px; /* More rounded corners */
+    display: none;
+    top: 100%;
+    z-index: 1000;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.content.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.search input {
+    width: 100%;
+    padding: 8px; /* Increased padding for better usability */
+    border: none;
+    border-bottom: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.options {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.options li {
+    padding: 12px; /* Increased padding for better click area */
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.options li:hover {
+    background-color: #f2f2f2;
+}
+
+.no-results {
+    padding: 12px; /* Increased padding for consistency */
+    color: #00bfae;
+    text-align: center;
+}
+
+/* Modal Styling */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 5%;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    width: 500px;
+    max-width: 90%;
+    position: relative;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.modal-content.show {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.modal-content.hide {
+    transform: scale(0.9);
+    opacity: 0;
+}
+
+#otp-input-boxes {
+    display: flex;
+    justify-content: center;
+    gap: 12px; /* Increased gap for better spacing */
+    margin: 20px 0;
+}
+
+.otp-input {
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    text-align: center;
+    border: 2px solid #ccc;
+    border-radius: 8px; /* More rounded corners */
+    transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transitions */
+}
+
+.otp-input:focus {
+    border-color: #ea1538;
+    box-shadow: 0 0 5px rgba(234, 21, 56, 0.3);
+    outline: none;
+}
+
+#otp-message {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+/* Enhanced Submit Button Style */
+#submit-otp-btn {
+    background: linear-gradient(to right, #00bfae, #00d2ff); /* Aqua green to aqua blue gradient */
+    color: #fff; /* Text color */
+    border: none; /* Remove default border */
+    padding: 12px 20px; /* Padding to make the button more prominent */
+    border-radius: 8px; /* More rounded corners */
+    font-size: 16px; /* Larger font size for better readability */
+    font-weight: bold; /* Make text bold */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background 0.3s, transform 0.2s, box-shadow 0.3s; /* Smooth transition effects */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+}
+
+#submit-otp-btn:hover {
+    background: linear-gradient(to right, #00a89c, #00b8d4); /* Slightly darker gradient on hover */
+    transform: scale(1.05); /* Slightly increase size on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Darker shadow on hover */
+}
+
+#submit-otp-btn:active {
+    background: linear-gradient(to right, #009688, #00a1c1); /* Even darker gradient when button is clicked */
+    transform: scale(1); /* Reset size to original when clicked */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Reset shadow */
+}
+
+#submit-otp-btn:disabled {
+    background: linear-gradient(to right, #ccc, #ddd); /* Light grey gradient when disabled */
+    color: #666; /* Darker grey text when disabled */
+    cursor: not-allowed; /* Change cursor to indicate disabled state */
+    box-shadow: none; /* Remove shadow for disabled state */
+}
+
+#resend-otp-btn {
+    margin-top: 10px;
+    background: linear-gradient(to right, #ccc, #ddd); /* Light grey gradient */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px; /* More rounded corners */
+    cursor: not-allowed;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+#resend-otp-btn.enabled {
+    background: linear-gradient(to right, #00bfae, #00d2ff); /* Aqua green to aqua blue gradient */
+    cursor: pointer;
+}
+
+#resend-otp-btn:hover {
+    background: linear-gradient(to right, #00a89c, #00b8d4); /* Slightly darker gradient on hover */
+}
+
+#verify-otp-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow: hidden;
+    width: 100%;
+}
+
+/* Error State for Select Button */
+.select-btn.error {
+    border: 2px solid red; /* Indicate error with a red border */
+}
+
+/* Footer */
+footer {
+    background: #003c4c; /* Dark teal */
+    color: #fff;
+    padding: 40px;
+    font-size: 14px; /* Slightly smaller font size for a neater look */
+    border-top: 0px solid #003c4c; /* Thinner border for a simpler look */
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 0 5%;
+}
+
+.footer-col {
+    flex: 1;
+    margin: 0 15px; /* Reduced margin for a simpler layout */
+    min-width: 200px; /* Smaller minimum width */
+}
+
+.footer-logo {
+    padding: 40px;
+    max-width: 150px; /* Smaller logo */
+}
+
+.footer-col h3 {
+    margin-bottom: 15px; /* Reduced margin for a neater look */
+    font-size: 18px; /* Smaller font size for headings */
+    color: #00bfae; /* Aqua green */
+}
+
+.footer-col p,
+.footer-col address,
+.footer-col ul {
+    margin-bottom: 10px; /* Reduced margin for a neater look */
+}
+
+.footer-col a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-col a:hover {
+    color: #00bfae; /* Aqua green */
+    text-decoration: underline;
+}
+
+/* Quick Links Styling */
+.footer-col.footer-links ul {
+    padding: 0;
+    list-style: none;
+}
+
+.footer-col.footer-links li {
+    margin-bottom: 8px; /* Reduced spacing between list items */
+}
+
+.footer-col.footer-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px; /* Smaller font size for consistency */
+    transition: color 0.3s;
+}
+
+.footer-col.footer-links a:hover {
+    color: #00bfae; /* Aqua green */
+    text-decoration: underline;
+}
+
+/* Feedback Section Styling */
+.feedback-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px; /* Keep max-width for a smaller form */
+}
+
+.feedback-form input,
+.feedback-form textarea {
+    padding: 8px; /* Maintain compact padding */
+    border: 1px solid #ddd; /* Light border color */
+    border-radius: 4px;
+    margin-bottom: 10px; /* Reduced spacing between form elements */
+    font-size: 14px; /* Smaller font size */
+}
+
+.feedback-form input::placeholder,
+.feedback-form textarea::placeholder {
+    color: #aaa; /* Placeholder text color */
+}
+
+.feedback-form textarea {
+    resize: vertical; /* Allow vertical resizing only */
+}
+
+.feedback-form button {
+    background: linear-gradient(to right, #00bfae, #00c6ff); /* Gradient from aqua green to aqua blue */
+    border: none;
+    color: #fff;
+    padding: 10px 20px; /* Maintain compact padding */
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px; /* Smaller font size */
+    transition: background 0.3s;
+}
+
+.feedback-form button:hover {
+    background: linear-gradient(to right, #00bfff, #00bfae); /* Slightly darker gradient on hover */
+}
+
+.footer-bottom {
+    text-align: center;
+    padding: 5px; /* Reduced padding for a smaller footer-bottom */
+}
+
+.footer-social-media {
+    margin-bottom: 15px; /* Reduced margin for better spacing */
+}
+
+.footer-social-media a {
+    margin: 0 10px; /* Reduced spacing between icons */
+    color: #fff;
+    font-size: 20px; /* Smaller icons for a neater look */
+    transition: color 0.3s;
+}
+
+.footer-social-media a:hover {
+    color: #00bfae; /* Aqua green */
+}
+
+.footer-content hr {
+    border: 0;
+    border-top: 1px solid #444;
+    margin: 20px 0; /* Reduced margin for a neater look */
+}
+
+.copyright {
+    font-size: 14px; /* Smaller font size for readability */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .menu {
+        display: none;
+        flex-direction: column;
+    }
+
+    .menu-btn {
+        display: block;
+    }
+
+    .menu.show {
+        display: flex;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-col {
+        margin-bottom: 20px; /* Adjusted margin for spacing */
+        text-align: center;
+    }
+
+    .feedback-form {
+        width: 100%;
+        max-width: 90%; /* Ensure the form is responsive */
+    }
+
+    .feedback-form input,
+    .feedback-form textarea {
+        margin-bottom: 12px; /* Adjusted spacing for smaller form */
+    }
+
+    .footer-social-media a {
+        margin: 0 8px; /* Adjusted spacing */
+    }
+}

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billing Operation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 48%;
+            padding: 10px;
+            margin: 10px 1%;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            position: relative; /* Added to position the print button */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .print-button {
+            background-color: #0056b3;
+            color: white;
+            width: 20%;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            position: absolute;
+            right: 10px;
+            top: 28px;
+        }
+        .print-button:hover {
+            background-color: #218838;
+        }
+        @media print {
+            .print-button {
+                display: none; /* Hide the button when printing */
+            }
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            padding-top: 60px;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto; /* Centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+            max-width: 500px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        /* Success message */
+        .success-message {
+            text-align: center;
+            padding: 20px;
+            color: green;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .success-message .tick {
+            font-size: 24px;
+            color: green;
+            margin-right: 10px;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Patient Billing Operation</h1>
+
+    <label for="patientId">Enter Patient ID:</label>
+    <input type="text" id="patientId" placeholder="Patient ID">
+
+    <div>
+        <button onclick="showReceipt()">Show Receipt</button>
+        <button onclick="showRefund()">Show Refund Details</button>
+    </div>
+
+    <div id="result" class="result" style="display: none;">
+        <!-- Content will be dynamically added here -->
+        <button class="print-button" onclick="window.print()">Print</button>
+    </div>
+
+    <button class="pay-bill" id="payBillButton" style="display: none;" onclick="payBill()">Pay Bill</button>
+</div>
+
+<!-- Modal for Payment Details -->
+<div id="paymentModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('paymentModal')">&times;</span>
+        <h2>Payment Details</h2>
+        <form id="paymentForm">
+            <label for="paymentMethod">Select Payment Method:</label>
+            <select id="paymentMethod" onchange="togglePaymentFields()">
+                <option value="" disabled selected>Select payment method</option>
+                <option value="debit">Debit Card</option>
+                <option value="upi">UPI</option>
+            </select>
+            <div id="debitCardFields" style="display: none;">
+                <label for="cardNumber">Card Number:</label>
+                <input type="text" id="cardNumber" placeholder="Enter debit card number" required/>
+                <label for="expiryDate">Expiry Date:</label>
+                <input type="text" id="expiryDate" placeholder="MM/YY" required/>
+                <label for="cvv">CVV:</label>
+                <input type="text" id="cvv" placeholder="Enter CVV" required/>
+            </div>
+            <div id="upiFields" style="display: none;">
+                <label for="upiId">UPI ID:</label>
+                <input type="text" id="upiId" placeholder="Enter UPI ID" required/>
+            </div>
+            <button type="button" onclick="submitPayment()">Submit Payment</button>
+        </form>
+    </div>
+</div>
+
+<!-- Modal for Payment Success -->
+<div id="successModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('successModal')">&times;</span>
+        <div class="success-message">
+            <span class="tick">&#10004;</span> Payment Successfully Completed!
+        </div>
+    </div>
+</div>
+
+<script>
+    // Sample dataset of patients
+    const patientData = {
+        "001": { name: "John Doe", amount: 200, date: "13-09-2024" },
+        "002": { name: "Jane Smith", amount: 150, date: "12-09-2024" },
+        "003": { name: "Alice Johnson", amount: 300, date: "11-09-2024" }
+    };
+
+    function showReceipt() {
+        var patientId = document.getElementById("patientId").value;
+        if (patientId) {
+            if (patientData[patientId]) {
+                // Display receipt details if Patient ID exists
+                const patient = patientData[patientId];
+                document.getElementById("result").style.display = "block";
+
+                // Get the current date and time
+                const currentDate = new Date();
+                const dateOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
+                const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
+                const formattedDate = currentDate.toLocaleDateString('en-GB', dateOptions);
+                const formattedTime = currentDate.toLocaleTimeString('en-GB', timeOptions);
+
+                document.getElementById("result").innerHTML = `
+                    <strong>Receipt for Patient ID ${patientId}:</strong><br>
+                    <br>Patient Name: ${patient.name} <button class="print-button" onclick="window.print()">Print</button><br>
+                    <br>Date: ${formattedDate} Time: ${formattedTime}
+                `;
+
+                // Create a table for payment details
+                const tableHTML = `
+                    <table>
+                        <tr>
+                            <th>S.No</th>
+                            <th>Payment Details</th>
+                            <th>Amount</th>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>Payment for consultation</td>
+                            <td>$${patient.amount}</td>
+                        </tr>
+                    </table>
+                `;
+                document.getElementById("result").innerHTML += tableHTML;
+
+                // Show pay bill button
+                document.getElementById("payBillButton").style.display = "block";
+            } else {
+                alert("Patient ID not found.");
+                document.getElementById("result").style.display = "none";
+                document.getElementById("payBillButton").style.display = "none";
+            }
+        } else {
+            alert("Please enter a Patient ID.");
+        }
+    }
+
+    function showRefund() {
+        var patientId = document.getElementById("patientId").value;
+        if (patientId) {
+            if (patientData[patientId]) {
+                // Display refund details if Patient ID exists
+                const patient = patientData[patientId];
+                document.getElementById("result").style.display = "block";
+
+                // Get the current date and time
+                const currentDate = new Date();
+                const dateOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
+                const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
+                const formattedDate = currentDate.toLocaleDateString('en-GB', dateOptions);
+                const formattedTime = currentDate.toLocaleTimeString('en-GB', timeOptions);
+
+                document.getElementById("result").innerHTML = `
+                    <strong>Receipt for Patient ID ${patientId}:</strong><br>
+                    <br>Patient Name: ${patient.name} <button class="print-button" onclick="window.print()">Print</button><br>
+                    <br>Date: ${formattedDate} Time: ${formattedTime}
+                `;
+
+                // Create a table for refund details
+                const tableHTML = `
+                    <table>
+                        <tr>
+                            <th>S.No</th>
+                            <th>Refund Details</th>
+                            <th>Amount</th>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>Refund for consultation</td>
+                            <td>$${patient.amount}</td>
+                        </tr>
+                    </table>
+                `;
+                document.getElementById("result").innerHTML += tableHTML;
+
+                // Show pay bill button
+                document.getElementById("payBillButton").style.display = "block";
+            } else {
+                alert("Patient ID not found.");
+                document.getElementById("result").style.display = "none";
+                document.getElementById("payBillButton").style.display = "none";
+            }
+        } else {
+            alert("Please enter a Patient ID.");
+        }
+    }
+
+    function payBill() {
+        document.getElementById("paymentModal").style.display = "block";
+    }
+
+    function submitPayment() {
+        // Perform the payment submission logic here
+        document.getElementById("paymentModal").style.display = "none";
+        document.getElementById("successModal").style.display = "block";
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = "none";
+    }
+
+    function togglePaymentFields() {
+        const paymentMethod = document.getElementById("paymentMethod").value;
+        document.getElementById("debitCardFields").style.display = paymentMethod === "debit" ? "block" : "none";
+        document.getElementById("upiFields").style.display = paymentMethod === "upi" ? "block" : "none";
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Inventory Management System</title>
+    <link rel="stylesheet" href="inventory.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <h2>Smart Inventory</h2>
+            <nav>
+                <ul>
+                    <li><a href="#dashboard" onclick="showSection('dashboard')"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="#stock-management" onclick="showSection('stock-management')"><i class="fas fa-boxes"></i> Stock Management</a></li>
+                    <li><a href="#reordering" onclick="showSection('reordering')"><i class="fas fa-cart-plus"></i> Reordering</a></li>
+                    <li><a href="#distribution" onclick="showSection('distribution')"><i class="fas fa-truck"></i> Distribution</a></li>
+                    <li><a href="#waste-management" onclick="showSection('waste-management')"><i class="fas fa-trash"></i> Waste Management</a></li>
+                    <li><a href="#reports" onclick="showSection('reports')"><i class="fas fa-chart-line"></i> Reports</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="content">
+            <!-- Dashboard -->
+            <section id="dashboard" class="section active">
+                <h2>Dashboard</h2>
+                <div class="dashboard-stats">
+                    <div class="stat-card">
+                        <h3>Total Stock</h3>
+                        <p id="total-stock">Loading...</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Low Stock Alerts</h3>
+                        <p id="low-stock">Loading...</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Pending Reorders</h3>
+                        <p id="pending-reorders">Loading...</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Waste Report</h3>
+                        <p id="waste-report">Loading...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stock Management -->
+            <section id="stock-management" class="section">
+                <h2>Stock Management</h2>
+                <button onclick="showAddItemForm()">Add New Item</button>
+                <div id="stock-list"></div>
+            </section>
+
+            <!-- Reordering -->
+            <section id="reordering" class="section">
+                <h2><i class="fas fa-cart-plus"></i> Reordering</h2>
+                <div id="reorder-list">
+                    <!-- Sample Records -->
+                    <div class="record">
+                        <strong>Syringes</strong> (10 units)
+                        <br><em>Supplier:</em> MedSupplies <em>Price:</em> $2.50 each
+                        <br><em>Reorder Level:</em> 20 units
+                    </div>
+                    <div class="record">
+                        <strong>IV Bags</strong> (5 units)
+                        <br><em>Supplier:</em> HealthPro <em>Price:</em> $10.00 each
+                        <br><em>Reorder Level:</em> 15 units
+                    </div>
+                </div>
+            </section>
+
+            <!-- Distribution -->
+            <section id="distribution" class="section">
+                <h2><i class="fas fa-truck"></i> Distribution</h2>
+                <div id="distribution-list">
+                    <!-- Sample Records -->
+                    <div class="record">
+                        <strong>Syringes</strong> - Distributed 30 units to Ward A
+                        <br><em>Date:</em> 2024-09-10
+                    </div>
+                    <div class="record">
+                        <strong>IV Bags</strong> - Distributed 10 units to Emergency Room
+                        <br><em>Date:</em> 2024-09-12
+                    </div>
+                </div>
+            </section>
+
+            <!-- Waste Management -->
+            <section id="waste-management" class="section">
+                <h2><i class="fas fa-trash"></i> Waste Management</h2>
+                <div id="waste-list">
+                    <!-- Sample Records -->
+                    <div class="record">
+                        <strong>Syringes</strong> - Waste of 5 units
+                        <br><em>Date:</em> 2024-09-15
+                    </div>
+                    <div class="record">
+                        <strong>IV Bags</strong> - Waste of 2 units
+                        <br><em>Date:</em> 2024-09-16
+                    </div>
+                </div>
+            </section>
+
+            <!-- Reports -->
+            <section id="reports" class="section">
+                <h2><i class="fas fa-chart-line"></i> Reports</h2>
+                <button onclick="generateReport()">Generate Report</button>
+                <div id="report-output"></div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal for Adding Items -->
+    <div id="addItemModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Add New Item</h2>
+            <form id="addItemForm">
+                <label for="itemName">Item Name:</label>
+                <input type="text" id="itemName" name="itemName" required>
+
+                <label for="itemQuantity">Quantity:</label>
+                <input type="number" id="itemQuantity" name="itemQuantity" required>
+
+                <label for="itemSupplier">Supplier:</label>
+                <input type="text" id="itemSupplier" name="itemSupplier" required>
+
+                <label for="itemPrice">Price:</label>
+                <input type="number" step="0.01" id="itemPrice" name="itemPrice" required>
+
+                <label for="itemExpiration">Expiration Date:</label>
+                <input type="date" id="itemExpiration" name="itemExpiration" required>
+
+                <button type="submit">Add Item</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="inventory.js"></script>
+</body>
+</html>

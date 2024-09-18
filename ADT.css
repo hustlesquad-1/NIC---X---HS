@@ -1,0 +1,275 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+header {
+    background: linear-gradient(to right, #00bfae, #0073e6); /* Gradient header background */
+    color: white;
+    padding: 5px 0;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5em;
+}
+
+header p {
+    margin: 5px 0;
+    font-size: 1.2em;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 10px;
+    text-align: center;
+}
+
+.home-link {
+    color: white; /* Adjust color as needed */
+    text-decoration: none;
+    display: center; /* Use flex to align icon and text */
+    align-items: center;
+}
+
+.home-link i {
+    padding: 20px 0px;
+    margin-right:0px; /* Space between icon and text */
+}
+
+.home-link:hover {
+    text-decoration: underline; /* Add underline on hover for better UX */
+}
+
+/* General button styles */
+button {
+    background: linear-gradient(to right, #00bfae, #0073e6); /* Gradient button background */
+    color: white;
+    border: none;
+    padding: 15px 50px;
+    cursor: pointer;
+    border-radius: 50px;
+    margin: 0px 250px;
+    display: inline-block; /* Ensure the button is treated as inline-block for centering */
+    font-size: 1em;
+    font-weight: bold; /* Add font weight for better visibility */
+    transition: background 0.4s ease, transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+}
+
+/* Center-align buttons within containers */
+button.center {
+    display: block; /* Ensure the button is a block-level element */
+    margin: 20px auto; /* Center button horizontally */
+}
+
+/* Button styles on hover */
+button:hover {
+    background: linear-gradient(to right, #0073e6, #00bfae); /* Reversed gradient on hover */
+    transform: translateY(-4px); /* Lift effect */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+}
+
+/* Button styles on focus */
+button:focus {
+    outline: none; /* Remove default focus outline */
+    box-shadow: 0 0 8px rgba(0, 191, 174, 0.4); /* Focus shadow color */
+}
+
+/* Button styles on active (clicked) */
+button:active {
+    background: linear-gradient(to right, #00bfae, #0073e6); /* Original gradient on active */
+    transform: translateY(2px); /* Pressed effect */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Shadow when pressed */
+}
+
+/* Icon button styles */
+.icon-button {
+    background: linear-gradient(to right, #00bfae, #0073e6); /* Gradient icon button background */
+    color: white;
+    border: none;
+    padding: 90px; /* Increased padding for a larger button */
+    cursor: pointer;
+    border-radius: 100px; /* Rounded corners for a smoother look */
+    font-size: 1.5em;
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* Smooth transitions */
+    margin: 60px;
+    display: inline-flex;
+    flex-direction: column; /* Stack icon and text vertically */
+    align-items: center;
+    justify-content: center;
+    width: 200px; /* Set a fixed width for uniformity */
+    height: 200px; /* Set a fixed height for uniformity */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+}
+
+/* Icon button styles on hover */
+.icon-button:hover {
+    background: linear-gradient(to right, #0073e6, #00bfae); /* Reversed gradient on hover */
+    transform: translateY(-2px); /* Lift effect */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+}
+
+/* Icon button styles on active (clicked) */
+.icon-button:active {
+    background: linear-gradient(to right, #00bfae, #0073e6); /* Original gradient on active */
+    transform: translateY(0); /* Pressed effect */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Shadow when pressed */
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Input, Select, Textarea Styles */
+input, select, textarea {
+    width: calc(100% - 24px); /* Adjust for padding and border */
+    padding: 14px;
+    margin-bottom: 20px;
+    border: 1px solid #0073e6; /* Border color to match gradient */
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 1em;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Styling the select element */
+select {
+    height: 50px; /* Set a fixed height to create square shape */
+    text-align: center; /* Center text inside select */
+    background: #ffffff; /* Background color of select */
+    color: #333; /* Text color inside select */
+    border: 1px solid #0073e6; /* Border color to match gradient */
+    padding: 10px; /* Add padding for better appearance */
+    appearance: none; /* Remove default browser styling */
+    background-color: #ffffff; /* Override default background color */
+    border-radius: 6px;
+    position: relative; /* Position relative for custom arrow */
+}
+
+/* Styling the options (limited support) */
+select option {
+    background-color: #ffffff; /* Background color of options */
+    color: #333; /* Text color of options */
+}
+
+/* Center and square shape for textareas */
+textarea {
+    resize: vertical;
+}
+
+/* Form Styles */
+form {
+    background: linear-gradient(to right, #e0f7fa, #b3e5fc); /* Gradient form background */
+    padding: 30px; /* Increased padding for more space */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 800px; /* Limit max width */
+    margin: 20px auto; /* Center form horizontally */
+    text-align: left; /* Align text and elements to the left inside the form */
+}
+
+form h2 {
+    border-bottom: 2px solid #00bfae; /* Accent color for header */
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-size: 2em; /* Increased font size */
+    color: #00bfae; /* Accent color */
+}
+
+form .form-group {
+    margin-bottom: 20px; /* Space between form groups */
+    padding: 15px;
+    border: 1px solid #00bfae; /* Border color to match gradient */
+    border-radius: 6px;
+    background-color: #ffffff; /* Light background for form groups */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Center-align the submit button */
+form .form-group:last-child {
+    margin-bottom: 0; /* Remove bottom margin from last group */
+    text-align: center; /* Center align the button container */
+}
+
+form .form-group:last-child button {
+    margin: 0 auto; /* Center the button */
+    display: inline-block; /* Ensure button is an inline-block element */
+    background: linear-gradient(to right, #00bfae, #0073e6); /* Gradient button background */
+    color: white;
+    border: none;
+    padding: 15px 30px; /* More padding for better appearance */
+    border-radius: 6px; /* Rounded corners for the button */
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+form .form-group:last-child button:hover {
+    background: linear-gradient(to right, #0073e6, #00bfae); /* Reversed gradient on hover */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+}
+
+form .form-group:last-child button:active {
+    background: linear-gradient(to right, #00bfae, #0073e6); /* Original gradient on active */
+    transform: translateY(0);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adjust shadow on click */
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: #00bfae; /* Focus border color */
+    box-shadow: 0 0 5px rgba(0, 191, 174, 0.2); /* Focus shadow color */
+}
+
+/* Success Message Styles */
+.success-message {
+    display: none;
+    background-color: #d4edda;
+    color: #155724;
+    padding: 15px;
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+/* Section Styles */
+.section {
+    display: none;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .icon-button {
+        width: 120px;
+        height: 120px;
+        padding: 20px; /* Adjust padding for smaller screens */
+        font-size: 1.2em;
+    }
+    
+    input, select, textarea {
+        width: 100%; /* Adjust width for smaller screens */
+    }
+
+    form {
+        padding: 20px; /* Adjust padding for smaller screens */
+    }
+}

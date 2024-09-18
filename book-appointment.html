@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Book your hospital appointment easily and efficiently with NIC X HS.">
+    <meta name="keywords" content="hospital, appointment, booking, NIC X HS">
+    <meta name="author" content="Your Name">
+    <title>Book Appointment - NIC X HS</title>
+    <link rel="stylesheet" href="book-appointment.css">
+    <script src="https://kit.fontawesome.com/06d6bc5413.js" crossorigin="anonymous"></script>
+    <script src="dropdowns.js" defer></script>
+    <script src="otp-modal.js" defer></script>
+    <script src="form-submission.js" defer></script>
+</head>
+<body>
+    <header>
+        <nav class="navigation">
+            <h1 class="logo">
+                <span><i class="fas fa-stethoscope"></i> NIC X HS</span>
+            </h1>
+            <button class="menu-btn" onclick="toggleMenu()" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="menu">
+                <li><a href="index.html" aria-label="Home"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="about.html" aria-label="About Us"><i class="fas fa-info-circle"></i> About Us</a></li>
+                <li><a href="contact.html" aria-label="Contact"><i class="fas fa-envelope"></i> Contact</a></li>
+                <li><a href="hospitals.html" aria-label="Hospitals"><i class="fas fa-hospital"></i> Hospitals</a></li>
+            </ul>
+            <a href="login.html" class="login-btn" aria-label="Login"><i class="fas fa-sign-in-alt"></i> LOGIN</a>
+        </nav>
+    </header>        
+
+    <main>
+        <section class="booking-form-section" id="booking-form-section">
+            <div class="header__form">
+                <form id="booking-form" aria-labelledby="booking-form-title">
+                    <h2 id="booking-form-title">Book Appointment Now</h2>
+                    
+                    <label for="name"><i class="fas fa-user"></i> Name</label>
+                    <input type="text" id="name" placeholder="Name" required aria-label="Name">
+                    
+                    <label for="age"><i class="fas fa-calendar-alt"></i> Age</label>
+                    <input type="tel" id="age" placeholder="Age" required aria-label="Age" pattern="\d{1,2}">
+                    
+                    <label for="gender-btn"><i class="fas fa-venus-mars"></i> Gender</label>
+                    <div class="content-wrapper">
+                        <div class="select-btn" id="gender-btn" aria-haspopup="true" aria-expanded="false" data-required="true">
+                            Select Gender <span>&#9660;</span>
+                        </div>
+                        <div class="content" id="gender-content">
+                            <ul class="options" id="gender-options" aria-required="true"></ul>
+                        </div>
+                    </div>
+
+                    <div class="input-container">
+                        <label for="phone-input"><i class="fas fa-phone"></i> Phone No</label>
+                        <div class="phone-input-wrapper">
+                            <input type="tel" id="phone-input" placeholder="Phone No" required aria-label="Phone Number" pattern="\d{10}">
+                        </div>
+                    </div>                                      
+
+                    <!-- OTP Modal -->
+                    <div id="otp-modal" class="modal" aria-hidden="true" style="display: none;">
+                        <div class="modal-content">
+                            <h2>Enter OTP</h2>
+                            <p id="otp-message">The OTP is sent to your phone no XXXXXXXX123</p>
+                            <div id="otp-input-boxes">
+                                <input type="text" maxlength="1" class="otp-input" id="otp-1" aria-label="OTP digit 1">
+                                <input type="text" maxlength="1" class="otp-input" id="otp-2" aria-label="OTP digit 2">
+                                <input type="text" maxlength="1" class="otp-input" id="otp-3" aria-label="OTP digit 3">
+                                <input type="text" maxlength="1" class="otp-input" id="otp-4" aria-label="OTP digit 4">
+                                <input type="text" maxlength="1" class="otp-input" id="otp-5" aria-label="OTP digit 5">
+                                <input type="text" maxlength="1" class="otp-input" id="otp-6" aria-label="OTP digit 6">
+                            </div>
+                            <button id="submit-otp-btn" type="button" aria-label="Submit OTP">Submit OTP</button>
+                            <button id="resend-otp-btn" type="button" disabled aria-label="Resend OTP">Resend OTP (<span id="countdown">59</span>s)</button>
+                            <p id="otp-success-msg" style="display: none;">OTP Verified Successfully!</p>
+                        </div>
+                    </div>
+
+                    <label for="email"><i class="fas fa-envelope"></i> Email</label>
+                    <input type="email" id="email" placeholder="Email" required aria-label="Email">
+
+                    <label for="city-btn"><i class="fas fa-city"></i> City</label>
+                    <div class="content-wrapper">
+                        <div class="select-btn" id="city-btn" aria-haspopup="true" aria-expanded="false" data-required="true">
+                            Select City <span>&#9660;</span>
+                        </div>
+                        <div class="content" id="city-content">
+                            <div class="search">
+                                <input type="text" id="city-search" placeholder="Search city..." aria-label="Search city">
+                            </div>
+                            <ul class="options" id="city-options" aria-required="true"></ul>
+                        </div>
+                    </div>
+
+                    <label for="hospital-btn"><i class="fas fa-hospital"></i> Hospital</label>
+                    <div class="content-wrapper">
+                        <div class="select-btn" id="hospital-btn" aria-haspopup="true" aria-expanded="false" data-required="true">
+                            Select Hospital <span>&#9660;</span>
+                        </div>
+                        <div class="content" id="hospital-content">
+                            <div class="search">
+                                <input type="text" id="hospital-search" placeholder="Search hospital..." aria-label="Search hospital">
+                            </div>
+                            <ul class="options" id="hospital-options" aria-required="true"></ul>
+                        </div>
+                    </div>
+
+                    <label for="appointment-date"><i class="fas fa-calendar-day"></i> Date</label>
+                    <input type="date" id="appointment-date" required aria-label="Date">
+                    
+                    <label for="appointment-time"><i class="fas fa-clock"></i> Time</label>
+                    <input type="time" id="appointment-time" required aria-label="Time">
+
+                    <label for="purpose-btn"><i class="fas fa-briefcase"></i> Purpose</label>
+                    <div class="content-wrapper">
+                        <div class="select-btn" id="purpose-btn" aria-haspopup="true" aria-expanded="false" data-required="true">
+                            Select Purpose <span>&#9660;</span>
+                        </div>
+                        <div class="content" id="purpose-content">
+                            <ul class="options" id="purpose-options" aria-required="true"></ul>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="form__btn" aria-label="Submit booking form">Book Appointment</button>
+                </form>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="footer-content container">
+            <div class="footer-col footer-about">
+                <img src="logo.png" alt="NIC X HS Logo" class="footer-logo">
+                <p>Your trusted partner in healthcare appointments.</p>
+            </div>
+            <div class="footer-col footer-contact">
+                <h3><i class="fas fa-address-book"></i> Contact Us</h3>
+                <address>
+                    <p><i class="fas fa-map-marker-alt"></i> Madurai</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Delhi</p>
+                    <p><i class="fas fa-envelope"></i> <a href="mailto:sih1620hs@gmail.com">sih1620hs@gmail.com</a></p>
+                    <p><i class="fas fa-phone"></i> +91 - 7305873097</p>
+                </address>
+            </div>
+            <div class="footer-col footer-links">
+                <h3><i class="fas fa-link"></i> Quick Links</h3>
+                <ul>
+                    <li><a href="index.html" aria-label="Home"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="about.html" aria-label="About Us"><i class="fas fa-info-circle"></i> About Us</a></li>
+                    <li><a href="features.html" aria-label="Features"><i class="fas fa-star"></i> Features</a></li>
+                    <li><a href="contact.html" aria-label="Contact"><i class="fas fa-envelope"></i> Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col footer-feedback">
+                <h3><i class="fas fa-comments"></i> Feedback</h3>
+                <form id="feedback-form" class="feedback-form">
+                    <label for="feedback-name" class="visually-hidden"></label>
+                    <input type="text" id="feedback-name" placeholder="Your Name" required aria-label="Your Name">
+                    
+                    <label for="feedback-email" class="visually-hidden"></label>
+                    <input type="email" id="feedback-email" placeholder="Your Email" required aria-label="Your Email">
+                    
+                    <label for="feedback-message" class="visually-hidden"></label>
+                    <textarea id="feedback-message" placeholder="Your Feedback" rows="2" required aria-label="Your Feedback"></textarea>
+                    
+                    <button type="submit" aria-label="Submit Feedback"><i class="fas fa-paper-plane"></i></button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-social-media">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+            <hr><br>
+            <p class="copyright">NIC X HS © 2024 - All Rights Reserved</p>
+        </div>
+    </footer>    
+</body>
+</html>

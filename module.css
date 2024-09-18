@@ -1,0 +1,99 @@
+/* Global styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Ensure padding and borders do not cause overflow */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #00bfae, #00d2ff); /* Aqua green to aqua blue gradient */
+    color: #333;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure the body takes up at least the full height of the viewport */
+    overflow-x: hidden; /* Prevent horizontal overflow */
+}
+
+/* Header */
+header {
+    background-color: #005c6e; /* Dark teal */
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2em;
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    width: 100%;
+    padding: 20px;
+    margin: 20px auto;
+    border-radius: 50px; /* Updated border-radius for a rounded appearance */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    overflow-y: auto;
+}
+
+/* Main Content Area */
+.main-content {
+    background: linear-gradient(to right, #00bfae, #00d2ff); /* Aqua green to aqua blue gradient */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* Modules */
+.module {
+    background: linear-gradient(to right, #e0f7fa, #b2ebf2); /* Light gradient for the form background */
+    padding: 20px;
+    border-radius: 70px; /* Updated border-radius for a rounded appearance */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: calc(33.333% - 20px);
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Ensure text color is consistent with parent */
+}
+
+.module i {
+    font-size: 3em;
+    color: #005c6e; /* Match your theme color */
+    margin-bottom: 10px;
+}
+
+.module h2 {
+    margin: 10px 0;
+    font-size: 1.5em;
+}
+
+.module p {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.module:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .module {
+        width: calc(50% - 20px);
+    }
+}
+
+@media (max-width: 480px) {
+    .module {
+        width: 100%;
+    }
+}

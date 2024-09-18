@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Bed Availability</title>
+    <link rel="stylesheet" href="ab.css">
+</head>
+<body>
+    <header>
+        <h1>Hospital Bed Availability</h1>
+    </header>
+    
+    <main>
+        <section class="filter-section">
+            <h2>Filter Hospitals</h2>
+            <div class="filter-container">
+                <label for="city-select">Select City:</label>
+                <select id="city-select">
+                    <!-- Options populated by JavaScript -->
+                </select>
+
+                <label for="hospital-select">Select Hospital:</label>
+                <select id="hospital-select">
+                    <option value="">All Hospitals</option>
+                    <!-- Options populated by JavaScript -->
+                </select>
+                
+                <label for="ward-select">Select Ward:</label>
+                <select id="ward-select">
+                    <option value="">All Wards</option>
+                    <!-- Options populated by JavaScript -->
+                </select>
+            </div>
+        </section>
+
+        <section class="results-section">
+            <h2>Available Beds</h2>
+            <table id="beds-table">
+                <thead>
+                    <tr>
+                        <th>City</th>
+                        <th>Hospital</th>
+                        <th>Ward</th>
+                        <th>Available Beds</th>
+                        <th>Total Beds</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data populated by JavaScript -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script src="ab.js"></script>
+</body>
+</html>

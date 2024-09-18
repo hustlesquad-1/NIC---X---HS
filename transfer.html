@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transfer Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="ADT.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Patient Transfer Form</h1>
+            <p><a href="ADT.html" class="home-link"><i class="fas fa-home"></i> Home</a></p>
+        </div>
+    </header>
+
+    <div class="container">
+        <form id="transfer-form" action="/submit-transfer" method="POST">
+            <!-- Reason for Transfer Section -->
+            <div class="form-field">
+                <label for="patient-id">Patient ID</label>
+                <input type="text" id="patient-id" name="patient-id" required placeholder="Enter unique patient ID">
+
+                <label for="patient-name">Patient Name</label>
+                <input type="text" id="patient-name" name="patient-name" required placeholder="Enter full name">
+
+                <label for="current-ward">Current Ward</label>
+                <input type="text" id="current-ward" name="current-ward" required placeholder="Enter current ward name">
+
+                <label for="transfer-reason">Reason for Transfer</label>
+                <textarea id="transfer-reason" name="transfer-reason" rows="3" required placeholder="Explain the reason for transfer (e.g., higher level of care, bed management, specialized treatment)"></textarea>
+            </div>
+
+            <!-- Transfer Documentation Section -->
+            <div class="form-field">
+                <h3>Transfer Documentation</h3>
+
+                <label for="transfer-request">Transfer Request Approved By</label>
+                <input type="text" id="transfer-request" name="transfer-request" required placeholder="Enter the approving doctor or administrator's name">
+
+                <label for="diagnosis-summary">Current Diagnosis Summary</label>
+                <textarea id="diagnosis-summary" name="diagnosis-summary" rows="4" required placeholder="Provide a brief summary of the current diagnosis"></textarea>
+
+                <label for="treatment-summary">Treatment Summary</label>
+                <textarea id="treatment-summary" name="treatment-summary" rows="4" required placeholder="Summarize treatment received so far"></textarea>
+
+                <label for="medications">Medications Required During Transfer</label>
+                <textarea id="medications" name="medications" rows="3" placeholder="List any medications required during transfer"></textarea>
+
+                <label for="receiving-ward">Receiving Ward/Facility</label>
+                <input type="text" id="receiving-ward" name="receiving-ward" required placeholder="Enter the name of the receiving ward or facility">
+            </div>
+
+            <!-- Logistics of Transfer Section -->
+            <div class="form-field">
+                <h3>Logistics of Transfer</h3>
+
+                <label for="transfer-date">Transfer Date</label>
+                <input type="date" id="transfer-date" name="transfer-date" required>
+
+                <label for="transfer-time">Transfer Time</label>
+                <input type="time" id="transfer-time" name="transfer-time" required>
+
+                <label for="mode-of-transfer">Mode of Transfer</label>
+                <select id="mode-of-transfer" name="mode-of-transfer" required>
+                    <option value="">Select Mode of Transfer</option>
+                    <option value="ambulance">Ambulance</option>
+                    <option value="internal-shift">Internal Shift</option>
+                    <option value="specialized-transport">Specialized Transport</option>
+                </select>
+
+                <label for="escort-team">Escort Team</label>
+                <select id="escort-team" name="escort-team" required>
+                    <option value="">Select Escort Team</option>
+                    <option value="doctor">Doctor</option>
+                    <option value="nurse">Nurse</option>
+                    <option value="paramedic">Paramedic</option>
+                    <option value="none">None</option>
+                </select>
+
+                <label for="equipment">Medical Equipment Required</label>
+                <textarea id="equipment" name="equipment" rows="3" placeholder="List any medical equipment required during transfer (e.g., oxygen, ventilator, etc.)"></textarea>
+
+                <label for="transfer-notes">Additional Transfer Notes</label>
+                <textarea id="transfer-notes" name="transfer-notes" rows="4" placeholder="Provide any other relevant details or instructions for the transfer"></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit">Submit Transfer Form</button>
+        </form>
+    </div>
+
+    <script src="ADT.js"></script>
+</body>
+</html>

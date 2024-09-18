@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Outpatient Registration</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background: #fff; 
+        }
+
+        /* Main Container */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .login {
+            width: 100%;
+            max-width: 600px;
+            background: linear-gradient(to right, #e0f7fa, #b2ebf2); /* Light gradient for the form background */
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #b2ebf2; /* Light blue border for additional emphasis */
+        }
+
+        .login-container h2 {
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 26px;
+            color: #00796b; /* Darker shade of aqua green for the header */
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column; /* Align items vertically */
+            gap: 10px;
+        }
+
+        .input-group label {
+            font-weight: bold;
+            color: #555;
+            display: flex;
+            align-items: center; /* Align items vertically */
+        }
+
+        .input-group label i {
+            margin-right: 10px;
+            color: #00796b;
+        }
+
+        .input-group input,
+        .input-group select,
+        .input-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus,
+        .input-group textarea:focus {
+            border-color: #00bfae;
+            outline: none;
+            box-shadow: 0 0 8px rgba(0, 191, 174, 0.5);
+        }
+
+        button {
+            background: linear-gradient(to right, #00bfae, #00d2ff);
+            color: white;
+            padding: 15px;
+            border-radius: 50px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+            font-size: 1rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button:hover {
+            background: linear-gradient(to right, #00a89c, #00b8d4);
+            transform: scale(1.02);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        button:active {
+            background: linear-gradient(to right, #009688, #00a1c1);
+            transform: scale(0.98);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background: rgba(0, 0, 0, 0.5);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background: #fff;
+            margin: 5% auto;
+            padding: 30px;
+            border: 1px solid #ddd;
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #333;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .login {
+                padding: 20px;
+            }
+
+            .login-container h2 {
+                font-size: 22px;
+            }
+
+            .input-group input,
+            .input-group select,
+            .input-group textarea {
+                font-size: 14px;
+            }
+
+            button {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <!-- Add your header and navigation here -->
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="login">
+            <div class="login-container">
+                <h2>Outpatient Registration Form</h2>
+                <form id="registration-form" class="login-form">
+                    <div class="input-group">
+                        <label for="full-name"><i class="fa fa-user"></i>Full Name:</label>
+                        <input type="text" id="full-name" name="full_name" placeholder="Enter your full name" required aria-required="true">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="dob"><i class="fa fa-calendar-alt"></i>Date of Birth:</label>
+                        <input type="date" id="dob" name="dob" required aria-required="true">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="gender"><i class="fa fa-genderless"></i>Gender:</label>
+                        <select id="gender" name="gender" required aria-required="true">
+                            <option value="" disabled selected>Select Gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="phone"><i class="fa fa-phone"></i>Phone Number:</label>
+                        <input type="tel" id="phone" name="phone" placeholder="e.g. +1234567890" required aria-required="true">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="email"><i class="fa fa-envelope"></i>Email Address:</label>
+                        <input type="email" id="email" name="email" placeholder="you@example.com" aria-required="true">
+                    </div>
+
+                    <div class="input-group">
+                        <h3>Visit Information</h3>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="visit-date"><i class="fa fa-calendar-day"></i>Date of Visit:</label>
+                        <input type="date" id="visit-date" name="visit_date" required aria-required="true">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="department"><i class="fa fa-hospital"></i>Department:</label>
+                        <select id="department" name="department" required aria-required="true">
+                            <option value="" disabled selected>Select Department</option>
+                            <option value="general-medicine">General Medicine</option>
+                            <option value="pediatrics">Pediatrics</option>
+                            <option value="orthopedics">Orthopedics</option>
+                            <option value="dermatology">Dermatology</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="doctor"><i class="fa fa-user-md"></i>Consulting Doctor (optional):</label>
+                        <input type="text" id="doctor" name="doctor" placeholder="Enter doctor's name (if known)">
+                    </div>
+
+                    <div class="input-group">
+                        <h3>Medical Information</h3>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="symptoms"><i class="fa fa-notes-medical"></i>Symptoms/Reason for Visit:</label>
+                        <textarea id="symptoms" name="symptoms" placeholder="Describe your symptoms or reason for visit" rows="4" required aria-required="true"></textarea>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="diagnosis"><i class="fa fa-diagnoses"></i>Preliminary Diagnosis (if known):</label>
+                        <input type="text" id="diagnosis" name="diagnosis" placeholder="Enter preliminary diagnosis (optional)">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="treatment"><i class="fa fa-pills"></i>Prescribed Treatment/Medications (if applicable):</label>
+                        <textarea id="treatment" name="treatment" placeholder="Enter prescribed treatment or medications (optional)" rows="3"></textarea>
+                    </div>
+
+                    <div class="input-group">
+                        <button type="submit">Register</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="confirmation-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Registration Successful!</h2>
+            <p>Your outpatient registration has been successfully submitted. We will contact you shortly for further details.</p>
+            <button onclick="location.reload()">Register Another Patient</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('registration-form');
+            const modal = document.getElementById('confirmation-modal');
+            const closeButton = document.querySelector('.close');
+
+            form.addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent the default form submission
+                modal.style.display = 'block'; // Show the modal
+            });
+
+            closeButton.addEventListener('click', function() {
+                modal.style.display = 'none'; // Hide the modal when close button is clicked
+            });
+
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none'; // Hide the modal if clicking outside the modal content
+                }
+            });
+        });
+    </script>
+</body>
+</html>

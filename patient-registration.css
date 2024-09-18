@@ -1,0 +1,96 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4; /* Default background color */
+    color: #333; /* Default text color */
+    margin: 0;
+    padding: 0;
+}
+
+/* Header Styles */
+header {
+    background: linear-gradient(to right, #00bfae, #0073e6); /* Gradient header background */
+    color: white;
+    padding: 35px 0;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5em;
+}
+
+/* Container Styles */
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 130px;
+    text-align: center;
+}
+
+/* Button Container Styles */
+button {
+    background: linear-gradient(to right, #00bfae, #0073e6); /* Gradient button background */
+    color: white;
+    border: none;
+    padding: 15px 50px;
+    cursor: pointer;
+    border-radius: 50px;
+    margin: 0px 20px;
+    display: inline-block; /* Ensure the button is treated as inline-block for centering */
+    font-size: 1em;
+    font-weight: bold; /* Add font weight for better visibility */
+    transition: background 0.4s ease, transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+}
+
+
+.button-container {
+    display: flex;
+    justify-content: center; /* Center buttons horizontally */
+    align-items: center; /* Center items vertically */
+    gap: 20px; /* Space between buttons */
+}
+
+/* Button Link Styles */
+.button-link {
+    text-decoration: none; /* Remove default link underline */
+}
+
+/* Icon Button Styles */
+.icon-button {
+    background: linear-gradient(to right, #00bfae, #0073e6); /* Gradient icon button background */
+    color: white;
+    border: none;
+    padding: 20px; /* Padding for the button */
+    cursor: pointer;
+    border-radius: 100px; /* Rounded corners for a smoother look */
+    font-size: 1.5em;
+    font-weight: bold; /* Add font weight for better visibility */
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* Smooth transitions */
+    display: flex; /* Use flexbox for icon and text alignment */
+    flex-direction: column; /* Stack icon and text vertically */
+    align-items: center;
+    justify-content: center;
+    width: 200px; /* Set a fixed width for uniformity */
+    height: 200px; /* Set a fixed height for uniformity */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+}
+
+/* Hover Effects */
+.icon-button:hover {
+    background: linear-gradient(to right, #0073e6, #00bfae); /* Reversed gradient on hover */
+    transform: scale(1.05); /* Slight scaling effect */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+}
+
+/* Label for Icon Button */
+.icon-button i {
+    margin-bottom: 10px; /* Space between icon and text */
+}
+
+/* Adjust button font size */
+.icon-button span {
+    font-size: 1em; /* Adjust text size */
+}

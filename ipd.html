@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IPD - In-Patient Day Details</title>
+    <link rel="stylesheet" href="ipd.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>In-Patient (IPD) Day-by-Day Details</h1>
+      </header>
+      <form action="ipdview-details.html" method="GET">
+        <label for="patientName">Patient Name:</label>
+        <input type="text" id="patientName" name="patientName" required />
+
+        <label for="patient-ID">Patient-ID:</label>
+        <input type="number" id="patient-ID" name="patient-ID" required />
+
+        <label for="admissionDate">Admission Date:</label>
+        <input type="date" id="admissionDate" name="admissionDate" required />
+
+        <label for="date">Entry Date:</label>
+        <input type="date" id="date" name="date" required />
+
+        <label for="heartbeatRate">Heartbeat Rate (bpm):</label>
+        <input type="number" id="heartbeatRate" name="heartbeatRate" required />
+
+        <label for="temperature">Temperature (°C):</label>
+        <input
+          type="number"
+          id="temperature"
+          name="temperature"
+          step="0.1"
+          required
+        />
+
+        <label for="sugarLevel">Sugar Level (mg/dL):</label>
+        <input type="number" id="sugarLevel" name="sugarLevel" required />
+
+        <label for="bloodPressure">Blood Pressure (mmHg):</label>
+        <input
+          type="text"
+          id="bloodPressure"
+          name="bloodPressure"
+          placeholder="e.g., 120/80"
+          required
+        />
+
+        <label for="spo2">SpO2 Level (%):</label>
+        <input type="number" id="spo2" name="spo2" max="100" min="0" required />
+
+        <label for="dayDiagnosis">Day’s Diagnosis:</label>
+        <textarea id="dayDiagnosis" name="dayDiagnosis" required></textarea>
+
+        <label for="dayTreatment">Day’s Treatment:</label>
+        <textarea id="dayTreatment" name="dayTreatment" required></textarea>
+
+        <label for="procedures">Procedures Ordered:</label>
+        <textarea id="procedures" name="procedures"></textarea>
+
+        <label for="prescription">Prescription:</label>
+        <textarea id="prescription" name="prescription"></textarea>
+
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
+  </body>
+</html>

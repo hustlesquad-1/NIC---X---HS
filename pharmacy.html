@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmacy Registration Form</title>
+    <link rel="stylesheet" href="pharmacystyle5.css">
+</head>
+<body>
+    <div class="form-container">
+        <center>
+        <h2> Pharmacy Registration Form </h2>
+    </center>
+        <form id="registration-form" action="view-prescription.html">
+            <label for="patient-name">Patient Name:</label>
+            <input type="text" id="patient-name" name="patient-name" required>
+            
+            <label for="heart-rate">Heart Rate:</label>
+            <select id="heart-rate" name="heart-rate" required>
+                <option value="" disabled selected>Select heart rate</option>
+                <option value="normal">Normal</option>
+                <option value="high">High</option>
+                <option value="low">Low</option>
+            </select>
+            
+            <label for="blood-pressure">Blood Pressure:</label>
+            <select id="blood-pressure" name="blood-pressure" required>
+                <option value="" disabled selected>Select blood pressure</option>
+                <option value="normal">Normal</option>
+                <option value="high">High</option>
+                <option value="low">Low</option>
+            </select>
+            
+            <label for="doctor-name">Doctor's Name:</label>
+            <input type="text" id="doctor-name" name="doctor-name" required>
+
+            <label for="problem">Problem:</label>
+            <input type="text" id="problem" name="problem" required>
+            
+            <label for="medicines">Medicines:</label>
+            <textarea id="medicines" name="medicines" rows="4" required></textarea>
+            
+            <label for="duration">Duration:</label>
+            <select id="duration" name="duration" required>
+                <option value="" disabled selected>Select duration</option>
+                <option value="morning">Morning</option>
+                <option value="afternoon">Afternoon</option>
+                <option value="evening">Evening</option>
+            </select>
+            
+            <button type="submit">Register</button>
+        </form>
+    </div>
+    <script>
+        document.getElementById('registration-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            const params = new URLSearchParams();
+            for (const [key, value] of formData.entries()) {
+                params.append(key, value);
+            }
+            window.location.href = 'view-prescription.html?' + params.toString();
+        });
+    </script>
+</body>
+</html>

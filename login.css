@@ -1,0 +1,403 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+/* Header Styling */
+header {
+    background-color: #005c6e; /* Darker teal */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 10px 0;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 10%;
+    color: #fff;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 28px;
+}
+
+.logo i {
+    margin-right: 10px;
+    color: #00bfae; /* Aqua green */
+}
+
+.menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+}
+
+.menu li {
+    margin: 0 10px;
+}
+
+.menu a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.menu a:hover {
+    color: #00bfae; /* Aqua green */
+}
+
+.menu-btn {
+    display: none; /* Hide if not needed for desktop */
+    font-size: 30px;
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}
+
+/* Header Buttons */
+.login-btn,
+.cta-btn {
+    border-radius: 30px;
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+    padding: 10px 20px;
+    text-decoration: none;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+}
+
+.login-btn {
+    background: linear-gradient(to right, #00bfae, #00c6ff); /* Gradient from aqua green to aqua blue */
+    margin-right: 10px;
+}
+
+.login-btn:hover {
+    background: linear-gradient(135deg, #00a3e0, #00bfae);
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.login-btn:active {
+    background: linear-gradient(135deg, #0098a6, #0090d1);
+    transform: scale(1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.cta-btn {
+    background: linear-gradient(to right, #00bfae, #00c6ff); /* Gradient from aqua green to aqua blue */
+    padding: 12px 30px;
+}
+
+.cta-btn:hover {
+    background: linear-gradient(to right, #00c6ff, #00bfae);
+    transform: scale(1.05);
+}
+
+/* Login Section */
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    background: #d9f7f3; /* Light aqua blue background */
+    padding: 20px;
+}
+
+.login {
+    width: 100%;
+    max-width: 500px;
+    margin-top: 130px;
+    background: linear-gradient(to right, #e0f7fa, #b2ebf2); /* Light gradient for the form background */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-container h2 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 30px; /* Adjusted to match the rounded inputs */
+    overflow: hidden;
+}
+
+.input-group i {
+    color: #00bfae; /* Aqua green */
+    margin: 0 10px;
+    font-size: 18px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 30px; /* Adjusted to match the border radius */
+    outline: none;
+}
+
+.input-group input:focus {
+    border-color: #00bfae; /* Aqua green */
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 30px; /* Consistent with .input-group */
+}
+
+.login-form button {
+    background: linear-gradient(to right, #00bfae, #00d2ff); /* Gradient from aqua green to aqua blue */
+    color: white;
+    padding: 12px 20px;
+    border-radius: 50px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+    font-size: 1rem;
+}
+
+.login-form button:hover {
+    background: linear-gradient(to right, #00a89c, #00b8d4);
+    transform: scale(1.02);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.login-form button:active {
+    background: linear-gradient(to right, #009688, #00a1c1);
+    transform: scale(0.98);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.login-form button:disabled {
+    background: linear-gradient(to right, #ccc, #ddd);
+    color: #666;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* Enhanced styles for login form links */
+.login-info {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.login-info a {
+    color: #005c6e;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s, text-decoration 0.3s;
+}
+
+.login-info a:hover {
+    color: #00bfae; /* Aqua green */
+    text-decoration: underline;
+}
+
+/* Specific styles for Register and Forgot Password links */
+.register-link {
+    color: #005c6e; /* teal */
+    font-weight: bold;
+}
+
+.register-link:hover {
+    color: #00bfae; /* Aqua green */
+    text-decoration: underline;
+}
+
+.forgot-password-link {
+    color: #ff5722; /* Accent orange */
+    font-weight: bold;
+}
+
+.forgot-password-link:hover {
+    color: #ff784e; /* Lighter orange */
+    text-decoration: underline;
+}
+
+/* Additional styling to improve the overall appearance */
+.login-info {
+    font-size: 14px;
+}
+
+.login-info p {
+    margin: 10px 0;
+}
+
+/* Footer */
+footer {
+    background: #003c4c; /* Dark teal */
+    color: #fff;
+    font-size: 14px;
+    padding: 20px 0;
+}
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-col {
+    flex: 1;
+    min-width: 200px;
+}
+
+.footer-about .footer-logo {
+    width: 150px;
+    padding: 40px;
+}
+
+.footer-col h3 {
+    margin-bottom: 15px;
+    font-size: 18px;
+    color: #00bfae; /* Aqua green */
+}
+
+.footer-col p,
+.footer-col address,
+.footer-col ul {
+    margin-bottom: 10px;
+}
+
+.footer-col a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-col a:hover {
+    color: #00bfae; /* Aqua green */
+    text-decoration: underline;
+}
+
+.footer-col.footer-links ul {
+    padding: 0;
+    list-style: none;
+}
+
+.footer-col.footer-links li {
+    margin-bottom: 8px;
+}
+
+.footer-col.footer-links a {
+    font-size: 14px;
+}
+
+.footer-feedback form input,
+.footer-feedback form textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.footer-feedback form button {
+    background: linear-gradient(to right, #00bfae, #00c6ff);
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s;
+}
+
+.footer-feedback form button:hover {
+    background: linear-gradient(to right, #00bfff, #00bfae);
+}
+
+/* Footer Bottom */
+.footer-bottom {
+    text-align: center;
+    padding: 10px 20px;
+}
+
+.footer-social-media a {
+    color: #fff;
+    margin: 0 10px;
+    font-size: 1.2em;
+    transition: color 0.3s;
+}
+
+.footer-social-media a:hover {
+    color: #00bfae; /* Aqua green */
+}
+
+.footer-content hr {
+    border: 0;
+    border-top: 1px solid #444;
+    margin: 20px 0;
+}
+
+.copyright {
+    font-size: 14px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .menu {
+        display: none;
+        flex-direction: column;
+    }
+
+    .menu-btn {
+        display: block;
+    }
+
+    .menu.show {
+        display: flex;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-col {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .feedback-form {
+        width: 100%;
+        max-width: 90%;
+    }
+
+    .feedback-form input,
+    .feedback-form textarea {
+        margin-bottom: 12px;
+    }
+
+    .footer-social-media a {
+        margin: 0 8px;
+    }
+}

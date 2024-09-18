@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OPD - Out-Patient Details</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background-image: url("images/ipd2.avif"); /* Path to your image */
+        background-size: cover;
+        background-attachment: fixed; /* Image stays fixed while content scrolls */
+        background-position: center center;
+        background-repeat: no-repeat;
+        min-height: 100vh; /* Set the minimum height of the page to the viewport height */
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: rgba(
+          255,
+          255,
+          255,
+          0.8
+        ); /* Slight transparency to see the background */
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      header h1 {
+        text-align: center;
+        color: #064486;
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+      }
+
+      label {
+        margin-top: 15px;
+        font-size: 1.1rem;
+      }
+
+      input[type="text"],
+      input[type="date"],
+      input[type="number"],
+      textarea {
+        padding: 10px;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-top: 5px;
+        font-weight: 200;
+      }
+
+      textarea {
+        height: 100px;
+      }
+
+      input[type="submit"] {
+        background-color: #007bff;
+        color: white;
+        padding: 10px;
+        font-size: 1.1rem;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 20px;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #0056b3;
+      }
+
+      /* Table Styling */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+
+      table th,
+      table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      table th {
+        background-color: #007bff;
+        color: white;
+      }
+
+      table td {
+        background-color: #f9f9f9;
+      }
+
+      table tr:hover {
+        background-color: #f1f1f1;
+      }
+
+      /* Scroll fix */
+      html,
+      body {
+        height: 100%;
+      }
+
+      /* Ensure the content scrolls and background is fixed */
+      body {
+        overflow-y: scroll; /* Adds scroll if content exceeds viewport */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Out-Patient (OPD) Details</h1>
+      </header>
+      <form action="opd_result.html" method="GET">
+        <label for="patientName">Patient Name:</label>
+        <input type="text" id="patientName" name="patientName" required />
+
+        <label for="patient-ID">Patient-ID:</label>
+        <input type="number" id="patient-ID" name="patient-ID" required />
+
+        <label for="visitDate">Visit Date:</label>
+        <input type="date" id="visitDate" name="visitDate" required />
+
+        <label for="heartbeatRate">Heartbeat Rate (bpm):</label>
+        <input type="number" id="heartbeatRate" name="heartbeatRate" required />
+
+        <label for="temperature">Temperature (°C):</label>
+        <input
+          type="number"
+          id="temperature"
+          name="temperature"
+          step="0.1"
+          required
+        />
+
+        <label for="sugarLevel">Sugar Level (mg/dL):</label>
+        <input type="number" id="sugarLevel" name="sugarLevel" required />
+
+        <label for="bloodPressure">Blood Pressure (mmHg):</label>
+        <input
+          type="text"
+          id="bloodPressure"
+          name="bloodPressure"
+          placeholder="e.g., 120/80"
+          required
+        />
+
+        <label for="spo2">SpO2 Level (%):</label>
+        <input type="number" id="spo2" name="spo2" max="100" min="0" required />
+
+        <label for="weight">Weight (kg):</label>
+        <input type="number" id="weight" name="weight" required />
+
+        <label for="height">Height (cm):</label>
+        <input type="number" id="height" name="height" required />
+
+        <label for="previousHistory">Previous Medical History:</label>
+        <textarea id="previousHistory" name="previousHistory"></textarea>
+
+        <label for="diagnosis">Diagnosis:</label>
+        <textarea id="diagnosis" name="diagnosis" required></textarea>
+
+        <label for="treatment">Treatment:</label>
+        <textarea id="treatment" name="treatment" required></textarea>
+
+        <label for="prescription">Prescription:</label>
+        <textarea id="prescription" name="prescription" required></textarea>
+
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
+  </body>
+</html>

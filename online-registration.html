@@ -1,0 +1,307 @@
+Conversation opened. 1 unread message.
+
+Skip to content
+Using Gmail with screen readers
+1 of 3,743
+ors
+Inbox
+
+Yogeshwaran R
+10:50 AM (0 minutes ago)
+to me
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Registration System - Hospital Name</title>
+    <style>
+        /* Basic styling for smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+        }
+        header {
+            background: #007BFF;
+            color: white;
+            padding: 20px 0;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            max-width: 1200px;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: right;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        section {
+            padding: 40px 0;
+        }
+        h2 {
+            color: #007BFF;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            font-weight: bold;
+        }
+        input, select, button {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+            max-width: 400px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #f1f1f1;
+            color: #333;
+            margin-top: 20px;
+        }
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
+            nav ul {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Hospital Name</h1>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#appointment" id="appointmentLink">Book Appointment</a></li>
+                    <li><a href="#cancel">Cancel Appointment</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="home">
+            <h2>Welcome to Our Online Registration System</h2>
+            <p>Manage your healthcare needs efficiently with our online services.</p>
+        </section>
+
+        <section id="services">
+            <h2>Our Services</h2>
+            <ul>
+                <li>Online Appointment Booking</li>
+                <li>Patient Information Management</li>
+                <li>Lab Test Results Viewing</li>
+                <li>Prescription Refills</li>
+            </ul>
+        </section>
+
+        <!-- Appointment Booking Section with Simplified OTP -->
+        <section id="appointment">
+            <h2>Book an Appointment</h2>
+            <form id="appointmentForm" action="/submit-appointment" method="POST">
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" name="name" required autocomplete="name" autofocus>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required autocomplete="email">
+
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" required>
+
+                <button type="button" id="sendOtp">Send OTP</button>
+
+                <label for="otp">Enter OTP:</label>
+                <input type="text" id="otp" name="otp" required>
+
+                <label for="department">Select Department:</label>
+                <select id="department" name="department" required>
+                    <option value="">--Choose a Department--</option>
+                    <option value="cardiology">Cardiology</option>
+                    <option value="neurology">Neurology</option>
+                    <option value="orthopedics">Orthopedics</option>
+                    <!-- Add more departments as needed -->
+                </select>
+
+                <label for="date">Preferred Date:</label>
+                <input type="date" id="date" name="date" required>
+
+                <button type="submit">Schedule Appointment</button>
+            </form>
+        </section>
+
+        <!-- Appointment Cancellation Section -->
+        <section id="cancel">
+            <h2>Cancel Appointment</h2>
+            <form id="cancelForm" action="/cancel-appointment" method="POST">
+                <label for="cancelPhone">Phone Number:</label>
+                <input type="tel" id="cancelPhone" name="cancelPhone" required>
+
+                <label for="appointmentId">Appointment ID:</label>
+                <input type="text" id="appointmentId" name="appointmentId" required>
+
+                <button type="submit">Cancel Appointment</button>
+            </form>
+        </section>
+
+        <section id="contact">
+            <h2>Contact Us</h2>
+            <p>If you have any questions, feel free to reach out!</p>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Hospital Name. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript code to handle OTP and form submission -->
+    <script>
+        // JavaScript code to send OTP and handle form submission
+        const form = document.getElementById('appointmentForm');
+        const cancelForm = document.getElementById('cancelForm');
+        let generatedOtp = null;
+
+        // Function to generate random OTP
+        function generateOtp() {
+            return Math.floor(1000 + Math.random() * 9000).toString(); // Simplified 4-digit OTP
+        }
+
+        // Handle OTP sending (Simplified, allows any phone number)
+        document.getElementById('sendOtp').addEventListener('click', () => {
+            const phone = document.getElementById('phone').value;
+            generatedOtp = generateOtp();
+            alert(`OTP sent to ${phone}: ${generatedOtp}`); // Simulate OTP sending
+        });
+
+        // Handle appointment form submission with OTP verification
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const enteredOtp = document.getElementById('otp').value;
+
+            // Ensure OTP is correct
+            if (enteredOtp == generatedOtp) {
+                const formData = new FormData(form);
+                try {
+                    // Simulate server response: replace this with your back-end logic
+                    console.log('Sending data to server:', [...formData.entries()]);
+
+                    // Simulating successful form submission (remove this when connected to a real server)
+                    alert('Appointment scheduled successfully!');
+                    form.reset();
+                    window.scrollTo({
+                        top: document.getElementById('home').offsetTop,
+                        behavior: 'smooth'
+                    });
+                   
+                    // Uncomment and replace this part with actual server code when you have a server
+                    /*
+                    const response = await fetch('/submit-appointment', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (response.ok) {
+                        alert('Appointment scheduled successfully!');
+                        form.reset();
+                        window.scrollTo({
+                            top: document.getElementById('home').offsetTop,
+                            behavior: 'smooth'
+                        });
+                    } else {
+                        alert('Error scheduling appointment. Please try again later.');
+                    }
+                    */
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('An unexpected error occurred. Please try again later.');
+                }
+            } else {
+                alert('Invalid OTP. Please try again.');
+            }
+        });
+
+        // Handle appointment cancellation form submission
+        cancelForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const formData = new FormData(cancelForm);
+            try {
+                console.log('Cancelling appointment:', [...formData.entries()]);
+                alert('Appointment cancelled successfully!');
+                cancelForm.reset();
+
+                // Uncomment this and replace it with actual server logic
+                /*
+                const response = await fetch('/cancel-appointment', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    alert('Appointment cancelled successfully!');
+                    cancelForm.reset();
+                } else {
+                    alert('Error cancelling appointment. Please try again later.');
+                }
+                */
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An unexpected error occurred. Please try again later.');
+            }
+        });
+
+        // Smooth scrolling for the appointment link
+        document.getElementById('appointmentLink').addEventListener('click', (event) => {
+            event.preventDefault();
+            const targetSection = document.getElementById('appointment');
+            targetSection.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+
+</body>
+</html>

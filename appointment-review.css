@@ -1,0 +1,117 @@
+/* Global styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4;
+}
+
+/* Container and Sidebar */
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header Styles */
+header {
+    background: linear-gradient(90deg, #00bfae, #00a3e0); /* Aqua green to aqua blue */
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+.home-link {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.home-link i {
+    margin-right: 8px; /* Space between icon and text */
+}
+
+.home-link:hover {
+    text-decoration: underline; /* Add underline on hover for better UX */
+}
+
+/* Main Content Styles */
+main {
+    padding: 20px 0;
+}
+
+.appointment-review {
+    padding: 20px;
+    background: #ffffff; /* White background for the section */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.appointment-details-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.appointment-details-table th, .appointment-details-table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.appointment-details-table th {
+    background-color: #00b5bf; /* Aqua green header background */
+    color: #fff;
+}
+
+.appointment-details-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Button Styles */
+.action-btn {
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+    color: #fff;
+    font-size: 16px;
+}
+
+.approve-btn {
+    background: linear-gradient(90deg, #4caf50, #35933a); /* Green gradient for approve */
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+}
+
+.reject-btn {
+    background: linear-gradient(90deg, #f44336, #df4040); /* Red gradient for reject */
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+}
+
+.action-btn:hover {
+    opacity: 0.9; /* Slightly reduce opacity on hover for better UX */
+    transform: scale(1.02);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .appointment-details-table th, .appointment-details-table td {
+        padding: 8px;
+        font-size: 14px;
+    }
+}

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Form</title>
+    <link rel="stylesheet" href="lab info and book test.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Lab Information System (LIS)</h1>
+            <nav>
+                <ul>
+                    <li><a href="lab-home.html"><i class="fa-solid fa-house"></i> Home</a></li>
+                    <li><a href="lab_info.html"><i class="fa-solid fa-flask"></i> Features</a></li>
+                    <li><a href="lab_info.html"><i class="fa-solid fa-envelope"></i> Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <main>
+        <section id="patient-form">
+            <div class="container">
+                <h2>Patient Form</h2><br>
+                <form id="form">
+                    <label for="patient-id">Patient ID:</label>
+                    <input type="text" id="patient-id" name="patient-id" required>
+                    
+                    <label for="file-upload">Upload File:</label>
+                    <input type="file" id="file-upload" name="file-upload" required>
+                    
+                    <button type="submit" class="btn">Submit</button>
+                </form>
+                <div id="confirmation" style="display: none; margin-top: 20px; color: #00bfae;">
+                    <p>Submission Successful!</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.getElementById('form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent actual form submission
+            document.getElementById('confirmation').style.display = 'block'; // Show confirmation message
+        });
+    </script>
+</body>
+</html>
