@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IPD - Submitted Details</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background-image: url("images/ipdview.avif"); /* Path to your background image */
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.9); /* Slight transparency */
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      header h1 {
+        text-align: center;
+        color: #064486;
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+
+      table th,
+      table td {
+        padding: 12px;
+        text-align: left;
+        border: 1px solid #ddd;
+      }
+
+      table th {
+        background-color: #007bff;
+        color: white;
+      }
+
+      table tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      table tr:hover {
+        background-color: #ddd;
+      }
+
+      .details {
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>In-Patient (IPD) Day-by-Day Details</h1>
+      </header>
+      <div class="details">
+        <table>
+          <tr>
+            <th>Field</th>
+            <th>Details</th>
+          </tr>
+          <tr>
+            <td><strong>Patient Name:</strong></td>
+            <td id="patientName"></td>
+          </tr>
+          <tr>
+            <td><strong>Patient-ID</strong></td>
+            <td id="patient-ID"></td>
+          </tr>
+          <tr>
+            <td><strong>Admission Date</strong></td>
+            <td id="admissionDate"></td>
+          </tr>
+          <tr>
+            <td><strong>Entry Date</strong></td>
+            <td id="date"></td>
+          </tr>
+          <tr>
+            <td><strong>Heartbeat Rate (bpm)</strong></td>
+            <td id="heartbeatRate"></td>
+          </tr>
+          <tr>
+            <td><strong>Temperature (°C)</strong></td>
+            <td id="temperature"></td>
+          </tr>
+          <tr>
+            <td><strong>Sugar Level (mg/dL)</strong></td>
+            <td id="sugarLevel"></td>
+          </tr>
+          <tr>
+            <td><strong>Blood Pressure</strong></td>
+            <td id="bloodPressure"></td>
+          </tr>
+          <tr>
+            <td><strong>SpO2 Level (%)</strong></td>
+            <td id="spo2"></td>
+          </tr>
+          <tr>
+            <td><strong>Day's Diagnosis</strong></td>
+            <td id="dayDiagnosis"></td>
+          </tr>
+          <tr>
+            <td><strong>Day's Treatment</strong></td>
+            <td id="dayTreatment"></td>
+          </tr>
+          <tr>
+            <td><strong>Procedures Ordered</strong></td>
+            <td id="procedures"></td>
+          </tr>
+          <tr>
+            <td><strong>Prescription</strong></td>
+            <td id="prescription"></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <script>
+      // Extract URL parameters and display them in respective table cells
+      const urlParams = new URLSearchParams(window.location.search);
+
+      document.getElementById("patientName").textContent =
+        urlParams.get("patientName");
+      document.getElementById("patient-ID").textContent =
+        urlParams.get("patient-ID");
+      document.getElementById("admissionDate").textContent =
+        urlParams.get("admissionDate");
+      document.getElementById("date").textContent = urlParams.get("date");
+      document.getElementById("heartbeatRate").textContent =
+        urlParams.get("heartbeatRate");
+      document.getElementById("temperature").textContent =
+        urlParams.get("temperature");
+      document.getElementById("sugarLevel").textContent =
+        urlParams.get("sugarLevel");
+      document.getElementById("bloodPressure").textContent =
+        urlParams.get("bloodPressure");
+      document.getElementById("spo2").textContent = urlParams.get("spo2");
+      document.getElementById("dayDiagnosis").textContent =
+        urlParams.get("dayDiagnosis");
+      document.getElementById("dayTreatment").textContent =
+        urlParams.get("dayTreatment");
+      document.getElementById("procedures").textContent =
+        urlParams.get("procedures");
+      document.getElementById("prescription").textContent =
+        urlParams.get("prescription");
+    </script>
+  </body>
+</html>
