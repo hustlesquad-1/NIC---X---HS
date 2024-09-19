@@ -1,15 +1,3 @@
-Conversation opened. 1 unread message.
-
-Skip to content
-Using Gmail with screen readers
-1 of 3,743
-ors
-Inbox
-
-Yogeshwaran R
-10:50 AM (0 minutes ago)
-to me
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,92 +5,163 @@ to me
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Online Registration System - Hospital Name</title>
     <style>
-        /* Basic styling for smooth scrolling */
-        html {
-            scroll-behavior: smooth;
-        }
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-            background-color: #f4f4f4;
-        }
-        header {
-            background: #007BFF;
-            color: white;
-            padding: 20px 0;
-        }
-        .container {
-            width: 80%;
-            margin: auto;
-            max-width: 1200px;
-        }
-        nav ul {
-            list-style-type: none;
-            padding: 0;
-            text-align: right;
-        }
-        nav ul li {
-            display: inline;
-            margin-right: 20px;
-        }
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        section {
-            padding: 40px 0;
-        }
-        h2 {
-            color: #007BFF;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            background: white;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        label {
-            font-weight: bold;
-        }
-        input, select, button {
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            width: 100%;
-            max-width: 400px;
-        }
-        button {
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        footer {
-            text-align: center;
-            padding: 20px;
-            background: #f1f1f1;
-            color: #333;
-            margin-top: 20px;
-        }
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .container {
-                width: 90%;
-            }
-            nav ul {
-                text-align: left;
-            }
-        }
+/* Basic styling for smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    background-color: #e0f7fa; /* Light aqua blue */
+}
+header {
+    background: #00bcd4; /* Aqua blue */
+    color: white;
+    padding: 20px 0;
+}
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 15px;
+}
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: center;
+    margin: 0;
+}
+nav ul li {
+    display: inline;
+    text-align: center;
+    margin-right: 20px;
+}
+nav ul li a {
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+}
+section {
+    text-align: center;
+    padding: 40px 0;
+    border-bottom: 1px solid #b2dfdb; /* Light aqua green */
+}
+h2 {
+    color: #004d40; /* Aqua green */
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    text-align: center;
+}
+p {
+    text-align: center; /* Center-align all paragraphs */
+}
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+    max-width: 500px;
+}
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+input, select, button {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%;
+}
+button {
+    background-color: #00bcd4; /* Aqua blue */
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    padding: 12px;
+    font-size: 1rem;
+}
+button:hover {
+    background-color: #00838f; /* Darker aqua blue */
+}
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #b2dfdb; /* Light aqua green */
+    color: #333;
+    margin-top: 20px;
+}
+/* Responsive Design */
+@media (max-width: 768px) {
+    nav ul {
+        text-align: left;
+        margin: 0;
+    }
+    nav ul li {
+        display: block;
+        margin-bottom: 10px;
+    }
+}
+
+/* Modal styling */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+    padding: 20px;
+}
+
+.modal-content {
+    background-color: #ffffff;
+    margin: 5% auto; /* Centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 100%;
+    max-width: 500px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.modal-header, .modal-body, .modal-footer {
+    margin-bottom: 20px;
+}
+
+.modal-header h2 {
+    margin: 0;
+    color: #004d40; /* Aqua green */
+    font-size: 1.6rem;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
     </style>
 </head>
 <body>
@@ -114,7 +173,8 @@ to me
                     <li><a href="#home">Home</a></li>
                     <li><a href="#services">Services</a></li>
                     <li><a href="#appointment" id="appointmentLink">Book Appointment</a></li>
-                    <li><a href="#cancel">Cancel Appointment</a></li>
+                    <li><a href="#trackappointment" id="trackAppointmentLink">Track Appointment</a></li>
+                    <li><a href="#cancel" id="cancelAppointmentLink">Cancel Appointment</a></li>
                     <li><a href="#contact">Contact Us</a></li>
                 </ul>
             </nav>
@@ -129,28 +189,25 @@ to me
 
         <section id="services">
             <h2>Our Services</h2>
-            <ul>
-                <li>Online Appointment Booking</li>
-                <li>Patient Information Management</li>
-                <li>Lab Test Results Viewing</li>
-                <li>Prescription Refills</li>
-            </ul>
+                <p>Online Appointment Booking</p>
+                <p>Patient Information Management</p>
+                <p>Lab Test Results Viewing</p>
+                <p>Prescription Refills</p>
         </section>
 
-        <!-- Appointment Booking Section with Simplified OTP -->
+        <!-- Appointment Booking Section -->
         <section id="appointment">
             <h2>Book an Appointment</h2>
-            <form id="appointmentForm" action="/submit-appointment" method="POST">
+            <form id="bookForm">
                 <label for="name">Full Name:</label>
-                <input type="text" id="name" name="name" required autocomplete="name" autofocus>
+                <input type="text" id="name" name="name" required>
 
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required autocomplete="email">
+                <input type="email" id="email" name="email" required>
 
                 <label for="phone">Phone Number:</label>
                 <input type="tel" id="phone" name="phone" required>
-
-                <button type="button" id="sendOtp">Send OTP</button>
+                <button type="button" id="sendOtpBook">Send OTP</button>
 
                 <label for="otp">Enter OTP:</label>
                 <input type="text" id="otp" name="otp" required>
@@ -161,25 +218,42 @@ to me
                     <option value="cardiology">Cardiology</option>
                     <option value="neurology">Neurology</option>
                     <option value="orthopedics">Orthopedics</option>
-                    <!-- Add more departments as needed -->
                 </select>
 
                 <label for="date">Preferred Date:</label>
                 <input type="date" id="date" name="date" required>
 
-                <button type="submit">Schedule Appointment</button>
+                <button type="submit">Book Appointment</button>
+            </form>
+        </section>
+
+        <!-- Appointment Tracking Section -->
+        <section id="trackappointment">
+            <h2>Track Appointment</h2>
+            <form id="trackForm">
+                <label for="trackPhone">Phone Number:</label>
+                <input type="tel" id="trackPhone" name="trackPhone" required>
+
+                <label for="appointmentId">Appointment ID:</label>
+                <input type="text" id="appointmentId" name="appointmentId" required>
+
+                <button type="button" id="trackAppointmentButton">Track Appointment</button>
             </form>
         </section>
 
         <!-- Appointment Cancellation Section -->
         <section id="cancel">
             <h2>Cancel Appointment</h2>
-            <form id="cancelForm" action="/cancel-appointment" method="POST">
+            <form id="cancelForm">
                 <label for="cancelPhone">Phone Number:</label>
                 <input type="tel" id="cancelPhone" name="cancelPhone" required>
+                <button type="button" id="sendOtpCancel">Send OTP</button>
 
-                <label for="appointmentId">Appointment ID:</label>
-                <input type="text" id="appointmentId" name="appointmentId" required>
+                <label for="otpCancel">Enter OTP:</label>
+                <input type="text" id="otpCancel" name="otpCancel" required>
+
+                <label for="cancelAppointmentId">Appointment ID:</label>
+                <input type="text" id="cancelAppointmentId" name="cancelAppointmentId" required>
 
                 <button type="submit">Cancel Appointment</button>
             </form>
@@ -189,7 +263,6 @@ to me
             <h2>Contact Us</h2>
             <p>If you have any questions, feel free to reach out!</p>
         </section>
-
     </main>
 
     <footer>
@@ -198,11 +271,59 @@ to me
         </div>
     </footer>
 
-    <!-- JavaScript code to handle OTP and form submission -->
+    <!-- Modal for booking appointment -->
+    <div id="bookModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close" id="closeBookModal">&times;</span>
+                <h2>Appointment Confirmation</h2>
+            </div>
+            <div class="modal-body">
+                <p id="bookStatus">Your appointment has been booked successfully!</p>
+            </div>
+            <div class="modal-footer">
+                <button id="closeBookModalFooter">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for canceling appointment -->
+    <div id="cancelModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close" id="closeCancelModal">&times;</span>
+                <h2>Appointment Cancellation</h2>
+            </div>
+            <div class="modal-body">
+                <p id="cancelStatus">Your appointment has been cancelled successfully.</p>
+            </div>
+            <div class="modal-footer">
+                <button id="closeCancelModalFooter">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for tracking appointment -->
+    <div id="trackModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close" id="closeTrackModal">&times;</span>
+                <h2>Appointment Status</h2>
+            </div>
+            <div class="modal-body">
+                <p id="appointmentStatus">Your appointment status will be displayed here.</p>
+            </div>
+            <div class="modal-footer">
+                <button id="closeTrackModalFooter">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript to handle modal popups -->
     <script>
-        // JavaScript code to send OTP and handle form submission
-        const form = document.getElementById('appointmentForm');
+        const bookForm = document.getElementById('bookForm');
         const cancelForm = document.getElementById('cancelForm');
+        const trackForm = document.getElementById('trackForm');
         let generatedOtp = null;
 
         // Function to generate random OTP
@@ -210,52 +331,36 @@ to me
             return Math.floor(1000 + Math.random() * 9000).toString(); // Simplified 4-digit OTP
         }
 
-        // Handle OTP sending (Simplified, allows any phone number)
-        document.getElementById('sendOtp').addEventListener('click', () => {
+        // Handle OTP sending for booking
+        document.getElementById('sendOtpBook').addEventListener('click', () => {
             const phone = document.getElementById('phone').value;
             generatedOtp = generateOtp();
             alert(`OTP sent to ${phone}: ${generatedOtp}`); // Simulate OTP sending
         });
 
+        // Handle OTP sending for canceling
+        document.getElementById('sendOtpCancel').addEventListener('click', () => {
+            const phone = document.getElementById('cancelPhone').value;
+            generatedOtp = generateOtp();
+            alert(`OTP sent to ${phone}: ${generatedOtp}`); // Simulate OTP sending
+        });
+
         // Handle appointment form submission with OTP verification
-        form.addEventListener('submit', async (event) => {
+        bookForm.addEventListener('submit', async (event) => {
             event.preventDefault();
 
             const enteredOtp = document.getElementById('otp').value;
 
             // Ensure OTP is correct
             if (enteredOtp == generatedOtp) {
-                const formData = new FormData(form);
+                const formData = new FormData(bookForm);
                 try {
-                    // Simulate server response: replace this with your back-end logic
                     console.log('Sending data to server:', [...formData.entries()]);
 
-                    // Simulating successful form submission (remove this when connected to a real server)
-                    alert('Appointment scheduled successfully!');
-                    form.reset();
-                    window.scrollTo({
-                        top: document.getElementById('home').offsetTop,
-                        behavior: 'smooth'
-                    });
-                   
-                    // Uncomment and replace this part with actual server code when you have a server
-                    /*
-                    const response = await fetch('/submit-appointment', {
-                        method: 'POST',
-                        body: formData
-                    });
-
-                    if (response.ok) {
-                        alert('Appointment scheduled successfully!');
-                        form.reset();
-                        window.scrollTo({
-                            top: document.getElementById('home').offsetTop,
-                            behavior: 'smooth'
-                        });
-                    } else {
-                        alert('Error scheduling appointment. Please try again later.');
-                    }
-                    */
+                    // Simulate successful form submission
+                    showModal('bookModal');
+                    bookForm.reset();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                 } catch (error) {
                     console.error('Error:', error);
                     alert('An unexpected error occurred. Please try again later.');
@@ -265,43 +370,72 @@ to me
             }
         });
 
-        // Handle appointment cancellation form submission
+        // Handle appointment cancellation form submission with OTP verification
         cancelForm.addEventListener('submit', async (event) => {
             event.preventDefault();
 
-            const formData = new FormData(cancelForm);
-            try {
-                console.log('Cancelling appointment:', [...formData.entries()]);
-                alert('Appointment cancelled successfully!');
-                cancelForm.reset();
+            const enteredOtp = document.getElementById('otpCancel').value;
 
-                // Uncomment this and replace it with actual server logic
-                /*
-                const response = await fetch('/cancel-appointment', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                if (response.ok) {
-                    alert('Appointment cancelled successfully!');
+            // Ensure OTP is correct
+            if (enteredOtp == generatedOtp) {
+                const formData = new FormData(cancelForm);
+                try {
+                    console.log('Cancelling appointment:', [...formData.entries()]);
+                    showModal('cancelModal');
                     cancelForm.reset();
-                } else {
-                    alert('Error cancelling appointment. Please try again later.');
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('An unexpected error occurred. Please try again later.');
                 }
-                */
+            } else {
+                alert('Invalid OTP. Please try again.');
+            }
+        });
+
+        // Handle appointment tracking form submission
+        document.getElementById('trackAppointmentButton').addEventListener('click', async () => {
+            const phone = document.getElementById('trackPhone').value;
+            const appointmentId = document.getElementById('appointmentId').value;
+
+            try {
+                console.log('Tracking appointment for:', phone, 'with ID:', appointmentId);
+
+                // Simulate fetching appointment status
+                document.getElementById('appointmentStatus').textContent = 'Your appointment status is: Confirmed'; // Example status
+
+                // Show the modal
+                showModal('trackModal');
             } catch (error) {
                 console.error('Error:', error);
                 alert('An unexpected error occurred. Please try again later.');
             }
         });
 
-        // Smooth scrolling for the appointment link
-        document.getElementById('appointmentLink').addEventListener('click', (event) => {
-            event.preventDefault();
-            const targetSection = document.getElementById('appointment');
-            targetSection.scrollIntoView({ behavior: 'smooth' });
-        });
-    </script>
+        // Modal handling functions
+        function showModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
 
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                closeModal(event.target.id);
+            }
+        }
+
+        // Close modals when close button is clicked
+        document.getElementById('closeBookModal').addEventListener('click', () => closeModal('bookModal'));
+        document.getElementById('closeBookModalFooter').addEventListener('click', () => closeModal('bookModal'));
+
+        document.getElementById('closeCancelModal').addEventListener('click', () => closeModal('cancelModal'));
+        document.getElementById('closeCancelModalFooter').addEventListener('click', () => closeModal('cancelModal'));
+
+        document.getElementById('closeTrackModal').addEventListener('click', () => closeModal('trackModal'));
+        document.getElementById('closeTrackModalFooter').addEventListener('click', () => closeModal('trackModal'));
+    </script>
 </body>
 </html>
