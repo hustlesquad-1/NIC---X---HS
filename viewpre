@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prescription Details</title>
+    <link rel="stylesheet" href="viewprescriptionstyle6.css">
+</head>
+<body>
+    <div class="prescription-container">
+        <h2>Prescription Details</h2>
+        <table>
+            <tr>
+                <th>Field</th>
+                <th>Value</th>
+            </tr>
+            <tr>
+                <td>Patient Name</td>
+                <td id="patient-name"></td>
+            </tr>
+            <tr>
+                <td>Heart Rate</td>
+                <td id="heart-rate"></td>
+            </tr>
+            <tr>
+                <td>Blood Pressure</td>
+                <td id="blood-pressure"></td>
+            </tr>
+            <tr>
+                <td>Doctor's Name</td>
+                <td id="doctor-name"></td>
+            </tr>
+            <tr>
+                <td>Problem</td>
+                <td id="problem"></td>
+            </tr>
+            <tr>
+                <td>Medicines</td>
+                <td id="medicines"></td>
+            </tr>
+            <tr>
+                <td>Duration</td>
+                <td id="duration"></td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+
+        // Populate table with URL parameters
+        document.getElementById('patient-name').textContent = urlParams.get('patient-name');
+        document.getElementById('heart-rate').textContent = urlParams.get('heart-rate');
+        document.getElementById('blood-pressure').textContent = urlParams.get('blood-pressure');
+        document.getElementById('doctor-name').textContent = urlParams.get('doctor-name');
+        document.getElementById('problem').textContent = urlParams.get('problem');
+        document.getElementById('medicines').textContent = urlParams.get('medicines');
+        document.getElementById('duration').textContent = urlParams.get('duration');
+    </script>
+</body>
+</html>
