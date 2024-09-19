@@ -1,9 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // =====================
-    // OTP Modal Functionality
-    // =====================
     const otpModal = document.getElementById('otp-modal');
-    const closeModalBtn = document.querySelector('.close-btn'); // Ensure this class matches your HTML
     const submitOtpBtn = document.getElementById('submit-otp-btn');
     const otpSuccessMsg = document.getElementById('otp-success-msg');
     const otpInputs = document.querySelectorAll('.otp-input');
@@ -11,9 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const resendOtpButton = document.getElementById('resend-otp-btn');
     let countdown = 59;
     let countdownInterval;
-
-    // Mask phone number
-    const maskPhoneNumber = (phone) => phone.slice(0, -3).replace(/\d/g, 'X') + phone.slice(-3);
 
     // Show OTP modal
     const showOtpModal = () => {
@@ -27,19 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         resetCountdown();
     };
 
-    // Ensure the close button click event is properly bound
-    if (closeModalBtn) {
-        closeModalBtn.addEventListener('click', closeOtpModal);
-    } else {
-        console.error('Close button not found. Ensure it has the class "close-btn"');
-    }
-
-    // Close modal when clicking outside of it
-    window.addEventListener('click', (event) => {
-        if (event.target === otpModal) closeOtpModal();
-    });
-
-    // Handle OTP input
+    // Handle OTP input navigation
     otpInputs.forEach((input, index) => {
         input.addEventListener('input', () => {
             if (input.value.length === 1 && index < otpInputs.length - 1) {
@@ -53,29 +34,32 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    submitOtpBtn.addEventListener('click', () => {
-        const otpValue = Array.from(otpInputs).map(input => input.value).join('');
-        if (otpValue.length === 6) {
+    // OTP Submit Button Click Handler
+    submitOtpBtn.addEventListener('click', function(event) {
+        let otp = Array.from(otpInputs).map(input => input.value).join('');
+        
+        // Assuming '123456' is the correct OTP for demo purposes
+        if (otp === '123456') {
+            // Show success message
             otpSuccessMsg.style.display = 'block';
+
+            // Wait for 2 seconds before redirecting
             setTimeout(() => {
-                closeOtpModal();
-                otpSuccessMsg.style.display = 'none';
-                // Redirect to verification page
-                window.location.href = 'verification-page.html'; // Update with your actual page
+                window.location.href = 'index.html'; // Redirect to index.html
             }, 2000);
         } else {
-            alert('Please enter a 6-digit OTP');
+            alert('Incorrect OTP. Please try again.');
         }
     });
 
     // Countdown timer for resend OTP button
     const startCountdown = () => {
-        countdown = 59; // Reset countdown
+        countdown = 59; 
         updateResendOtpButton(false); // Initially disable the button
-        countdownElement.textContent = `Resend OTP (${countdown}s)`;
+        countdownElement.textContent = `${countdown}s`;
         countdownInterval = setInterval(() => {
             countdown--;
-            countdownElement.textContent = `Resend OTP (${countdown}s)`;
+            countdownElement.textContent = `${countdown}s`;
             if (countdown <= 0) {
                 clearInterval(countdownInterval);
                 updateResendOtpButton(true); // Enable button when countdown is finished
@@ -95,17 +79,14 @@ document.addEventListener('DOMContentLoaded', () => {
         resendOtpButton.textContent = enabled ? 'Resend OTP' : `Resend OTP (${countdown}s)`;
     };
 
-    // Handle resend OTP
-    const handleResendOtp = () => {
-        if (!resendOtpButton.disabled) { // Prevent multiple resends before countdown finishes
+    // Handle resend OTP button click
+    resendOtpButton.addEventListener('click', () => {
+        if (!resendOtpButton.disabled) {
             console.log('Resending OTP...');
             startCountdown(); // Restart countdown when OTP is resent
         }
-    };
+    });
 
-    // Attach event listener to resend OTP button
-    resendOtpButton.addEventListener('click', handleResendOtp);
-
-    // Optional: Initialize OTP modal if needed
+    // Show the OTP modal (you can trigger this from somewhere else if needed)
     // showOtpModal();
 });
