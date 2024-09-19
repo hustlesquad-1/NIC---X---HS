@@ -12,6 +12,50 @@ body {
     background-color: #f4f4f4;
 }
 
+/* Header Styling */
+.main-header {
+    background-color: #00a3e0; /* Aqua blue background */
+    padding: 15px;
+    color: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1001;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.main-header .container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.home-button {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    font-size: 18px;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.home-button i {
+    margin-right: 8px;
+    font-size: 1.2em;
+}
+
+.home-button:hover {
+    background-color: #00796b; /* Darker aqua green on hover */
+}
+
+/* Ensure that content is not hidden behind the fixed header */
+body {
+    padding-top: 60px; /* Adjust according to header height */
+}
+
 /* Container and Sidebar */
 .container {
     display: flex;
