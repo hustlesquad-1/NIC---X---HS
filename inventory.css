@@ -9,12 +9,12 @@ body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
     color: #333;
-    background-color: #f4f4f4;
+    background-color: #d9f7f3;
 }
 
 /* Header Styling */
 .main-header {
-    background-color: #00a3e0; /* Aqua blue background */
+    background: linear-gradient(90deg, #00bfae, #36b9e9); /* Aqua green to aqua blue */
     padding: 15px;
     color: #fff;
     position: fixed;
@@ -27,6 +27,7 @@ body {
 
 .main-header .container {
     display: flex;
+    background: linear-gradient(90deg, #00bfae, #36b9e9); /* Aqua green to aqua blue */
     justify-content: flex-start;
     align-items: center;
 }
@@ -69,7 +70,7 @@ body {
     top: 0;
     left: 0;
     overflow-y: auto;
-    background: linear-gradient(90deg, #00bfae, #00a3e0); /* Aqua green to aqua blue */
+    background: linear-gradient(90deg, #00bfae, #36b9e9); /* Aqua green to aqua blue */
     color: #fff;
     z-index: 1000;
 }
