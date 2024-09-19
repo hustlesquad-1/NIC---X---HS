@@ -6,6 +6,14 @@
     <title>Transfer Form</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="ADT.css">
+    <style>
+        #transfer-success {
+            display: none;
+            color: green;
+            margin-top: 20px;
+            font-size: 1.5em;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -16,7 +24,7 @@
     </header>
 
     <div class="container">
-        <form id="transfer-form" action="/submit-transfer" method="POST">
+        <form id="transfer-form" action="/submit-transfer" method="POST" onsubmit="handleFormSubmission(event)">
             <!-- Reason for Transfer Section -->
             <div class="form-field">
                 <label for="patient-id">Patient ID</label>
@@ -29,7 +37,7 @@
                 <input type="text" id="current-ward" name="current-ward" required placeholder="Enter current ward name">
 
                 <label for="transfer-reason">Reason for Transfer</label>
-                <textarea id="transfer-reason" name="transfer-reason" rows="3" required placeholder="Explain the reason for transfer (e.g., higher level of care, bed management, specialized treatment)"></textarea>
+                <textarea id="transfer-reason" name="transfer-reason" rows="3" required placeholder="Explain the reason for transfer"></textarea>
             </div>
 
             <!-- Transfer Documentation Section -->
@@ -37,19 +45,19 @@
                 <h3>Transfer Documentation</h3>
 
                 <label for="transfer-request">Transfer Request Approved By</label>
-                <input type="text" id="transfer-request" name="transfer-request" required placeholder="Enter the approving doctor or administrator's name">
+                <input type="text" id="transfer-request" name="transfer-request" required placeholder="Enter approving doctor's name">
 
                 <label for="diagnosis-summary">Current Diagnosis Summary</label>
                 <textarea id="diagnosis-summary" name="diagnosis-summary" rows="4" required placeholder="Provide a brief summary of the current diagnosis"></textarea>
 
                 <label for="treatment-summary">Treatment Summary</label>
-                <textarea id="treatment-summary" name="treatment-summary" rows="4" required placeholder="Summarize treatment received so far"></textarea>
+                <textarea id="treatment-summary" name="treatment-summary" rows="4" required placeholder="Summarize treatment received"></textarea>
 
                 <label for="medications">Medications Required During Transfer</label>
-                <textarea id="medications" name="medications" rows="3" placeholder="List any medications required during transfer"></textarea>
+                <textarea id="medications" name="medications" rows="3" placeholder="List medications required during transfer"></textarea>
 
                 <label for="receiving-ward">Receiving Ward/Facility</label>
-                <input type="text" id="receiving-ward" name="receiving-ward" required placeholder="Enter the name of the receiving ward or facility">
+                <input type="text" id="receiving-ward" name="receiving-ward" required placeholder="Enter receiving ward or facility name">
             </div>
 
             <!-- Logistics of Transfer Section -->
@@ -80,17 +88,31 @@
                 </select>
 
                 <label for="equipment">Medical Equipment Required</label>
-                <textarea id="equipment" name="equipment" rows="3" placeholder="List any medical equipment required during transfer (e.g., oxygen, ventilator, etc.)"></textarea>
+                <textarea id="equipment" name="equipment" rows="3" placeholder="List medical equipment required during transfer"></textarea>
 
                 <label for="transfer-notes">Additional Transfer Notes</label>
-                <textarea id="transfer-notes" name="transfer-notes" rows="4" placeholder="Provide any other relevant details or instructions for the transfer"></textarea>
+                <textarea id="transfer-notes" name="transfer-notes" rows="4" placeholder="Provide additional details or instructions"></textarea>
             </div>
 
             <!-- Submit Button -->
             <button type="submit">Submit Transfer Form</button>
         </form>
+
+        <!-- Success Message -->
+        <div id="transfer-success">Form submitted successfully!</div>
     </div>
 
-    <script src="ADT.js"></script>
+    <script>
+        function handleFormSubmission(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Show the success message
+            const successMessage = document.getElementById('transfer-success');
+            successMessage.style.display = 'block';
+
+            // Optionally, hide the form after submission
+            document.getElementById('transfer-form').style.display = 'none';
+        }
+    </script>
 </body>
 </html>
