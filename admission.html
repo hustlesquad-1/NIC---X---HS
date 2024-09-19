@@ -6,6 +6,14 @@
     <title>Admission Form</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="ADT.css">
+    <style>
+        #admission-success {
+            display: none;
+            color: green;
+            margin-top: 20px;
+            font-size: 1.5em;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -16,7 +24,7 @@
     </header>
 
     <div class="container">
-        <form id="admission-form" action="/submit-admission" method="POST">
+        <form id="admission-form" action="submit-admission" method="POST" onsubmit="handleFormSubmission(event)">
             <!-- Patient Identification Section -->
             <div class="form-field">
                 <label for="admission-patient-id">Patient ID</label>
@@ -97,8 +105,22 @@
             <!-- Submit Button -->
             <button type="submit">Submit Admission Form</button>
         </form>
+
+        <!-- Success Message -->
+        <div id="admission-success">Form submitted successfully!</div>
     </div>
 
-    <script src="ADT.js"></script>
+    <script>
+        function handleFormSubmission(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Show the success message
+            const successMessage = document.getElementById('admission-success');
+            successMessage.style.display = 'block';
+
+            // Optionally, hide the form after submission
+            document.getElementById('admission-form').style.display = 'none';
+        }
+    </script>
 </body>
 </html>
