@@ -1,0 +1,175 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+header {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+}
+
+main {
+  padding: 20px;
+}
+
+section {
+  margin-bottom: 20px;
+  margin-left: 400px;
+  align-items: center;
+}
+
+form {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin: 10px 0 5px;
+}
+
+input, select, button {
+  padding: 10px;
+  margin: 5px 0;
+  display: block;
+  width: 60%;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.error {
+  color: red;
+}
+
+/* Login Page Styles */
+#login-section {
+  width: 300px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+#login-section h2 {
+  margin-top: 0;
+  font-weight: bold;
+  color: #333;
+}
+
+#login-form {
+  margin-top: 20px;
+}
+
+#login-form input[type="text"], #login-form input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#login-form input[type="submit"] {
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#login-form input[type="submit"]:hover {
+  background-color: #3e8e41;
+}
+
+#login-error {
+  color: red;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+/* Confirmation Modal Styles */
+  #confirmation-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 20px;
+  width: 300px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+#confirmation-modal p {
+  margin-bottom: 20px;
+}
+
+#confirmation-modal button {
+  margin-left: 20%;
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#confirmation-modal button:hover {
+  background-color: #0056b3;
+}
+
+/* Success Modal Styles */
+#success-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 20px;
+  width: 300px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+#success-modal p {
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #2ecc71;
+}
+
+#success-modal span {
+  font-size: 24px;
+  vertical-align: middle;
+}
+
+#success-modal button {
+  margin-left: 20%;
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#success-modal button:hover {
+  background-color: #3e8e41;
+}

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Management</title>
+    <link rel="stylesheet" href="hab.css">
+</head>
+<body>
+    <header>
+        <h1>Hospital Management</h1>
+    </header>
+    
+    <main>
+        <!-- Login Section -->
+        <section class="login-section" id="login-section">
+            <h2>Doctor Login</h2>
+            <form id="login-form">
+                <label for="username">Username:</label>
+                <input type="text" id="username" required>
+                <label for="password">Password:</label>
+                <input type="password" id="password" required>
+                <button type="submit">Login</button>
+                <p id="login-error" style="color: red; display: none;">Invalid login credentials.</p>
+            </form>
+        </section>
+
+        <!-- Management Section -->
+        <section class="management-section" id="management-section" style="display: none;">
+            <h2>Manage Hospital Data</h2>
+
+            <!-- Update Beds Form -->
+            <form id="update-beds-form">
+                <h3>Update Beds</h3>
+
+                <label for="update-ward-select">Select Ward:</label>
+                <select id="update-ward-select">
+                    <!-- Options populated by JavaScript -->
+                </select>
+
+                <label for="total-beds-count">Total Beds:</label>
+                <input type="number" id="total-beds-count" required>
+
+                <label for="update-beds-count">Available Beds:</label>
+                <input type="number" id="update-beds-count" required>
+
+                <br><button type="submit">Update Beds</button>
+            </form>
+
+            <!-- Create New Ward Button -->
+            <button id="create-ward-btn">Create New Ward</button>
+
+            <!-- New Ward Form (Hidden initially) -->
+            <form id="new-ward-form" style="display: none;">
+                <h3>Create New Ward</h3>
+                <label for="new-ward-name">New Ward Name:</label>
+                <input type="text" id="new-ward-name" required>
+
+                <label for="new-ward-total-beds">Total Beds:</label>
+                <input type="number" id="new-ward-total-beds" required>
+
+                <label for="new-ward-available-beds">Available Beds:</label>
+                <input type="number" id="new-ward-available-beds" required>
+
+                <br><button type="submit">Submit New Ward</button>
+            </form>
+        </section>
+
+        <!-- Confirmation Modal -->
+        <div id="confirmation-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <p>Are you sure you want to update the bed information?</p>
+                <button id="confirm-btn">Confirm</button>
+                <button id="cancel-btn">Cancel</button>
+            </div>
+        </div>
+
+        <!-- Success Modal -->
+        <div id="success-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <p>Update successfully <span>&#10004;</span></p>
+                <button id="success-ok-btn">OK</button>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="cnw.js"></script>
+</body>
+</html>
