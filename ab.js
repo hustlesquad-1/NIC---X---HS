@@ -142,4 +142,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // Initialize with the first city
     updateHospitalOptions(cities[0]);
     updateTable();
+
+    // Event listener for the hospital link
+    document.getElementById("hospital-link").addEventListener("click", function(event) {
+        event.preventDefault(); // Prevent default anchor behavior
+        window.location.href = "hab.html"; // Redirect to hab.html
+    });
 });
