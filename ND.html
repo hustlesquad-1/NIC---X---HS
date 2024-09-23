@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="ND.css">
+    <title>New Doctor Registration</title>
+    <style>
+        /* Style for the modal pop-up */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            width: 300px;
+            position: relative;
+        }
+
+        .modal-content .checkmark {
+            font-size: 50px;
+            color: green;
+        }
+
+        .modal-content p {
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        /* Close button */
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            color: red;
+        }
+
+        /* Style for the form container */
+        .container {
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>NEW DOCTOR Registration</header>
+        <form id="registrationForm" enctype="multipart/form-data">
+            <div class="form first">
+                <div class="details personal">
+                    <span class="title">Personal Details</span>
+                    <div class="fields">
+                        <div class="input-field">
+                            <label>Full Name</label>
+                            <input type="text" placeholder="Enter your name" required>
+                        </div>
+                        <div class="input-field">
+                            <label>Date of Birth</label>
+                            <input type="date" required>
+                        </div>
+                        <div class="input-field">
+                            <label>Gender</label>
+                            <div class="gender-selection">
+                                <input type="radio" name="gender" value="Male" id="male" required>
+                                <label for="male">Male</label>
+                                <input type="radio" name="gender" value="Female" id="female" required>
+                                <label for="female">Female</label>
+                                <input type="radio" name="gender" value="Other" id="other" required>
+                                <label for="other">Other</label>
+                            </div>
+                        </div>
+                        <div class="input-field">
+                            <label>Years of Experience</label>
+                            <input type="number" placeholder="Enter years of experience" min="0" required>
+                        </div>
+                        <div class="input-field">
+                            <label>Area of Specialization</label>
+                            <input type="text" placeholder="Enter your specialization" required>
+                        </div>
+                        <div class="input-field">
+                            <label>Select City</label>
+                            <input list="cities" name="city" placeholder="Enter or select your city" required>
+                            <datalist id="cities">
+                                <option value="New York">
+                                <option value="Los Angeles">
+                                <option value="Chicago">
+                                <option value="Houston">
+                                <option value="Miami">
+                            </datalist>
+                        </div>
+                        <div class="input-field">
+                            <label>Hospital Name</label>
+                            <input type="text" placeholder="Enter hospital name" required>
+                        </div>
+                        <div class="input-field">
+                            <label>Upload Certificate</label>
+                            <input type="file" accept=".pdf,.jpg,.jpeg,.png" required>
+                        </div>
+                        <div class="input-field">
+                            <label>E-mail</label>
+                            <input type="email" placeholder="Enter your email" required>
+                        </div>
+                        <div class="input-field">
+                            <label>Password</label>
+                            <input type="password" placeholder="Enter your password" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="submit-button">
+                    <button type="submit">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeModal">&times;</span>
+            <div class="checkmark">&#10004;</div>
+            <p>Registration Completed Successfully!</p>
+            <p>The verification link and Doctor ID will be sent to your email.</p>
+        </div>
+    </div>
+
+    <script>
+       
+        var modal = document.getElementById("successModal");
+        var closeModal = document.getElementById("closeModal");
+
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            event.preventDefault(); 
+
+         
+            modal.style.display = "flex";
+
+           
+            this.reset();
+        });
+
+        
+        closeModal.onclick = function() {
+            modal.style.display = "none";
+        }
+
+       
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>

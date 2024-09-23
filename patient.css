@@ -1,0 +1,293 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #4070f4;
+}
+
+/* Button hover effect */
+.button-group button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 5px;
+}
+
+.button-group button:hover {
+    background-color: #d32f2f;
+}
+
+/* Prescription table styles */
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+/* Adjust column widths */
+th, td {
+    text-align: center;
+}
+
+td select, td input {
+    width: 100%;
+}
+
+/* Column width adjustments */
+th:nth-child(1), td:nth-child(1) {
+    width: 5%; /* S.No */
+}
+
+th:nth-child(2), td:nth-child(2) {
+    width: 40%; /* Drug Name */
+}
+
+th:nth-child(3), td:nth-child(3),
+th:nth-child(4), td:nth-child(4),
+th:nth-child(5), td:nth-child(5),
+th:nth-child(6), td:nth-child(6),
+th:nth-child(7), td:nth-child(7) {
+    width: 9%; /* Quantity, Morning, Afternoon, Evening, Night */
+}
+
+/* Hide initially */
+.hidden {
+    display: none;
+}
+
+/* Center the Submit Prescription button and style it green */
+.submit-prescription {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.submit-prescription button {
+    background-color: #4CAF50; /* Green color */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.submit-prescription button:hover {
+    background-color: #45a049;
+}
+
+/* Pop-up box styling */
+.popup-box {
+    display: none;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 2px solid #4CAF50;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.popup-box p {
+    font-size: 18px;
+    color: #4CAF50;
+}
+
+.popup-box button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.popup-box button:hover {
+    background-color: #45a049;
+}
+
+.container {
+    position: relative;
+    max-width: 700px; /* Increased width to accommodate the table */
+    width: 100%;
+    border-radius: 6px;
+    padding: 30px;
+    background-color: #ffffff;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.container header {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.container header::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -5px;
+    height: 3px;
+    width: 30px;
+    border-radius: 8px;
+    background-color: #4070f4;
+}
+
+.container form {
+    margin-top: 16px;
+}
+
+.container form .details {
+    margin-top: 30px;
+}
+
+.container form .title {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+}
+
+.container form .fields {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.fields .input-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-field label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #2e2e2e;
+}
+
+.input-field input {
+    outline: none;
+    font-size: 14px;
+    font-weight: 400;
+    color: #333;
+    border-radius: 5px;
+    border: 1px solid #aaa;
+    padding: 0 15px;
+    height: 42px;
+    margin-top: 8px;
+    transition: box-shadow 0.3s ease;
+}
+
+.input-field input:is(:focus, :valid) {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.submit-button {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.submit-button button {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #4070f4;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button button:hover {
+    background-color: #3458c8;
+}
+
+/* Styling for prescription table */
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+    padding: 12px 15px;
+    text-align: left;
+    font-size: 14px;
+}
+
+th {
+    background-color: #f7f7f7;
+    font-weight: 600;
+}
+
+td input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+td button {
+    padding: 5px 10px;
+    background-color: #4070f4;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+td button:hover {
+    background-color: #3458c8;
+}
+
+/* Styling for logout and back buttons */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.button-group button {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #f44336; /* Red color for buttons */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button-group button:hover {
+    background-color: #d32f2f;
+}

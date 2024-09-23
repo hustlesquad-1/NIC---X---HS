@@ -1,0 +1,132 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #4070f4;
+}
+
+.container {
+    position: relative;
+    max-width: 500px;
+    width: 100%;
+    border-radius: 6px;
+    padding: 30px;
+    background-color: #ffffff;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.container header {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.container header::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -5px;
+    height: 3px;
+    width: 30px;
+    border-radius: 8px;
+    background-color: #4070f4;
+}
+
+.container form {
+    margin-top: 16px;
+}
+
+.container form .details {
+    margin-top: 30px;
+}
+
+.container form .title {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+}
+
+.container form .fields {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.fields .input-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-field label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #2e2e2e;
+}
+
+.input-field input {
+    outline: none;
+    font-size: 14px;
+    font-weight: 400;
+    color: #333;
+    border-radius: 5px;
+    border: 1px solid #aaa;
+    padding: 0 15px;
+    height: 42px;
+    margin-top: 8px;
+    transition: box-shadow 0.3s ease;
+}
+
+.input-field input:is(:focus, :valid) {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.forgot-password {
+    margin-top: 15px;
+    text-align: right;
+}
+
+.forgot-password a {
+    font-size: 14px;
+    color: #4070f4;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.forgot-password a:hover {
+    color: #3458c8;
+}
+
+.submit-button {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.submit-button button {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #4070f4;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button button:hover {
+    background-color: #3458c8;
+}

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Prescription Details</title>
+    <link rel="stylesheet" href="patient.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Patient Details Section -->
+        <div id="patient-form">
+            <header>Patient Details</header>
+            <div class="form">
+                <div class="details login">
+                    <div class="fields">
+                        <div class="input-field">
+                            <label>Patient ID</label>
+                            <input type="text" id="patientId" placeholder="Enter Patient ID" required>
+                        </div>
+                        <div class="input-field">
+                            <label for="dateTime">Current Date and Time</label>
+                            <input type="text" id="dateTime" readonly>
+                        </div>
+                    </div>
+                    <div class="submit-button">
+                        <button onclick="submitPatientDetails()">Submit</button>
+                    </div>
+                    <div class="real-time" id="realTime"></div>
+                </div>
+                </div>
+            </div>
+
+            <!-- Health Data Section -->
+            <div id="health-data" class="hidden">
+                <header>Health Metrics</header>
+                <div class="form">
+                    <div class="fields">
+                        <div class="input-field">
+                            <label>Heart Beat Rate</label>
+                            <input type="text" id="heartBeatRate" readonly>
+                        </div>
+                        <div class="input-field">
+                            <label>Sugar Level</label>
+                            <input type="text" id="sugarLevel" readonly>
+                        </div>
+                        <div class="input-field">
+                            <label>Blood Pressure</label>
+                            <input type="text" id="bloodPressure" readonly>
+                        </div>
+                        <div class="input-field">
+                            <label>SPO2 Level</label>
+                            <input type="text" id="spo2Level" readonly>
+                        </div>
+                        <div class="input-field">
+                            <label>Height</label>
+                            <input type="text" id="height" readonly>
+                        </div>
+                        <div class="input-field">
+                            <label>Weight</label>
+                            <input type="text" id="weight" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Prescription List -->
+            <div id="prescription-section" class="hidden">
+                <header>Prescription Details for Patient</header>
+                <table id="prescriptionList">
+                    <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>Drug Name</th>
+                            <th>Quantity</th>
+                            <th>Morning</th>
+                            <th>Afternoon</th>
+                            <th>Evening</th>
+                            <th>Night</th>
+                        </tr>
+                    </thead>
+                    <tbody id="prescriptionBody">
+                        <tr>
+                            <td>1</td>
+                            <td>
+                                <select class="dropdown" id="drugName">
+                                    <option value="">Select Drug</option>
+                                    <option value="Drug A">Drug A</option>
+                                    <option value="Drug B">Drug B</option>
+                                    <option value="Drug C">Drug C</option>
+                                    <!-- Add more drugs as needed -->
+                                </select>
+                            </td>
+                            <td><input type="number" min="1" id="quantity" required></td>
+                            <td><input type="number" min="0" id="morning" required></td>
+                            <td><input type="number" min="0" id="afternoon" required></td>
+                            <td><input type="number" min="0" id="evening" required></td>
+                            <td><input type="number" min="0" id="night" required></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="add-prescription">
+                    <button onclick="addPrescription()">Add Prescription</button>
+                </div>
+                <div class="submit-prescription">
+                    <button onclick="submitPrescription()">Submit Prescription</button>
+                </div>
+            </div>
+
+            <!-- Logout and Back Button -->
+            <div class="button-group">
+                <button onclick="logout()">Logout</button>
+                <button onclick="goBack()">Back</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pop-up box -->
+    <div id="popupBox" class="popup-box">
+        <p>Prescription submitted successfully</p>
+        <button onclick="closePopup()">OK</button>
+    </div>
+
+    <script>
+
+        // Function to update the date and time field
+        function updateDateTime() {
+            const currentDateTime = new Date();
+            document.getElementById('dateTime').value = currentDateTime.toLocaleString();
+        }
+
+        // Function to update real-time display
+        function updateRealTime() {
+            const now = new Date();
+            document.getElementById('realTime').textContent = now.toLocaleTimeString();
+        }
+
+        // Submit form and validate
+        function submitPatientForm() {
+            const patientId = document.getElementById('patientId').value;
+            const dateTime = document.getElementById('dateTime').value;
+
+            if (patientId) {
+                // Redirect to the next page (e.g., patientDetails.html) with patientId and dateTime
+                window.location.href = `patientDetails.html?patientId=${encodeURIComponent(patientId)}&dateTime=${encodeURIComponent(dateTime)}`;
+                return false; // Prevent actual form submission
+            } else {
+                alert('Please enter your Patient ID.');
+                return false;
+            }
+        }
+
+        // Function to logout
+        function logout() {
+            alert('Logging out...');
+            // Add your logout logic (e.g., redirect to a login page)
+        }
+
+        // Update date and time on page load
+        updateDateTime();
+        
+        // Real-time clock update every second
+        setInterval(updateRealTime, 1000);
+        
+        // Simulated function to get patient data
+        function getPatientHealthData(patientId) {
+            return {
+                heartBeatRate: '75 bpm',
+                sugarLevel: '110 mg/dL',
+                bloodPressure: '120/80 mmHg',
+                spo2Level: '98%',
+                height: '170 cm',
+                weight: '70 kg'
+            };
+        }
+
+        function submitPatientDetails() {
+            const patientId = document.getElementById('patientId').value;
+            if (!patientId) {
+                alert('Please enter a valid Patient ID');
+                return;
+            }
+
+            const healthData = getPatientHealthData(patientId);
+
+            document.getElementById('heartBeatRate').value = healthData.heartBeatRate;
+            document.getElementById('sugarLevel').value = healthData.sugarLevel;
+            document.getElementById('bloodPressure').value = healthData.bloodPressure;
+            document.getElementById('spo2Level').value = healthData.spo2Level;
+            document.getElementById('height').value = healthData.height;
+            document.getElementById('weight').value = healthData.weight;
+
+            document.getElementById('health-data').classList.remove('hidden');
+            document.getElementById('prescription-section').classList.remove('hidden');
+        }
+
+        function addPrescription() {
+            const prescriptionBody = document.getElementById('prescriptionBody');
+            const rowCount = prescriptionBody.rows.length + 1;
+
+            const newRow = `<tr>
+                <td>${rowCount}</td>
+                <td>
+                    <select class="dropdown" id="drugName">
+                        <option value="">Select Drug</option>
+                        <option value="Drug A">Drug A</option>
+                        <option value="Drug B">Drug B</option>
+                        <option value="Drug C">Drug C</option>
+                    </select>
+                </td>
+                <td><input type="number" min="1" id="quantity" required></td>
+                <td><input type="number" min="0" id="morning" required></td>
+                <td><input type="number" min="0" id="afternoon" required></td>
+                <td><input type="number" min="0" id="evening" required></td>
+                <td><input type="number" min="0" id="night" required></td>
+            </tr>`;
+            prescriptionBody.insertAdjacentHTML('beforeend', newRow);
+        }
+
+        function submitPrescription() {
+            // Show the pop-up box
+            document.getElementById('popupBox').style.display = 'block';
+
+            // Automatically refresh the page after 0.1 seconds
+            //setTimeout(function() {
+                //location.reload();
+            }//, 700);
+        //}
+
+        function closePopup() {
+            // Hide the pop-up box after confirmation
+            document.getElementById('popupBox').style.display = 'none';
+            // Refresh the page
+    location.reload();
+        }
+
+        function logout() {
+            window.location.href = 'OD.html';
+        }
+
+        function goBack() {
+            window.location.href = 'PDlogin.html';
+        }
+    </script>
+</body>
+</html>

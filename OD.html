@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="OD.css">
+    <title>Doctor Login</title>
+    <style>
+        /* Hover effect for login button */
+        .login-button button {
+            background-color: #4CAF50; /* Green color */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .login-button button:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Doctor Login Form -->
+        <div id="login-form">
+            <header>Doctor Login</header>
+            <form id="doctorLoginForm" onsubmit="return handleLogin()">
+                <div class="form">
+                    <div class="details login">
+                        <span class="title">Login Details</span>
+                        <div class="fields">
+                            <div class="input-field">
+                                <label>Doctor ID</label>
+                                <input type="text" id="doctorId" placeholder="Enter your Doctor ID" required>
+                            </div>
+                            <div class="input-field">
+                                <label>Password</label>
+                                <input type="password" id="password" placeholder="Enter your password" required>
+                            </div>
+                        </div>
+                        <div class="forgot-password">
+                            <a href="#">Forgot Password?</a>
+                        </div>
+                    </div>
+                    <div class="login-button">
+                        <button type="submit">Login</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Function to handle login form submission
+        function handleLogin() {
+            var doctorId = document.getElementById('doctorId').value;
+            var password = document.getElementById('password').value;
+
+            if (doctorId && password) {
+                // Redirect to patient details page
+                window.location.href = 'patientdetails.html';
+                return false; // Prevent actual form submission
+            } else {
+                alert('Please fill in both Doctor ID and Password.');
+                return false; // Prevent form submission
+            }
+        }
+    </script>
+</body>
+</html>
