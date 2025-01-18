@@ -13,6 +13,22 @@
             margin-top: 20px;
             font-size: 1.5em;
         }
+        #submitted-data {
+            margin-top: 30px;
+            font-size: 1em;
+        }
+        #submitted-data table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        #submitted-data table, #submitted-data th, #submitted-data td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        #submitted-data th {
+            background-color: #f2f2f2;
+        }
     </style>
 </head>
 <body>
@@ -24,7 +40,7 @@
     </header>
 
     <div class="container">
-        <form id="transfer-form" action="/submit-transfer" method="POST" onsubmit="handleFormSubmission(event)">
+        <form id="transfer-form" onsubmit="handleFormSubmission(event)">
             <!-- Reason for Transfer Section -->
             <div class="form-field">
                 <label for="patient-id">Patient ID</label>
@@ -34,7 +50,13 @@
                 <input type="text" id="patient-name" name="patient-name" required placeholder="Enter full name">
 
                 <label for="current-ward">Current Ward</label>
-                <input type="text" id="current-ward" name="current-ward" required placeholder="Enter current ward name">
+                <select id="current-ward" name="current-ward" required>
+                    <option value="">Select Current Ward</option>
+                    <option value="general-ward">General Ward</option>
+                    <option value="icu">ICU</option>
+                    <option value="surgical-ward">Surgical Ward</option>
+                    <option value="pediatrics-ward">Pediatrics Ward</option>
+                </select>
 
                 <label for="transfer-reason">Reason for Transfer</label>
                 <textarea id="transfer-reason" name="transfer-reason" rows="3" required placeholder="Explain the reason for transfer"></textarea>
@@ -47,17 +69,17 @@
                 <label for="transfer-request">Transfer Request Approved By</label>
                 <input type="text" id="transfer-request" name="transfer-request" required placeholder="Enter approving doctor's name">
 
-                <label for="diagnosis-summary">Current Diagnosis Summary</label>
-                <textarea id="diagnosis-summary" name="diagnosis-summary" rows="4" required placeholder="Provide a brief summary of the current diagnosis"></textarea>
-
                 <label for="treatment-summary">Treatment Summary</label>
-                <textarea id="treatment-summary" name="treatment-summary" rows="4" required placeholder="Summarize treatment received"></textarea>
-
-                <label for="medications">Medications Required During Transfer</label>
-                <textarea id="medications" name="medications" rows="3" placeholder="List medications required during transfer"></textarea>
+                <textarea id="treatment-summary" name="treatment-summary" rows="4" placeholder="Summarize treatment received"></textarea>
 
                 <label for="receiving-ward">Receiving Ward/Facility</label>
-                <input type="text" id="receiving-ward" name="receiving-ward" required placeholder="Enter receiving ward or facility name">
+                <select id="receiving-ward" name="receiving-ward" required>
+                    <option value="">Select Receiving Ward</option>
+                    <option value="general-ward">General Ward</option>
+                    <option value="icu">ICU</option>
+                    <option value="surgical-ward">Surgical Ward</option>
+                    <option value="pediatrics-ward">Pediatrics Ward</option>
+                </select>
             </div>
 
             <!-- Logistics of Transfer Section -->
@@ -87,9 +109,6 @@
                     <option value="none">None</option>
                 </select>
 
-                <label for="equipment">Medical Equipment Required</label>
-                <textarea id="equipment" name="equipment" rows="3" placeholder="List medical equipment required during transfer"></textarea>
-
                 <label for="transfer-notes">Additional Transfer Notes</label>
                 <textarea id="transfer-notes" name="transfer-notes" rows="4" placeholder="Provide additional details or instructions"></textarea>
             </div>
@@ -100,19 +119,114 @@
 
         <!-- Success Message -->
         <div id="transfer-success">Form submitted successfully!</div>
+
+        <!-- Display Submitted Data -->
+        <div id="submitted-data"></div>
     </div>
 
+    <!-- Firebase Configuration -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <script>
-        function handleFormSubmission(event) {
-            event.preventDefault(); // Prevent default form submission
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBgtzx3R7WkQ05sprADf_iiiVrHhuUSIJs",
+            authDomain: "hospital-a1bcc.firebaseapp.com",
+            databaseURL: "https://hospital-a1bcc-default-rtdb.firebaseio.com/",
+            projectId: "hospital-a1bcc",
+            storageBucket: "hospital-a1bcc.appspot.com",
+            messagingSenderId: "1011214120740",
+            appId: "1:1011214120740:web:97c32f4885b59a665fe5b1"
+        };
 
-            // Show the success message
-            const successMessage = document.getElementById('transfer-success');
-            successMessage.style.display = 'block';
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
 
-            // Optionally, hide the form after submission
-            document.getElementById('transfer-form').style.display = 'none';
+        // Handle form submission (insert or update)
+        async function handleFormSubmission(event) {
+            event.preventDefault();
+
+            const patientId = document.getElementById('patient-id').value;
+            const formData = {
+                patientId: patientId,
+                patientName: document.getElementById('patient-name').value,
+                currentWard: document.getElementById('current-ward').value,
+                transferReason: document.getElementById('transfer-reason').value,
+                transferRequest: document.getElementById('transfer-request').value,
+                treatmentSummary: document.getElementById('treatment-summary').value,
+                receivingWard: document.getElementById('receiving-ward').value,
+                transferDate: document.getElementById('transfer-date').value,
+                transferTime: document.getElementById('transfer-time').value,
+                modeOfTransfer: document.getElementById('mode-of-transfer').value,
+                escortTeam: document.getElementById('escort-team').value,
+                transferNotes: document.getElementById('transfer-notes').value
+            };
+
+            try {
+                // Check if the patient already exists in the database by patientId
+                const patientRef = database.ref('transferForms/' + patientId);
+
+                // Fetch existing data to see if the patient record exists
+                const snapshot = await patientRef.once('value');
+                if (snapshot.exists()) {
+                    // If record exists, update it
+                    await patientRef.update(formData);
+                    alert("Patient data updated successfully.");
+                } else {
+                    // If record doesn't exist, create a new one
+                    await patientRef.set(formData);
+                    alert("Patient data added successfully.");
+                }
+
+                document.getElementById('transfer-success').style.display = 'block';
+                document.getElementById('transfer-form').reset();
+
+                // Re-fetch and display updated data
+                displaySubmittedData();
+            } catch (error) {
+                console.error('Error saving data:', error);
+            }
         }
+
+        // Fetch and display data
+        function displaySubmittedData() {
+            const dataContainer = document.getElementById('submitted-data');
+            dataContainer.innerHTML = '<h3>Submitted Data</h3>';
+            const table = document.createElement('table');
+            const header = `
+                <tr>
+                    <th>Patient ID</th>
+                    <th>Patient Name</th>
+                    <th>Current Ward</th>
+                    <th>Receiving Ward</th>
+                    <th>Transfer Date</th>
+                    <th>Transfer Time</th>
+                </tr>`;
+            table.innerHTML = header;
+
+            database.ref('transferForms').on('value', (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    Object.values(data).forEach(entry => {
+                        const row = `
+                            <tr>
+                                <td>${entry.patientId}</td>
+                                <td>${entry.patientName}</td>
+                                <td>${entry.currentWard}</td>
+                                <td>${entry.receivingWard}</td>
+                                <td>${entry.transferDate}</td>
+                                <td>${entry.transferTime}</td>
+                            </tr>`;
+                        table.innerHTML += row;
+                    });
+                }
+                dataContainer.appendChild(table);
+            });
+        }
+
+        // Load data when the page loads
+        window.onload = displaySubmittedData;
     </script>
 </body>
 </html>
