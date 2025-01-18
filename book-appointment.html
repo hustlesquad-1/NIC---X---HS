@@ -12,6 +12,8 @@
     <script src="dropdowns.js" defer></script>
     <script src="otp-modal.js" defer></script>
     <script src="form-submission.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
 </head>
 <body>
     <header>
@@ -61,26 +63,7 @@
                         </div>
                     </div>                                      
 
-                    <!-- OTP Modal -->
-                    <div id="otp-modal" class="modal" aria-hidden="true" style="display: none;">
-                        <div class="modal-content">
-                            <h2>Enter OTP</h2>
-                            <p id="otp-message">The OTP is sent to your phone no XXXXXXXX123</p>
-                            <div id="otp-input-boxes">
-                                <input type="text" maxlength="1" class="otp-input" id="otp-1" aria-label="OTP digit 1">
-                                <input type="text" maxlength="1" class="otp-input" id="otp-2" aria-label="OTP digit 2">
-                                <input type="text" maxlength="1" class="otp-input" id="otp-3" aria-label="OTP digit 3">
-                                <input type="text" maxlength="1" class="otp-input" id="otp-4" aria-label="OTP digit 4">
-                                <input type="text" maxlength="1" class="otp-input" id="otp-5" aria-label="OTP digit 5">
-                                <input type="text" maxlength="1" class="otp-input" id="otp-6" aria-label="OTP digit 6">
-                            </div>
-                            <button id="submit-otp-btn" type="button" aria-label="Submit OTP">Submit OTP</button>
-                            <button id="resend-otp-btn" type="button" disabled aria-label="Resend OTP">Resend OTP (<span id="countdown">59</span>s)</button>
-                            <p id="otp-success-msg" style="display: none;">OTP Verified Successfully!</p>
-                        </div>
-                    </div>
-
-                    <label for="email"><i class="fas fa-envelope"></i> Email</label>
+                    <label for="email"><i class="fas fa-envelope"></i > Email</label>
                     <input type="email" id="email" placeholder="Email" required aria-label="Email">
 
                     <label for="city-btn"><i class="fas fa-city"></i> City</label>
@@ -106,6 +89,19 @@
                                 <input type="text" id="hospital-search" placeholder="Search hospital..." aria-label="Search hospital">
                             </div>
                             <ul class="options" id="hospital-options" aria-required="true"></ul>
+                        </div>
+                    </div>
+
+                    <label for="department-btn"><i class="fas fa-building"></i> Department</label>
+                    <div class="content-wrapper">
+                        <div class="select-btn" id="department-btn" aria-haspopup="true" aria-expanded="false" data-required="true">
+                            Select Department <span>&#9660;</span>
+                        </div>
+                        <div class="content" id="department-content">
+                            <div class="search">
+                                <input type="text" id="department-search" placeholder="Search department..." aria-label="Search department">
+                            </div>
+                            <ul class="options" id="department-options" aria-required="true"></ul>
                         </div>
                     </div>
 
@@ -155,7 +151,7 @@
                 </ul>
             </div>
             <div class="footer-col footer-feedback">
-                <h3><i class="fas fa-comments"></i> Feedback</h3>
+                <h3><i class ="fas fa-comments"></i> Feedback</h3>
                 <form id="feedback-form" class="feedback-form">
                     <label for="feedback-name" class="visually-hidden"></label>
                     <input type="text" id="feedback-name" placeholder="Your Name" required aria-label="Your Name">
@@ -180,6 +176,58 @@
             <hr><br>
             <p class="copyright">NIC X HS © 2024 - All Rights Reserved</p>
         </div>
-    </footer>    
+    </footer>   
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBgtzx3R7WkQ05sprADf_iiiVrHhuUSIJs",
+            authDomain: "hospital-a1bcc.firebaseapp.com",
+            databaseURL: "https://hospital-a1bcc-default-rtdb.firebaseio.com",
+            projectId: "hospital-a1bcc",
+            storageBucket: "hospital-a1bcc.appspot.com",
+            messagingSenderId: "1011214120740",
+            appId: "1:1011214120740:web:97c32f4885b59a665fe5b1"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app); // Initialize Realtime Database
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const bookingForm = document.getElementById('booking-form');
+            
+            bookingForm.addEventListener('submit', async function(event) {
+                event.preventDefault(); // Prevent the default form submission
+                
+                // Capture form data
+                const appointmentData = {
+                    name: document.getElementById('name').value,
+                    age: document.getElementById('age').value,
+                    gender: document.getElementById('gender-btn').innerText,
+                    phone: document.getElementById('phone-input').value,
+                    email: document.getElementById('email').value,
+                    city: document.getElementById('city-btn').innerText,
+                    hospital: document.getElementById('hospital-btn').innerText,
+                    department: document.getElementById('department-btn').innerText, // Capture department
+                    date: document.getElementById('appointment-date').value,
+                    time: document.getElementById('appointment-time').value,
+                    purpose: document.getElementById('purpose-btn').innerText
+                };
+
+                // Save data to Realtime Database
+                try {
+                    const newAppointmentRef = ref(database, 'appointments/' + Date.now());
+                    await set(newAppointmentRef, appointmentData);
+                    console.log("Appointment data saved successfully.");
+                } catch (error) {
+                    console.error("Error saving appointment data: ", error);
+                }
+            });
+        });
+    </script>
 </body>
 </html>
