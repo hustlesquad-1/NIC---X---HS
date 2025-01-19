@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Portal Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f7fa;
+            color: #333;
+            display: flex;
+            min-height: 100vh; /* Ensure full height */
+        }
+
+        .sidebar {
+            background-color: #4a90e2;
+            color: white;
+            width: 250px;
+            padding: 15px;
+            height: 100vh; /* Ensure it covers the entire vertical height */
+            position: fixed;
+            overflow-y: auto; /* Allow scrolling if content overflows */
+            transition: width 0.3s; /* Transition for responsive styles */
+        }
+
+        .sidebar h2 {
+            color: #fff;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            padding: 10px;
+            border-bottom: 1px solid #fff;
+        }
+
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+            flex: 1;
+            transition: margin-left 0.3s; /* Transition for responsive styles */
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        header .user-info {
+            display: flex;
+            align-items: center;
+        }
+
+        header .user-info img {
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        header .user-info .notifications {
+            position: relative;
+            margin-left: 20px;
+        }
+
+        header .user-info .notifications .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -10px;
+            background: red;
+            color: white;
+            padding: 3px 5px;
+            border-radius: 50%;
+            font-size: 12px;
+        }
+
+        header .language-dropdown {
+            position: relative;
+            margin-left: 20px; /* Add margin for spacing */
+        }
+
+        header .language-dropdown select {
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background-color: #fff; /* Match dropdown with page background */
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #4a90e2;
+            padding-bottom: 5px;
+        }
+
+        .patient-info,
+        .last-visit,
+        .medications,
+        .vital-signs,
+        .history,
+        .upcoming-appointments {
+            margin-bottom: 30px;
+            padding: 15px;
+            border: 1px solid #e1e1e1;
+            border-radius: 8px;
+            background-color: #ffffff;
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+
+        .search-container input[type="text"] {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 10px;
+            width: 250px; /* Add a fixed width for input field */
+        }
+
+        .search-container button {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4a90e2;
+            color: white;
+            cursor: pointer;
+        }
+
+        .search-container button:hover {
+            background-color: #357ab8;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #777;
+        }
+
+        canvas {
+            margin: 20px 0; /* Add margin for spacing */
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            width: 100%; /* Ensures chart uses full width */
+        }
+
+        /* Special styles for the two canvas elements */
+        #bpChart {
+            height: 1px; /* Height for Blood Pressure chart */
+        }
+        
+        #sugarChart {
+            height: 1px; /* Height for Blood Sugar chart */
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            header .user-info img {
+                width: 40px;
+                height: 40px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            .sidebar {
+                width: 200px;
+            }
+
+            .content {
+                margin-left: 200px;
+            }
+
+            .search-container input[type="text"] {
+                width: 100%; /* Full-width on mobile */
+            }
+
+            .sidebar.collapsed {
+                width: 60px; /* Width when collapsed */
+            }
+
+            .content.collapsed {
+                margin-left: 60px; /* Adjust content margin when sidebar is collapsed */
+            }
+
+            .sidebar.collapsed ul li {
+                text-align: center; /* Center text when collapsed */
+            }
+
+            .sidebar.collapsed ul li a {
+                font-size: 12px; /* Smaller text size */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar" id="sidebar">
+        <h2>Patient Portal</h2>
+        <ul>
+            <li><a href="#profile">Profile</a></li>
+            <li><a href="#appointments">Appointments</a></li>
+            <li><a href="#medications">Medications</a></li>
+            <li><a href="#vital-signs">Vital Signs</a></li>
+            <li><a href="#history">Health Records</a></li>
+            <li><a href="#logout">Logout</a></li>
+        </ul>
+    </div>
+
+    <div class="content" id="content">
+        <header>
+            <div class="user-info">
+                <img src="https://ui-avatars.com/api/?name=Yogesh&size=50&background=FFA500&color=fff" alt="Profile Picture">
+                <div>
+                    <strong>Yogesh</strong><br>
+                    <small>Yogesh@gmail.com</small><br>
+                </div>
+                <div class="notifications">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </div>
+                <div class="language-dropdown">
+                    <select>
+                        <option value="en">English</option>
+                        <option value="es">Tamil</option>
+                        <option value="fr">Hindi</option>
+                    </select>
+                </div>
+            </div>
+        </header>
+
+        <strong style="font-weight: bold; color: #e94e77; background-color: #f7d7db; padding: 5px; border-radius: 5px;">Patient ID: #12345</strong><br>
+        <div class="search-container">
+            <input type="text" placeholder="Search..." aria-label="Search">
+            <button>Search</button>
+        </div>
+
+        <div class="patient-info">
+            <h2 id="profile">Basic Patient Details</h2>
+            <p><strong>Name:</strong> John Doe</p>
+            <p><strong>Age:</strong> 30</p>
+            <p><strong>Gender:</strong> Male</p>
+            <p><strong>Contact:</strong> (123) 456-7890</p>
+            <p><strong>Email:</strong> john.doe@example.com</p>
+            <button style="background-color: #4a90e2; color: white; padding: 5px 10px; border-radius: 5px; border: none;">Edit Profile</button>
+        </div>
+
+        <div class="last-visit">
+            <h2>Last Visit Information</h2>
+            <p><strong>Date:</strong> 2024-12-21</p>
+            <p><strong>Time:</strong> 10:00 AM</p>
+            <p><strong>Reason:</strong> Regular Check-up</p>
+            <p><strong>Hospital:</strong> City Hospital</p>
+            <p><strong>Address:</strong> 123 Main St, Anytown</p>
+        </div>
+
+        <div class="medications">
+            <h2 id="medications">Current Medications</h2>
+            <ul>
+                <li>Aspirin - 100mg - Twice a day</li>
+                <li>Lisinopril - 10mg - Once a day</li>
+                <li>Metformin - 500mg - Twice a day</li>
+            </ul>
+        </div>
+
+        <div class="upcoming-appointments">
+            <h2>Upcoming Appointments</h2>
+            <ul>
+                <li>2024-01-30: Dr. Smith - General Consultation</li>
+                <li>2025-02-10: Dr. Jones - Follow-up Check-up</li>
+            </ul>
+        </div>
+
+        <div class="vital-signs">
+            <h2 id="vital-signs">Vital Signs</h2>
+            <canvas id="bpChart"></canvas>
+            <canvas id="sugarChart"></canvas>
+        </div>
+
+        <div class="history">
+            <h2 id="history">Medical History</h2>
+            <ul>
+                <li>2022: Diagnosed with Hypertension</li>
+                <li>2023: Diagnosed with Type 2 Diabetes</li>
+                <li>2024: Regular check-up with no major issues</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p> patient ID: #12345</p>
+            <p> &copy; 2025 HealthCare System</p>
+        </footer>
+    </div>
+
+    <script>
+        // Sample Data for BP and Sugar Levels
+        const bpData = {
+            labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7', 'Week 8'],
+            datasets: [{
+                label: 'Blood Pressure Systolic (mmHg)',
+                data: [120, 125, 118, 130, 127, 122, 121, 125],
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 2,
+                fill: false
+            }, {
+                label: 'Blood Pressure Diastolic (mmHg)',
+                data: [80, 75, 76, 78, 77, 74, 75, 76],
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 2,
+                fill: false
+            }]
+        };
+
+        const sugarData = {
+            labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7', 'Week 8'],
+            datasets: [{
+                label: 'Blood Sugar (mg/dL)',
+                data: [59, 68, 70, 62, 68, 69, 57, 70],
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 2,
+                fill: false
+            }]
+        };
+
+        const commonOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            legend: {
+                display: true,
+                labels: {
+                    fontColor: '#333'
+                }
+            },
+            scales: {
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Pressure (mmHg) / Sugar Level (mg/dL)',
+                    },
+                    ticks: {
+                        beginAtZero: true,
+                        fontColor: '#333'
+                    }
+                }],
+                xAxes: [{
+                    ticks: {
+                        fontColor: '#333'
+                    }
+                }]
+            }
+        };
+
+        new Chart(document.getElementById('bpChart'), {
+            type: 'line',
+            data: bpData,
+            options: {
+                ...commonOptions,
+                title: {
+                    display: true,
+                    text: 'Blood Pressure Trends',
+                    fontColor: '#333'
+                }
+            }
+        });
+
+        new Chart(document.getElementById('sugarChart'), {
+            type: 'line',
+            data: sugarData,
+            options: {
+                ...commonOptions,
+                title: {
+                    display: true,
+                    text: 'Blood Sugar Trends',
+                    fontColor: '#333'
+                }
+            }
+        });
+
+        // Sidebar toggle for smaller screens
+        const sidebar = document.getElementById('sidebar');
+        const content = document.getElementById('content');
+        sidebar.addEventListener('mouseover', () => {
+            sidebar.classList.remove('collapsed');
+            content.classList.remove('collapsed');
+        });
+
+        sidebar.addEventListener('mouseleave', () => {
+            sidebar.classList.add('collapsed');
+            content.classList.add('collapsed');
+        });
+    </script>
+</body>
+
+</html>
