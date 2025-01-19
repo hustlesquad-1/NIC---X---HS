@@ -1,66 +1,408 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pharmacy Registration Form</title>
-    <link rel="stylesheet" href="pharmacystyle5.css">
-</head>
-<body>
-    <div class="form-container">
-        <center>
-        <h2> Pharmacy Registration Form </h2>
-    </center>
-        <form id="registration-form" action="view-prescription.html">
-            <label for="patient-name">Patient Name:</label>
-            <input type="text" id="patient-name" name="patient-name" required>
-            
-            <label for="heart-rate">Heart Rate:</label>
-            <select id="heart-rate" name="heart-rate" required>
-                <option value="" disabled selected>Select heart rate</option>
-                <option value="normal">Normal</option>
-                <option value="high">High</option>
-                <option value="low">Low</option>
-            </select>
-            
-            <label for="blood-pressure">Blood Pressure:</label>
-            <select id="blood-pressure" name="blood-pressure" required>
-                <option value="" disabled selected>Select blood pressure</option>
-                <option value="normal">Normal</option>
-                <option value="high">High</option>
-                <option value="low">Low</option>
-            </select>
-            
-            <label for="doctor-name">Doctor's Name:</label>
-            <input type="text" id="doctor-name" name="doctor-name" required>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Pharmacy Page</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 20px;
+            background-color: #f8f9fa;
+            color: #343a40;
+            /* Add this for responsiveness */
+            padding: 0;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
 
-            <label for="problem">Problem:</label>
-            <input type="text" id="problem" name="problem" required>
-            
-            <label for="medicines">Medicines:</label>
-            <textarea id="medicines" name="medicines" rows="4" required></textarea>
-            
-            <label for="duration">Duration:</label>
-            <select id="duration" name="duration" required>
-                <option value="" disabled selected>Select duration</option>
-                <option value="morning">Morning</option>
-                <option value="afternoon">Afternoon</option>
-                <option value="evening">Evening</option>
-            </select>
-            
-            <button type="submit">Register</button>
-        </form>
-    </div>
-    <script>
-        document.getElementById('registration-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const formData = new FormData(this);
-            const params = new URLSearchParams();
-            for (const [key, value] of formData.entries()) {
-                params.append(key, value);
+        h1 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+        }
+
+        #lookupBtn {
+            background-color: #5bc0de;
+            color: white;
+        }
+
+        #submitLookupBtn{
+            background-color: #5cb85c;
+        }
+
+        #addPrescriptionBtn {
+            background-color: #5cb85c;
+            color: white;
+        }
+
+        #addRowBtn{
+            background-color: #5bc0de;
+        }
+
+        #submitPrescriptionBtn{
+            background-color: #5cb85c;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .tab {
+            display: none;
+            /* Hidden by default */
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .tab.active {
+            display: block;
+            /* Show active tab */
+        }
+
+        label, h3 {
+            font-size: 18px;
+            margin: 10px 0;
+            display: block;
+            color: #495057;
+            /* Add this for responsiveness */
+            word-wrap: break-word;
+        }
+
+        input[type='text'], input[type='number'], select {
+            width: 100%;
+            height: 40px;
+            padding: 10px;
+            margin: 5px 0 20px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        input[type='text']:focus, 
+        input[type='number']:focus, 
+        select:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        /* Add media query for smaller screens */
+        @media (max-width: 768px) {
+            body {
+                margin: 10px;
             }
-            window.location.href = 'view-prescription.html?' + params.toString();
+            .button-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            button {
+                width: 100%;
+                margin: 10px 0;
+            }
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            /* Add this for responsiveness */
+            table-layout: fixed;
+            word-wrap: break-word;
+        }
+
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            text-align: left;
+            /* Add this for responsiveness */
+            word-break: break-word;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        #newPrescriptionTable {
+            margin-top: 20px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #6c757d;
+        }
+
+        /* Add media query for smaller screens */
+        @media (max-width: 480px) {
+            label, h3 {
+                font-size: 14px;
+            }
+            input[type='text'], input[type='number'], select {
+                height: 30px;
+                padding: 5px;
+            }
+            table {
+                font-size: 14px;
+            }
+            td, th {
+                padding: 5px;
+            }
+        }
+
+        /* Add this for input validation on mobile devices */
+        .no-padding-left {
+            padding-left: 0;
+        }
+
+        .no-padding-right {
+            padding-right: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Pharmacy Prescription Management</h1>
+    <div class="button-container">
+        <button id="lookupBtn">Prescription Lookup</button>
+        <button id="addPrescriptionBtn">Add New Prescription</button>
+    </div>
+
+    <div id="lookupTab" class="tab active">
+        <label for="patientId">Enter Patient ID:</label>
+        <input type="text" id="patientId" placeholder="Patient ID">
+        <button id="submitLookupBtn">Submit</button>
+
+        <table id="prescriptionTable">
+            <thead>
+                <tr>
+                    <th>Drug Name</th>
+                    <th>Quantity</th>
+                    <th>Morning</th>
+                    <th>Afternoon</th>
+                    <th>Evening</th>
+                    <th>Night</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Prescription data will be inserted here -->
+            </tbody>
+        </table>
+    </div>
+
+    <div id="addPrescriptionTab" class="tab">
+        <h3>New Prescription</h3>
+        <label for="newPatientId">Enter Patient ID:</label>
+        <input type="text" id="newPatientId" placeholder="Patient ID">
+
+        <h3>Prescriptions Added:</h3>
+        <table id="newPrescriptionTable">
+            <thead>
+                <tr>
+                    <th>S.No</th>
+                    <th>Drug Name</th>
+                    <th>Quantity</th>
+                    <th>Morning</th>
+                    <th>Afternoon</th>
+                    <th>Evening</th>
+                    <th>Night</th>
+                </tr>
+            </thead>
+            <tbody id="prescriptionBody">
+                <!-- Initial row added by JavaScript -->
+            </tbody>
+        </table>
+        <div class="button-container">
+            <button id="addRowBtn">Add Prescription Row</button>
+            <button id="submitPrescriptionBtn">Submit Prescriptions</button>
+        </div>
+    </div>
+
+    <div class="footer">
+        &copy; 2023 Pharmacy Management System
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getDatabase, ref, get, set, onValue } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBgtzx3R7WkQ05sprADf_iiiVrHhuUSIJs",
+            authDomain: "hospital-a1bcc.firebaseapp.com",
+            databaseURL: "https://hospital-a1bcc-default-rtdb.firebaseio.com",
+            projectId: "hospital-a1bcc",
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        let allDrugNames = [];
+        onValue(ref(database, 'drug-names'), (snapshot) => {
+            const drugNames = snapshot.val();
+            allDrugNames = drugNames;
+        });
+
+        // Switch to prescription lookup tab
+        document.getElementById('lookupBtn').addEventListener('click', function () {
+            document.getElementById('lookupTab').classList.add('active');
+            document.getElementById('addPrescriptionTab').classList.remove('active');
+        });
+
+        // Switch to add new prescription tab
+        document.getElementById('addPrescriptionBtn').addEventListener('click', function () {
+            document.getElementById('addPrescriptionTab').classList.add('active');
+            document.getElementById('lookupTab').classList.remove('active');
+            document.getElementById('newPatientId').value = ''; // Clear input
+            document.getElementById('prescriptionBody').innerHTML = ''; // Clear previous prescriptions
+            addInitialRow(); // Add the initial row
+        });
+
+        // Lookup prescriptions
+        document.getElementById('submitLookupBtn').addEventListener('click', async function () {
+            const patientId = document.getElementById('patientId').value;
+            const tbody = document.querySelector('#prescriptionTable tbody');
+            tbody.innerHTML = ''; // Clear previous data
+
+            if (patientId) {
+                const prescriptionsRef = ref(database, 'prescriptions/' + patientId);
+                const snapshot = await get(prescriptionsRef);
+                if (snapshot.exists()) {
+                    const prescriptions = snapshot.val();
+                    for (const key in prescriptions) {
+                        const prescription = prescriptions[key];
+                        const row = tbody.insertRow();
+                        row.insertCell(0).innerText = prescription.drugName;
+                        row.insertCell(1).innerText = prescription.quantity;
+                        row.insertCell(2).innerText = prescription.morning || '0';
+                        row.insertCell(3).innerText = prescription.afternoon || '0';
+                        row.insertCell(4).innerText = prescription.evening || '0';
+                        row.insertCell(5).innerText = prescription.night || '0';
+                    }
+                } else {
+                    alert('No prescriptions found for this patient ID.');
+                }
+            } else {
+                alert('Please enter a patient ID.');
+            }
+        });
+
+        function addRow() {
+            const prescriptionBody = document.getElementById("prescriptionBody");
+            const newRow = prescriptionBody.insertRow();
+            const serialCell = newRow.insertCell(0);
+            serialCell.innerText = prescriptionBody.rows.length; // Correct serial number
+
+            // Create drug name dropdown
+            const drugNameCell = newRow.insertCell(1);
+            const select = document.createElement('select');
+            select.className = 'dropdown drugName';
+            select.innerHTML = '<option value="">Select Drug</option>' +
+                '<option value="Drug A">Drug A</option>' +
+                '<option value="Drug B">Drug B</option>' +
+                '<option value="Drug C">Drug C</option>';
+            drugNameCell.appendChild(select);
+
+            // Create quantity input
+            newRow.insertCell(2).innerHTML = '<input type="number" min="1" class="quantity" required>';
+
+            // Create morning input
+            newRow.insertCell(3).innerHTML = '<input type="number" min="0" class="morning" required>';
+
+            // Create afternoon input
+            newRow.insertCell(4).innerHTML = '<input type="number" min="0" class="afternoon" required>';
+
+            // Create evening input
+            newRow.insertCell(5).innerHTML = '<input type="number" min="0" class="evening" required>';
+
+            // Create night input
+            newRow.insertCell(6).innerHTML = '<input type="number" min="0" class="night" required>';
+
+            updateSerialNumbers(); // Update serial numbers for all rows
+        }
+
+        function addInitialRow() {
+            addRow(); // Add the initial row
+        }
+
+        // Add new prescription row
+        document.getElementById('addRowBtn').addEventListener('click', addRow);
+
+        // Update serial numbers
+        function updateSerialNumbers() {
+            const rows = document.querySelectorAll('#prescriptionBody tr');
+            rows.forEach((row, index) => {
+                row.cells[0].innerText = index + 1; // Update serial number based on row index
+            });
+        }
+
+        // Submit all new prescriptions
+        document.getElementById('submitPrescriptionBtn').addEventListener('click', async function () {
+            const patientId = document.getElementById('newPatientId').value;
+            const newPrescriptionTableBody = document.getElementById('prescriptionBody');
+            const rows = newPrescriptionTableBody.getElementsByTagName('tr');
+
+            if (patientId && rows.length > 0) {
+                for (let row of rows) {
+                    const drugName = row.cells[1].getElementsByTagName('select')[0].value;
+                    const quantity = row.cells[2].getElementsByTagName('input')[0].value;
+                    const morning = row.cells[3].getElementsByTagName('input')[0].value;
+                    const afternoon = row.cells[4].getElementsByTagName('input')[0].value;
+                    const evening = row.cells[5].getElementsByTagName('input')[0].value;
+                    const night = row.cells[6].getElementsByTagName('input')[0].value;
+
+                    if (drugName && quantity) {
+                        const prescriptionsRef = ref(database, 'prescriptions/' + patientId + '/' + drugName);
+                        await set(prescriptionsRef, {
+                            quantity: quantity,
+                            morning: morning,
+                            afternoon: afternoon,
+                            evening: evening,
+                            night: night,
+                        });
+                    }
+                }
+
+                alert('New Prescriptions added successfully!');
+
+                // Reset fields
+                document.getElementById('newPatientId').value = '';
+                document.getElementById('prescriptionBody').innerHTML = ''; // Clear the table
+                addInitialRow(); // Add the initial row again
+            } else {
+                alert('Please fill in all required fields and add at least one prescription entry!');
+            }
         });
     </script>
 </body>
+
 </html>
