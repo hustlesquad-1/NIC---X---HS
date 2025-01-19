@@ -9,6 +9,9 @@
     <title>Appointment Review - NIC X HS</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="appointment-review.css">
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+    <script src="appointment-review.js"></script>
 </head>
 <body>
     <header>
@@ -27,6 +30,7 @@
                         <th>Gender</th>
                         <th>Phone No</th>
                         <th>Email</th>
+                        <th>department</th>
                         <th>Date</th>
                         <th>Time</th>
                         <th>Purpose</th>
@@ -34,93 +38,11 @@
                         <th>Reject</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td id="patient-name">John</td>
-                        <td id="patient-age">30</td>
-                        <td id="patient-gender">Male</td>
-                        <td id="patient-phone">9834567890</td>
-                        <td id="patient-email">johndoe@example.com</td>
-                        <td id="appointment-date">20-09-2024</td>
-                        <td id="appointment-time">10:00 AM</td>
-                        <td id="appointment-purpose">Checkup</td>
-                        <td><button id="approve-btn" class="action-btn approve-btn">Approve</button></td>
-                        <td><button id="reject-btn" class="action-btn reject-btn">Reject</button></td>
-                    </tr>
-                </tbody>
-                <tbody>
-                    <tr>
-                        <td id="patient-name">Raam</td>
-                        <td id="patient-age">35</td>
-                        <td id="patient-gender">Male</td>
-                        <td id="patient-phone">9887364307</td>
-                        <td id="patient-email">raam234@example.com</td>
-                        <td id="appointment-date">22-09-2024</td>
-                        <td id="appointment-time">10:30 AM</td>
-                        <td id="appointment-purpose">Checkup</td>
-                        <td><button id="approve-btn" class="action-btn approve-btn">Approve</button></td>
-                        <td><button id="reject-btn" class="action-btn reject-btn">Reject</button></td>
-                    </tr>
-                </tbody>
-                <tbody>
-                    <tr>
-                        <td id="patient-name">Priya</td>
-                        <td id="patient-age">27</td>
-                        <td id="patient-gender">Female</td>
-                        <td id="patient-phone">6348567890</td>
-                        <td id="patient-email">priya754@example.com</td>
-                        <td id="appointment-date">25-09-2024</td>
-                        <td id="appointment-time">11:00 AM</td>
-                        <td id="appointment-purpose">Consultation</td>
-                        <td><button id="approve-btn" class="action-btn approve-btn">Approve</button></td>
-                        <td><button id="reject-btn" class="action-btn reject-btn">Reject</button></td>
-                    </tr>
-                </tbody>
-                <tbody>
-                    <tr>
-                        <td id="patient-name">Selva</td>
-                        <td id="patient-age">37</td>
-                        <td id="patient-gender">Male</td>
-                        <td id="patient-phone">9632945101</td>
-                        <td id="patient-email">selva456@example.com</td>
-                        <td id="appointment-date">12-10-2024</td>
-                        <td id="appointment-time">05:00 PM</td>
-                        <td id="appointment-purpose">Checkup</td>
-                        <td><button id="approve-btn" class="action-btn approve-btn">Approve</button></td>
-                        <td><button id="reject-btn" class="action-btn reject-btn">Reject</button></td>
-                    </tr>
-                </tbody>
-                <tbody>
-                    <tr>
-                        <td id="patient-name">Aravind</td>
-                        <td id="patient-age">42</td>
-                        <td id="patient-gender">Male</td>
-                        <td id="patient-phone">8671525327</td>
-                        <td id="patient-email">aravind987@example.com</td>
-                        <td id="appointment-date">16-10-2024</td>
-                        <td id="appointment-time">06:24 PM</td>
-                        <td id="appointment-purpose">Consultation</td>
-                        <td><button id="approve-btn" class="action-btn approve-btn">Approve</button></td>
-                        <td><button id="reject-btn" class="action-btn reject-btn">Reject</button></td>
-                    </tr>
-                </tbody>
-                <tbody>
-                    <tr>
-                        <td id="patient-name">Dinesh</td>
-                        <td id="patient-age">38</td>
-                        <td id="patient-gender">Male</td>
-                        <td id="patient-phone">7443248951</td>
-                        <td id="patient-email">dinesh34@example.com</td>
-                        <td id="appointment-date">19-10-2024</td>
-                        <td id="appointment-time">08:20 PM</td>
-                        <td id="appointment-purpose">Checkup</td>
-                        <td><button id="approve-btn" class="action-btn approve-btn">Approve</button></td>
-                        <td><button id="reject-btn" class="action-btn reject-btn">Reject</button></td>
-                    </tr>
+                <tbody id="appointment-details-body">
+                    <!-- Appointment details will be populated here -->
                 </tbody>
             </table>
         </section>
     </main>
-    <script src="appointment-review.js"></script>
 </body>
 </html>
