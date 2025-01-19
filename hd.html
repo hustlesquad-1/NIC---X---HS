@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Management Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+</head>
+
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f7fa;
+        color: #333;
+        display: flex;
+        overflow-x: hidden; /* Prevent horizontal scrolling */
+    }
+
+    /* Sidebar styles */
+    .sidebar {
+        width: 250px;
+        background: #4a90e2;
+        height: 100vh;
+        position: fixed;
+        left: 0; /* Sidebar fixed position */
+        transition: left 0.3s ease;
+        padding-top: 20px; /* Small gap before the text */
+    }
+
+    .sidebar h2 {
+        color: #fff;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .sidebar ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .sidebar ul li {
+        margin: 20px 0;
+    }
+
+    .sidebar ul li a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 18px;
+        transition: color 0.3s;
+    }
+
+    .sidebar ul li a:hover {
+        color: #1c6ea4;
+    }
+
+    /* Main content styles */
+    main {
+        margin-left: 260px; /* Add margin for gap */
+        padding: 20px;
+        flex: 1;
+        transition: margin-left 0.3s;
+    }
+
+    header {
+        background-color: #1c6ea4;
+        padding: 20px;
+        text-align: center;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        margin-bottom: 20px;
+        color: white;
+    }
+
+    section {
+        margin-bottom: 40px;
+        padding: 20px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        margin-top: 20px;
+        color: #4a90e2;
+    }
+
+    canvas {
+        height: 250px !important; /* Set height to 100px for graphs */
+        width: 90% !important; /* Set width to 90% for graphs */
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    th,
+    td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f0f0f0;
+        color: #4a90e2;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+        .sidebar {
+            width: 200px;
+        }
+
+        main {
+            margin-left: 0;
+        }
+    }
+</style>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <h2>Hospital Dashboard</h2>
+        <ul>
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Appointments</a></li>
+            <li><a href="#">Reports</a></li>
+            <li><a href="#">Patients</a></li>
+            <li><a href="#">Staff</a></li>
+            <li><a href="#">Settings</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content Section -->
+    <main>
+        <!-- Header Section -->
+        <header>
+            <h1>Hospital Dashboard</h1>
+        </header>
+
+        <!-- Appointments Chart Section -->
+        <section id="appointments-chart-section">
+            <h2>Appointments Today</h2>
+            <canvas id="appointments-chart"></canvas>
+        </section>
+
+        <!-- Admitted Patients Chart Section -->
+        <section id="admitted-patients-section">
+            <h2>Admitted Patients</h2>
+            <canvas id="admitted-patients-chart"></canvas>
+        </section>
+
+        <!-- Bed Availability Table Section -->
+        <section id="beds-section">
+            <h2>Beds Availability</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Department</th>
+                        <th>Ward</th>
+                        <th>Beds</th>
+                    </tr>
+                </thead>
+                <tbody id="beds-body"></tbody>
+            </table>
+        </section>
+
+        <!-- Schedule Management Table Section -->
+        <section id="schedule-section">
+            <h2>Schedule Management</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Doctor</th>
+                        <th>Shift</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody id="schedule-body"></tbody>
+            </table>
+        </section>
+
+        <!-- Financial Reports Section -->
+        <section id="financial-reports-section">
+            <h2>Financial Reports</h2>
+            <canvas id="financial-reports-chart"></canvas>
+        </section>
+
+        <!-- Patient Demographics Section -->
+        <section id="patient-demographics-section">
+            <h2>Patient Demographics</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Age Group</th>
+                        <th>Gender</th>
+                        <th>Location</th>
+                    </tr>
+                </thead>
+                <tbody id="patient-demographics-body"></tbody>
+            </table>
+        </section>
+
+        <!-- Staff Workload Section -->
+        <section id="workload-section">
+            <h2>Staff Workload</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Staff Member</th>
+                        <th>Workload</th>
+                    </tr>
+                </thead>
+                <tbody id="workload-body"></tbody>
+            </table>
+        </section>
+    </main>
+
+    <!-- Script for JavaScript -->
+    <script>
+        // Mock data
+        const mockData = {
+            appointments: [50, 60, 70, 80, 75, 90, 100],
+            admittedPatients: [
+                { department: 'Cardiology', ward: 'Ward A', count: 15 },
+                { department: 'Neurology', ward: 'Ward B', count: 8 },
+                { department: 'Oncology', ward: 'Ward C', count: 12 },
+            ],
+            bedAvailability: [
+                { department: 'Cardiology', ward: 'Ward A', availability: 5 },
+                { department: 'Neurology', ward: 'Ward B', availability: 3 },
+                { department: 'Oncology', ward: 'Ward C', availability: 2 },
+            ],
+            schedule: [
+                { doctor: 'Dr. Smith', shift: 'Morning', date: '2023-10-01' },
+                { doctor: 'Dr. Jones', shift: 'Evening', date: '2023-10-01' },
+            ],
+            financialReports: [
+                { date: '2023-10-01', revenue: 10000, expenses: 5000, profit: 5000 },
+                { date: '2023-09-30', revenue: 12000, expenses: 3000, profit: 9000 },
+            ],
+            demographics: [
+                { age: '25-34', gender: 'Male', location: 'City A' },
+                { age: '35-44', gender: 'Female', location: 'City B' },
+            ],
+            workload: [
+                { staffMember: 'Dr. Smith', workload: 10 },
+                { staffMember: 'Nurse Jane', workload: 8 },
+            ],
+        };
+
+        // Function to render appointments chart
+        function renderAppointmentsChart() {
+            const ctx = document.getElementById('appointments-chart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Appointments',
+                        data: mockData.appointments,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1,
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false // Allow custom height set in CSS
+                }
+            });
+        }
+
+        // Function to render admitted patients bar chart
+        function renderAdmittedPatientsChart() {
+            const ctx = document.getElementById('admitted-patients-chart').getContext('2d');
+            const labels = mockData.admittedPatients.map(p => p.ward);
+            const data = mockData.admittedPatients.map(p => p.count);
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Admitted Patients',
+                        data: data,
+                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false, // Allow custom height set in CSS
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 20 // Set a max for the y-axis to keep the bars proportionate
+                        }
+                    }
+                }
+            });
+        }
+
+        // Function to render financial reports chart
+        function renderFinancialReportsChart() {
+            const ctx = document.getElementById('financial-reports-chart').getContext('2d');
+            const labels = mockData.financialReports.map(r => r.date);
+            const revenues = mockData.financialReports.map(r => r.revenue);
+            const expenses = mockData.financialReports.map(r => r.expenses);
+            const profits = mockData.financialReports.map(r => r.profit);
+
+            const chartData = {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Revenue',
+                        data: revenues,
+                        type: 'bar',
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1,
+                    },
+                    {
+                        label: 'Expenses',
+                        data: expenses,
+                        type: 'bar',
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1,
+                    },
+                    {
+                        label: 'Profit',
+                        data: profits,
+                        type: 'bar',
+                        backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                        borderColor: 'rgba(255, 206, 86, 1)',
+                        borderWidth: 1,
+                    }
+                ]
+            };
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: chartData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false, // Allow custom height set in CSS
+                    scales: {
+                        y: {
+                            stacked: true,
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Function to populate tables
+        function populateTables() {
+            // Populate bed availability table
+            const bedsBody = document.getElementById('beds-body');
+            mockData.bedAvailability.forEach(b => {
+                bedsBody.innerHTML += `<tr><td>${b.department}</td><td>${b.ward}</td><td>${b.availability}</td></tr>`;
+            });
+
+            // Populate schedule management table
+            const scheduleBody = document.getElementById('schedule-body');
+            mockData.schedule.forEach(s => {
+                scheduleBody.innerHTML += `<tr><td>${s.doctor}</td><td>${s.shift}</td><td>${s.date}</td></tr>`;
+            });
+
+            // Populate patient demographics table
+            const demographicsBody = document.getElementById('patient-demographics-body');
+            mockData.demographics.forEach(d => {
+                demographicsBody.innerHTML += `<tr><td>${d.age}</td><td>${d.gender}</td><td>${d.location}</td></tr>`;
+            });
+
+            // Populate staff workload table
+            const workloadBody = document.getElementById('workload-body');
+            mockData.workload.forEach(w => {
+                workloadBody.innerHTML += `<tr><td>${w.staffMember}</td><td>${w.workload}</td></tr>`;
+            });
+        }
+
+        // Call functions to render the charts and populate the tables
+        $(document).ready(() => {
+            renderAppointmentsChart();
+            renderAdmittedPatientsChart();
+            renderFinancialReportsChart();
+            populateTables();
+        });
+    </script>
+</body>
+</html>
