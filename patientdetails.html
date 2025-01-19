@@ -24,15 +24,17 @@
                         </div>
                     </div>
                     <div class="submit-button">
-                        <button onclick="submitPatientDetails()">Submit</button>
+                        <button id="submitButton">Submit</button>
                     </div>
                     <div class="real-time" id="realTime"></div>
                 </div>
-                </div>
             </div>
 
-            <!-- Health Data Section -->
-            <div id="health-data" class="hidden">
+            <!-- Display Patient Details Section -->
+            <div id="patient-details" class="hidden">
+                <header>Patient Information</header>
+                <p id="patientInfo"></p>
+
                 <header>Health Metrics</header>
                 <div class="form">
                     <div class="fields">
@@ -64,7 +66,7 @@
                 </div>
             </div>
 
-            <!-- Prescription List -->
+            <!-- Prescription Section -->
             <div id="prescription-section" class="hidden">
                 <header>Prescription Details for Patient</header>
                 <table id="prescriptionList">
@@ -83,28 +85,30 @@
                         <tr>
                             <td>1</td>
                             <td>
-                                <select class="dropdown" id="drugName">
+                                <select class="dropdown drugName">
                                     <option value="">Select Drug</option>
                                     <option value="Drug A">Drug A</option>
                                     <option value="Drug B">Drug B</option>
                                     <option value="Drug C">Drug C</option>
-                                    <!-- Add more drugs as needed -->
                                 </select>
                             </td>
-                            <td><input type="number" min="1" id="quantity" required></td>
-                            <td><input type="number" min="0" id="morning" required></td>
-                            <td><input type="number" min="0" id="afternoon" required></td>
-                            <td><input type="number" min="0" id="evening" required></td>
-                            <td><input type="number" min="0" id="night" required></td>
+                            <td><input type="number" min="1" class="quantity" required></td>
+                            <td><input type="number" min="0" class="morning" required></td>
+                            <td><input type="number" min="0" class="afternoon" required></td>
+                            <td><input type="number" min="0" class="evening" required></td>
+                            <td><input type="number" min="0" class="night" required></td>
                         </tr>
                     </tbody>
                 </table>
+                <!-- Pop-up box -->
+                <div id="popupBox" class="popup-box" style="display: none;">
+                    <p>Prescription submitted successfully</p>
+                    <button onclick="closePopup()">OK</button>
+                </div>
                 <div class="add-prescription">
                     <button onclick="addPrescription()">Add Prescription</button>
                 </div>
-                <div class="submit-prescription">
-                    <button onclick="submitPrescription()">Submit Prescription</button>
-                </div>
+                <button id="submitPrescriptionButton">Submit Prescription</button>
             </div>
 
             <!-- Logout and Back Button -->
@@ -116,83 +120,154 @@
     </div>
 
     <!-- Pop-up box -->
-    <div id="popupBox" class="popup-box">
+    <div id="popupBox" class="popup-box" style="display: none;">
         <p>Prescription submitted successfully</p>
         <button onclick="closePopup()">OK</button>
     </div>
+    
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
-    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBgtzx3R7WkQ05sprADf_iiiVrHhuUSIJs",
+            authDomain: "hospital-a1bcc.firebaseapp.com",
+            databaseURL: "https://hospital-a1bcc-default-rtdb.firebaseio.com",
+            projectId: "hospital-a1bcc",
+            storageBucket: "hospital-a1bcc.appspot.com",
+            messagingSenderId: "1011214120740",
+            appId: "1:1011214120740:web:97c32f4885b59a665fe5b1"
+        };
 
-        // Function to update the date and time field
-        function updateDateTime() {
-            const currentDateTime = new Date();
-            document.getElementById('dateTime').value = currentDateTime.toLocaleString();
-        }
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
 
-        // Function to update real-time display
-        function updateRealTime() {
-            const now = new Date();
-            document.getElementById('realTime').textContent = now.toLocaleTimeString();
-        }
-
-        // Submit form and validate
-        function submitPatientForm() {
-            const patientId = document.getElementById('patientId').value;
-            const dateTime = document.getElementById('dateTime').value;
-
-            if (patientId) {
-                // Redirect to the next page (e.g., patientDetails.html) with patientId and dateTime
-                window.location.href = `patientDetails.html?patientId=${encodeURIComponent(patientId)}&dateTime=${encodeURIComponent(dateTime)}`;
-                return false; // Prevent actual form submission
-            } else {
-                alert('Please enter your Patient ID.');
-                return false;
-            }
-        }
-
-        // Function to logout
-        function logout() {
-            alert('Logging out...');
-            // Add your logout logic (e.g., redirect to a login page)
-        }
-
-        // Update date and time on page load
-        updateDateTime();
-        
-        // Real-time clock update every second
-        setInterval(updateRealTime, 1000);
-        
-        // Simulated function to get patient data
-        function getPatientHealthData(patientId) {
-            return {
-                heartBeatRate: '75 bpm',
-                sugarLevel: '110 mg/dL',
-                bloodPressure: '120/80 mmHg',
-                spo2Level: '98%',
-                height: '170 cm',
-                weight: '70 kg'
-            };
-        }
+        document.getElementById('submitButton').addEventListener('click', submitPatientDetails);
+        document.getElementById('submitPrescriptionButton').addEventListener('click', submitPrescriptionToDatabase);
 
         function submitPatientDetails() {
-            const patientId = document.getElementById('patientId').value;
+            const patientId = document.getElementById('patientId').value.trim();
+
             if (!patientId) {
                 alert('Please enter a valid Patient ID');
                 return;
             }
 
-            const healthData = getPatientHealthData(patientId);
+            const opdRef = ref(database, `opdDetails`);
 
-            document.getElementById('heartBeatRate').value = healthData.heartBeatRate;
-            document.getElementById('sugarLevel').value = healthData.sugarLevel;
-            document.getElementById('bloodPressure').value = healthData.bloodPressure;
-            document.getElementById('spo2Level').value = healthData.spo2Level;
-            document.getElementById('height').value = healthData.height;
-            document.getElementById('weight').value = healthData.weight;
+            get(opdRef).then((snapshot) => {
+                if (snapshot.exists()) {
+                    const opdData = snapshot.val();
+                    let foundPatient = null;
 
-            document.getElementById('health-data').classList.remove('hidden');
+                    Object.keys(opdData).forEach((key) => {
+                        const patientData = opdData[key];
+                        if (patientData.patientID === patientId) {
+                            foundPatient = patientData;
+                        }
+                    });
+
+                    if (foundPatient) {
+                        displayPatientInfo(foundPatient);
+                    } else {
+                        alert('Patient data not found for ID: ' + patientId);
+                    }
+                } else {
+                    alert('No OPD details found in the database');
+                }
+            }).catch((error) => {
+                console.error('Error fetching patient data:', error);
+                alert('An error occurred while retrieving patient data: ' + error.message);
+            });
+        }
+
+        function displayPatientInfo(foundPatient) {
+            document.getElementById('patientInfo').innerHTML = `
+                <p>Patient ID: ${foundPatient.patientID}</p>
+                <p>Name: ${foundPatient.patientName}</p>
+                <p>Diagnosis: ${foundPatient.diagnosis}</p>
+                <p>Previous History: ${foundPatient.previousHistory || 'N/A'}</p>
+                <p>Prescription: ${foundPatient.prescription || 'N/A'}</p>
+            `;
+            document.getElementById('heartBeatRate').value = foundPatient.heartbeatRate || '';
+            document.getElementById('sugarLevel').value = foundPatient.sugarLevel || '';
+            document.getElementById('bloodPressure').value = foundPatient.bloodPressure || '';
+            document.getElementById('spo2Level').value = foundPatient.spo2 || '';
+            document.getElementById('height').value = foundPatient.height || '';
+            document.getElementById('weight').value = foundPatient.weight || '';
+
+            document.getElementById('patient-details').classList.remove('hidden');
             document.getElementById('prescription-section').classList.remove('hidden');
         }
+
+        async function submitPrescriptionToDatabase() {
+            console.log('Prescription submission function called');
+
+            const patientId = document.getElementById('patientId').value.trim();
+            const drugNames = document.querySelectorAll('.drugName');
+            const quantities = document.querySelectorAll('.quantity');
+            const mornings = document.querySelectorAll('.morning');
+            const afternoons = document.querySelectorAll('.afternoon');
+            const evenings = document.querySelectorAll('.evening');
+            const nights = document.querySelectorAll('.night');
+
+            let prescriptions = [];
+
+            for (let i = 0; i < drugNames.length; i++) {
+                const drugName = drugNames[i].value.trim();
+                const quantity = quantities[i]?.value.trim();
+                const morning = mornings[i]?.value.trim();
+                const afternoon = afternoons[i]?.value.trim();
+                const evening = evenings[i]?.value.trim();
+                const night = nights[i]?.value.trim();
+
+                if (drugName && quantity) {
+                    prescriptions.push({
+                        patientId,
+                        drugName,
+                        quantity,
+                        morning,
+                        afternoon,
+                        evening,
+                        night,
+                    });
+                }
+            }
+
+            if (prescriptions.length === 0) {
+                alert('Please enter at least one prescription.');
+                return;
+            }
+
+            try {
+                await set(ref(database, 'prescriptions/' + patientId), prescriptions);
+                console.log('Prescription submitted:', prescriptions);
+                showPrescriptionPopup(); // Display the pop-up after successful submission
+            } catch (error) {
+                console.error('Error submitting prescription:', error);
+                alert('Error submitting prescription. Please try again later.');
+            }
+
+        }
+
+        function showPrescriptionPopup() {
+            // Show the popup box
+            document.getElementById('popupBox').style.display = 'block';
+        }
+                // Use event listener to attach closePopup to the button
+            let closeButton = document.querySelector('#popupBox button');
+            closeButton.addEventListener('click', closePopup);
+
+        // Add event listener to the button
+        closeButton.addEventListener('click', closePopup);
+
+        function closePopup() {
+            document.getElementById('popupBox').style.display = 'none';
+            location.reload();
+        }
+
 
         function addPrescription() {
             const prescriptionBody = document.getElementById('prescriptionBody');
@@ -201,45 +276,45 @@
             const newRow = `<tr>
                 <td>${rowCount}</td>
                 <td>
-                    <select class="dropdown" id="drugName">
+                    <select class="dropdown drugName">
                         <option value="">Select Drug</option>
                         <option value="Drug A">Drug A</option>
                         <option value="Drug B">Drug B</option>
                         <option value="Drug C">Drug C</option>
                     </select>
                 </td>
-                <td><input type="number" min="1" id="quantity" required></td>
-                <td><input type="number" min="0" id="morning" required></td>
-                <td><input type="number" min="0" id="afternoon" required></td>
-                <td><input type="number" min="0" id="evening" required></td>
-                <td><input type="number" min="0" id="night" required></td>
+                <td><input type="number" min="1" class="quantity" required></td>
+                <td><input type="number" min="0" class="morning" required></td>
+                <td><input type="number" min="0" class="afternoon" required></td>
+                <td><input type="number" min="0" class="evening" required></td>
+                <td><input type="number" min="0" class="night" required></td>
             </tr>`;
             prescriptionBody.insertAdjacentHTML('beforeend', newRow);
         }
-
-        function submitPrescription() {
-            // Show the pop-up box
-            document.getElementById('popupBox').style.display = 'block';
-
-            // Automatically refresh the page after 0.1 seconds
-            //setTimeout(function() {
-                //location.reload();
-            }//, 700);
-        //}
-
-        function closePopup() {
-            // Hide the pop-up box after confirmation
-            document.getElementById('popupBox').style.display = 'none';
-            // Refresh the page
-    location.reload();
-        }
-
+        
         function logout() {
-            window.location.href = 'OD.html';
+            alert('Logging out...');
+            // Add your logout logic here (e.g., redirect to login page)
         }
 
         function goBack() {
-            window.location.href = 'PDlogin.html';
+            window.history.back();
+        }
+
+        // Real-time clock updates
+        document.addEventListener('DOMContentLoaded', () => {
+            updateDateTime();
+            setInterval(updateRealTime, 1000);
+        });
+
+        function updateDateTime() {
+            const currentDateTime = new Date();
+            document.getElementById('dateTime').value = currentDateTime.toLocaleString();
+        }
+
+        function updateRealTime() {
+            const now = new Date();
+            document.getElementById('realTime').textContent = now.toLocaleTimeString();
         }
     </script>
 </body>
