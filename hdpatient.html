@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Patients - Hospital Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google Fonts for modern look -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+        integrity="sha512-papNMj0bqEo19b+6g5sXAlT4O8AGKylce08kGvYldJ56AHDhAnXJpXZVSK9xTWSi95pUIzq6+S7VdW4GsvF2Wg==" 
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    /* Global Styles */
+    * {
+      box-sizing: border-box;
+    }
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+      background: #eef2f7;
+      color: #333;
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+    /* Dashboard Sidebar */
+    .dashboard-sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 250px;
+      height: 100%;
+      background: #2c3e50;
+      color: #ecf0f1;
+      transition: transform 0.3s ease-in-out;
+      overflow-y: auto;
+      z-index: 1000;
+    }
+    .dashboard-sidebar.collapsed {
+      transform: translateX(-100%);
+    }
+    .dashboard-sidebar .sidebar-header {
+      padding: 20px;
+      text-align: center;
+      background: #1abc9c;
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .dashboard-sidebar nav {
+      padding: 20px 0;
+    }
+    .dashboard-sidebar nav a {
+      display: flex;
+      align-items: center;
+      padding: 12px 20px;
+      font-size: 16px;
+      color: #ecf0f1;
+      transition: background 0.3s;
+    }
+    .dashboard-sidebar nav a:hover {
+    background: #34495e; /* Hover Color */
+    }
+
+    .dashboard-sidebar nav a.active {
+    background: #16a085; /* Active Color */
+    }
+
+    .dashboard-sidebar nav a i {
+      width: 25px;
+      text-align: center;
+      margin-right: 10px;
+      font-size: 18px;
+    }
+    /* Hamburger Button 
+    .hamburger {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      z-index: 1100;
+      cursor: pointer;
+      background: #1abc9c;
+      border: none;
+      color: #fff;
+      padding: 10px;
+      border-radius: 4px;
+      font-size: 18px;
+      transition: background 0.3s;
+    }
+    .hamburger:hover {
+      background: #16a085;
+    }*/
+    /* Main Content Wrapper */
+    .main-wrapper {
+        flex: 1;
+        width: 100%;
+        padding: 20px;
+        margin-left: 250px; /* This should match the sidebar width */
+        transition: margin-left 0.3s ease-in-out;
+    }
+    /* When sidebar is collapsed */
+    .main-wrapper.expanded {
+      margin-left: 0;
+    }
+    /* Container for content and right sidebar */
+    .container {
+      display: flex;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    /* Main Content Area */
+    .main-content {
+      flex: 3;
+      padding: 20px;
+    }
+    /* Right Sidebar Area */
+    .sidebar {
+      flex: 1;
+      border-left: 1px solid #e1e8ed;
+      background: #f9fbfd;
+      padding: 20px;
+    }
+    /* Patients Header */
+    .patients-header {
+      background: #1abc9c;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      border-radius: 8px 8px 0 0;
+    }
+    .patients-header h1 {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 500;
+    }
+    /* Search & Filter */
+    .search-filter {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 20px;
+      background: #f9fbfd;
+      border-bottom: 1px solid #e1e8ed;
+    }
+    .search-filter input,
+    .search-filter select {
+      padding: 10px 15px;
+      border: 1px solid #d1d9e6;
+      border-radius: 4px;
+      font-size: 16px;
+      flex: 1;
+      min-width: 200px;
+      transition: border-color 0.3s;
+    }
+    .search-filter input:focus,
+    .search-filter select:focus {
+      border-color: #1abc9c;
+      outline: none;
+    }
+    /* Patients Table */
+    .patients-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .patients-table thead {
+      background: #1abc9c;
+      color: #fff;
+    }
+    .patients-table th,
+    .patients-table td {
+      padding: 15px 10px;
+      text-align: left;
+      border-bottom: 1px solid #e1e8ed;
+      font-size: 16px;
+    }
+    .patients-table tbody tr:hover {
+      background: #f4f7fb;
+      transition: background 0.3s;
+    }
+    .patients-table tbody tr td:first-child {
+      font-weight: 500;
+    }
+    /* Responsive table adjustments */
+    @media (max-width: 768px) {
+      .patients-table thead {
+        display: none;
+      }
+      .patients-table, 
+      .patients-table tbody, 
+      .patients-table tr, 
+      .patients-table td {
+        display: block;
+        width: 100%;
+      }
+      .patients-table tr {
+        margin-bottom: 15px;
+      }
+      .patients-table td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+      }
+      .patients-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: 45%;
+        padding-right: 10px;
+        font-weight: 500;
+        text-align: left;
+      }
+    }
+    /* Status Labels */
+    .status {
+      padding: 6px 12px;
+      border-radius: 12px;
+      font-size: 14px;
+      display: inline-block;
+      font-weight: 500;
+      text-align: center;
+    }
+    .status.stable {
+      background: #27ae60;
+      color: #fff;
+    }
+    .status.critical {
+      background: #e74c3c;
+      color: #fff;
+    }
+    .status.discharge {
+      background: #f39c12;
+      color: #fff;
+    }
+    /* Sidebar Widgets (Right Sidebar) */
+    .widget {
+      margin-bottom: 30px;
+    }
+    .widget h2 {
+      font-size: 20px;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #1abc9c;
+      padding-bottom: 5px;
+    }
+    .quick-stats ul {
+      list-style: none;
+      padding: 0;
+    }
+    .quick-stats li {
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+    .recent-activity {
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    .recent-activity li {
+      margin-bottom: 10px;
+      font-size: 15px;
+      padding: 5px 0;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .stats-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .stat-box {
+        background: white;
+        padding: 10px;
+        text-align: center;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        flex: 1;
+        margin: 10px;
+    }
+
+    .stat-box.critical {
+        background: #e74c3c;
+        color: white;
+    }
+
+    .stat-box.stable {
+        background: #3498db;
+        color: white;
+    }
+
+    .stat-box.discharge {
+        background: #2ecc71;
+        color: white;
+    }
+
+    /* Global Footer */
+    .global-footer {
+      background: #1abc9c;
+      color: #fff;
+      text-align: center;
+      padding: 15px 30px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hamburger Menu Button 
+  <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button> -->
+
+  <!-- Dashboard Sidebar -->
+  <aside class="dashboard-sidebar" id="dashboardSidebar">
+    <div class="sidebar-header">Hospital Dashboard</div>
+    <nav>
+      <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+      <a href="#" class="active"><i class="fas fa-user-injured"></i> Patients</a>
+      <a href="#"><i class="fas fa-calendar-check"></i> Appointments</a>
+      <a href="#"><i class="fas fa-user-md"></i> Doctors</a>
+      <a href="#"><i class="fas fa-chart-line"></i> Reports</a>
+      <a href="#"><i class="fas fa-cogs"></i> Settings</a>
+    </nav>
+  </aside>
+
+  <!-- Main Content Wrapper -->
+  <div class="main-wrapper" id="mainWrapper">
+    <div class="container">
+      <!-- Main Content Area -->
+      <div class="main-content">
+        <div class="patients-header">
+          <h1>Patients</h1>
+        </div>
+        <div class="search-filter">
+          <input type="text" id="searchInput" placeholder="Search by name or ID">
+          <select id="wardFilter">
+            <option value="">All Wards</option>
+            <option value="Ward A">Ward A</option>
+            <option value="Ward B">Ward B</option>
+            <option value="Ward C">Ward C</option>
+            <option value="Ward D">Ward D</option>
+          </select>
+        </div>
+        <table class="patients-table" id="patientsTable">
+          <thead>
+            <tr>
+              <th>Patient ID</th>
+              <th>Name</th>
+              <th>Age</th>
+              <th>Gender</th>
+              <th>Ward</th>
+              <th>Admission Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Sample Data Rows -->
+            <tr data-ward="Ward A">
+              <td data-label="Patient ID">P001</td>
+              <td data-label="Name">John Doe</td>
+              <td data-label="Age">45</td>
+              <td data-label="Gender">Male</td>
+              <td data-label="Ward">Ward A</td>
+              <td data-label="Admission Date">2025-01-15</td>
+              <td data-label="Status"><span class="status stable">Stable</span></td>
+            </tr>
+            <tr data-ward="Ward B">
+              <td data-label="Patient ID">P002</td>
+              <td data-label="Name">Jane Smith</td>
+              <td data-label="Age">30</td>
+              <td data-label="Gender">Female</td>
+              <td data-label="Ward">Ward B</td>
+              <td data-label="Admission Date">2025-01-20</td>
+              <td data-label="Status"><span class="status critical">Critical</span></td>
+            </tr>
+            <tr data-ward="Ward C">
+              <td data-label="Patient ID">P003</td>
+              <td data-label="Name">Robert Johnson</td>
+              <td data-label="Age">60</td>
+              <td data-label="Gender">Male</td>
+              <td data-label="Ward">Ward C</td>
+              <td data-label="Admission Date">2025-02-01</td>
+              <td data-label="Status"><span class="status discharge">Discharge</span></td>
+            </tr>
+            <!-- More rows can be added here -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Right Sidebar Area -->
+      <div class="sidebar">
+        <!-- Quick Stats Widget -->
+        <div class="widget quick-stats">
+          <h2>Quick Stats</h2>
+          <ul>
+            <li>Total Patients: <strong>1,200</strong></li>
+            <li>Admissions Today: <strong>45</strong></li>
+            <li>Pending Discharges: <strong>12</strong></li>
+          </ul>
+        </div>
+
+        <!-- Recent Activity Widget -->
+        <div class="widget recent-activity">
+          <h2>Recent Activity</h2>
+          <ul>
+            <li>John Doe admitted to Ward A.</li>
+            <li>Jane Smith marked critical in Ward B.</li>
+            <li>Robert Johnson scheduled for discharge.</li>
+            <li>Emily Clark admitted to Ward D.</li>
+            <li>Michael Lee updated his medical record.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-container">
+    <div class="stat-box">
+        <h3>Total Patients</h3>
+        <p>1,200</p>
+    </div>
+    <div class="stat-box critical">
+        <h3>Critical Cases</h3>
+        <p>45</p>
+    </div>
+    <div class="stat-box stable">
+        <h3>Stable Patients</h3>
+        <p>985</p>
+    </div>
+    <div class="stat-box discharge">
+        <h3>Discharged Patients</h3>
+        <p>170</p> <!-- Make sure this value reflects the actual count of discharged patients -->
+    </div>
+</div>
+  <!-- Global Footer -->
+  <footer class="global-footer">
+    &copy; 2025 Hospital Dashboard. All rights reserved.
+  </footer>
+
+  <script>
+    // Get all sidebar links
+    const sidebarLinks = document.querySelectorAll('.dashboard-sidebar nav a');
+
+    // Function to handle active state
+    sidebarLinks.forEach(link => {
+    link.addEventListener('click', function () {
+        // Remove active class from all links
+        sidebarLinks.forEach(item => item.classList.remove('active'));
+        
+        // Add active class to the clicked link
+        this.classList.add('active');
+    });
+    });
+
+    // Toggle the dashboard sidebar when the hamburger button is clicked
+    const hamburger = document.getElementById('hamburger');
+    const dashboardSidebar = document.getElementById('dashboardSidebar');
+    const mainWrapper = document.getElementById('mainWrapper');
+    hamburger.addEventListener('click', () => {
+    dashboardSidebar.classList.toggle('collapsed');
+        // Adjust the main wrapper margin based on the sidebar's visibility
+        if (dashboardSidebar.classList.contains('collapsed')) {
+            mainWrapper.style.marginLeft = '0'; // It should not have margin if sidebar is collapsed
+        } else {
+            mainWrapper.style.marginLeft = '250px'; // Restore margin when expanded
+        }
+    });
+
+    // JavaScript for filtering patients by search term and ward
+    const searchInput = document.getElementById('searchInput');
+    const wardFilter = document.getElementById('wardFilter');
+    const patientsTableBody = document.getElementById('patientsTable').getElementsByTagName('tbody')[0];
+
+    function filterPatients() {
+      const searchTerm = searchInput.value.toLowerCase();
+      const selectedWard = wardFilter.value;
+      const rows = patientsTableBody.getElementsByTagName('tr');
+
+      for (let row of rows) {
+        const patientID = row.cells[0].textContent.toLowerCase();
+        const patientName = row.cells[1].textContent.toLowerCase();
+        const ward = row.getAttribute('data-ward');
+
+        const matchesSearch = patientID.includes(searchTerm) || patientName.includes(searchTerm);
+        const matchesWard = selectedWard === "" || ward === selectedWard;
+
+        row.style.display = (matchesSearch && matchesWard) ? '' : 'none';
+      }
+    }
+
+    searchInput.addEventListener('keyup', filterPatients);
+    wardFilter.addEventListener('change', filterPatients);
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Make Dashboard the default active section
+        const menuItems = document.querySelectorAll(".sidebar ul li a");
+        menuItems.forEach(item => {
+            item.addEventListener("click", function () {
+                menuItems.forEach(link => link.classList.remove("active"));
+                this.classList.add("active");
+            });
+        });
+    });
+    function validateForm() {
+    let x = document.forms["myForm"]["fname"].value;
+    if (x == "") {
+        alert("Name must be filled out");
+        return false;
+    }
+    }
+  </script>
+
+</body>
+</html>
