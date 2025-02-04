@@ -16,9 +16,12 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: #f4f6f9;
       color: #333;
+      height: 100vh; /* Full height */
+      overflow: hidden; /* Prevent scrolling on body, manage in content */
     }
     .dashboard {
       display: flex;
+      height: 100%; /* Full height for dashboard */
     }
     /* Sidebar Styles */
     .sidebar {
@@ -26,8 +29,8 @@
       background: #2c3e50;
       color: #ecf0f1;
       min-height: 100vh;
-      position: fixed;
-      overflow-y: auto;
+      position: fixed; /* Fixed sidebar */
+      overflow-y: auto; /* Enable scroll */
     }
     .sidebar .logo {
       text-align: center;
@@ -36,31 +39,25 @@
       background: #1abc9c;
       font-weight: bold;
     }
-    .dashboard-sidebar .sidebar-header {
-      padding: 20px;
-      text-align: center;
-      background: #1abc9c;
-      font-size: 22px;
-      font-weight: 700;
-    }
-    .dashboard-sidebar nav {
+    .sidebar nav {
       padding: 20px 0;
     }
-    .dashboard-sidebar nav a {
+    .sidebar nav a {
       display: flex;
       align-items: center;
       padding: 12px 20px;
       font-size: 16px;
       color: #ecf0f1;
       transition: background 0.3s;
+      text-decoration: none; /* No underline on links */
     }
-    .dashboard-sidebar nav a:hover {
+    .sidebar nav a:hover {
       background: #34495e; /* Hover Color */
     }
-    .dashboard-sidebar nav a.active {
+    .sidebar nav a.active {
       background: #16a085; /* Active Color */
     }
-    .dashboard-sidebar nav a i {
+    .sidebar nav a i {
       width: 25px;
       text-align: center;
       margin-right: 10px;
@@ -70,6 +67,7 @@
     .main-content {
       margin-left: 250px;
       width: calc(100% - 250px);
+      overflow-y: auto; /* Enable scrolling in main content */
     }
     .header {
       background: #fff;
@@ -85,6 +83,8 @@
     }
     .content {
       padding: 20px;
+      height: calc(100vh - 80px); /* Adjust for header height */
+      overflow-y: auto; /* Enable scrolling in content area */
     }
     /* Cards Section */
     .cards {
@@ -138,7 +138,7 @@
       color: #555;
     }
     /* Responsive Adjustments */
-    @media(max-width: 768px){
+    @media(max-width: 768px) {
       .sidebar {
         width: 200px;
       }
@@ -160,9 +160,9 @@
         Hospital Dashboard
       </div>
       <nav>
-          <a href="hd.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+          <a href="hd.html" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
           <a href="hdpatient.html"><i class="fas fa-user-md"></i> Patients</a>
-          <a href="hddoctors.html" class="active"><i class="fas fa-procedures"></i> Doctors</a>
+          <a href="hddoctors.html"><i class="fas fa-procedures"></i> Doctors</a>
           <a href="#"><i class="fas fa-calendar-alt"></i> Staffs</a>
           <a href="#"><i class="fas fa-cogs"></i> Settings</a>
       </nav>
