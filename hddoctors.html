@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hospital Dashboard - Doctors Attendance & Schedule</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google Fonts for modern look -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+        integrity="sha512-papNMj0bqEo19b+6g5sXAlT4O8AGKylce08kGvYldJ56AHDhAnXJpXZVSK9xTWSi95pUIzq6+S7VdW4GsvF2Wg==" 
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    /* Global Styles */
+    * {
+      box-sizing: border-box;
+    }
+    body, html {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+      background: #eef2f7;
+      color: #333;
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+    }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+    /* Dashboard Sidebar */
+    .dashboard-sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 250px;
+      height: 100%;
+      background: #2a3f54;
+      color: #ecf0f1;
+      transition: transform 0.3s ease-in-out;
+      overflow-y: auto;
+      z-index: 1000;
+    }
+    .dashboard-sidebar .sidebar-header {
+      padding: 20px;
+      text-align: center;
+      background: #1abc9c;
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .dashboard-sidebar nav {
+      padding: 20px 0;
+    }
+    .dashboard-sidebar nav a {
+      display: flex;
+      align-items: center;
+      padding: 12px 20px;
+      font-size: 16px;
+      color: #ecf0f1;
+      transition: background 0.3s;
+    }
+    .dashboard-sidebar nav a:hover {
+      background: #34495e; /* Hover Color */
+    }
+    .dashboard-sidebar nav a.active {
+      background: #16a085; /* Active Color */
+    }
+    .dashboard-sidebar nav a i {
+      width: 25px;
+      text-align: center;
+      margin-right: 10px;
+      font-size: 18px;
+    }
+    /* Main Content Wrapper */
+    .main-content {
+      width: 100%;
+      flex: 1;
+      margin-left: 250px; /* leaves space for sidebar */
+      padding: 20px;
+      overflow-y: auto;
+    }
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+    /* Search Group */
+    .search-filter {
+      margin-bottom: 20px;
+    }
+    .search-filter input {
+      padding: 10px;
+      width: 300px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    /* Doctors Attendance Table */
+    .patients-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    .patients-table th,
+    .patients-table td {
+      padding: 12px 10px;
+      text-align: left;
+      border-bottom: 1px solid #e1e8ed;
+      font-size: 16px;
+    }
+    .patients-table thead {
+      background: #1abc9c;
+      color: #fff;
+    }
+    .patients-table tbody tr:hover {
+      background: #f4f7fb;
+      transition: background 0.3s;
+    }
+    /* Status Labels */
+    .status {
+      padding: 5px 10px;
+      border-radius: 5px;
+      color: #fff;
+      font-weight: bold;
+      display: inline-block;
+    }
+    .present {
+      background-color: #28a745;
+    }
+    .absent {
+      background-color: #dc3545;
+    }
+    /* Doctor Schedule Section */
+    .schedule {
+      margin-top: 20px;
+    }
+    .schedule h2 {
+      margin-bottom: 10px;
+    }
+    .schedule-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    .schedule-table th,
+    .schedule-table td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    .schedule-table th {
+      background: #f9f9f9;
+    }
+    /* Schedule Form Styles */
+    .form-container {
+      width: 30%;
+      margin-top: 20px;
+      background: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .form-container h2 {
+      margin-bottom: 10px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    .form-group button[type="submit"] {
+      padding: 10px;
+      background-color: #2a3f54;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .form-group button[type="submit"]:hover {
+      background-color: #1a2734;
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="dashboard-sidebar">
+      <div class="sidebar-header">Hospital Dashboard</div>
+      <nav>
+          <a href="hd.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+          <a href="hdpatient.html"><i class="fas fa-user-md"></i> Patients</a>
+          <a href="#" class="active"><i class="fas fa-procedures"></i> Doctors</a>
+          <a href="#"><i class="fas fa-calendar-alt"></i> Staffs</a>
+          <a href="#"><i class="fas fa-cogs"></i> Settings</a>
+      </nav>
+  </div>
+  <!-- Main Content -->
+  <div class="main-content">
+      <!-- Header -->
+      <div class="header">
+          <h1>Doctors' Attendance</h1>
+          <button onclick="fetchDoctorData()">Refresh Data</button>
+      </div>
+      <!-- Search Group -->
+      <div class="search-filter">
+          <input type="text" id="searchInput" placeholder="Search Doctor ID..." onkeyup="searchDoctor()">
+      </div>
+      <!-- Doctors Attendance Table -->
+      <table class="patients-table" id="doctorTable">
+          <thead>
+              <tr>
+                  <th>Doctor ID</th>
+                  <th>Name</th>
+                  <th>Status</th>
+                  <th>Login Time</th>
+                  <th>Logout Time</th>
+                  <th>Department</th>
+              </tr>
+          </thead>
+          <tbody>
+              <!-- Data populated via JavaScript -->
+          </tbody>
+      </table>
+      <!-- Schedule Form -->
+      <div class="form-container">
+          <h2>Schedule a Doctor</h2>
+          <form id="scheduleForm">
+              <div class="form-group">
+                  <label for="doctorId">Enter Doctor ID:</label>
+                  <input type="text" id="doctorId" name="doctorId" placeholder="e.g., D001" required>
+              </div>
+              <div class="form-group">
+                  <label for="scheduleTime">Schedule Date & Time:</label>
+                  <input type="datetime-local" id="scheduleTime" name="scheduleTime" required>
+              </div>
+              <div class="form-group">
+                  <label for="task">Select Task:</label>
+                  <select id="task" name="task" required>
+                      <option value="OP Consultation">OP Consultation</option>
+                      <option value="Operation">Operation</option>
+                      <option value="General Consultation">General Consultation</option>
+                      <option value="Emergency Ward">Emergency Ward</option>
+                  </select>
+              </div>
+              <div class="form-group">
+                  <button type="submit">Schedule Task</button>
+              </div>
+          </form>
+      </div>
+      <!-- Doctor Schedules Section -->
+      <div class="schedule">
+          <h2>Doctor Schedules</h2>
+          <div id="scheduleContainer">
+              <!-- Schedule tables populated via JavaScript -->
+          </div>
+      </div>
+  </div>
+  <script>
+      // Sample data for doctors
+      const doctors = [
+          {
+              id: 'D001',
+              name: 'Dr. John Doe',
+              status: 'Present',
+              loginTime: '08:00 AM',
+              logoutTime: '05:00 PM',
+              department: 'Cardiology',
+              schedule: [
+                  { time: '09:00 AM - 10:00 AM', task: 'Patient Consultation' },
+                  { time: '10:30 AM - 11:30 AM', task: 'Ward Round' },
+                  { time: '12:00 PM - 01:00 PM', task: 'Surgery' },
+              ]
+          },
+          {
+              id: 'D002',
+              name: 'Dr. Jane Smith',
+              status: 'Absent',
+              loginTime: 'N/A',
+              logoutTime: 'N/A',
+              department: 'Neurology',
+              schedule: []
+          },
+          {
+              id: 'D003',
+              name: 'Dr. Emily Johnson',
+              status: 'Present',
+              loginTime: '09:00 AM',
+              logoutTime: '05:00 PM',
+              department: 'Pediatrics',
+              schedule: [
+                  { time: '09:30 AM - 10:30 AM', task: 'Child Wellness Checkup' },
+                  { time: '11:00 AM - 12:00 PM', task: 'Vaccinations' },
+              ]
+          },
+          {
+              id: 'D004',
+              name: 'Dr. Alex Brown',
+              status: 'Present',
+              loginTime: '07:45 AM',
+              logoutTime: '04:00 PM',
+              department: 'Dermatology',
+              schedule: [
+                  { time: '08:30 AM - 09:30 AM', task: 'Skin Examination' },
+                  { time: '10:00 AM - 11:00 AM', task: 'Allergy Test' },
+              ]
+          },
+          {
+              id: 'D005',
+              name: 'Dr. Lisa White',
+              status: 'Absent',
+              loginTime: 'N/A',
+              logoutTime: 'N/A',
+              department: 'Orthopedics',
+              schedule: []
+          },
+          {
+              id: 'D006',
+              name: 'Dr. Lisa White',
+              status: 'Present',
+              loginTime: '8:00 AM',
+              logoutTime: 'N/A',
+              department: 'Orthopedics',
+              schedule: []
+          },
+          {
+              id: 'D007',
+              name: 'Dr. Lisa White',
+              status: 'Absent',
+              loginTime: 'N/A',
+              logoutTime: 'N/A',
+              department: 'Orthopedics',
+              schedule: []
+          },
+      ];
+
+      // Function to populate the doctors' attendance table and schedule tables
+      function fetchDoctorData() {
+          const tableBody = document.querySelector('#doctorTable tbody');
+          tableBody.innerHTML = ''; // Clear previous data
+
+          doctors.forEach(doctor => {
+              const row = document.createElement('tr');
+              row.innerHTML = `
+                  <td>${doctor.id}</td>
+                  <td>${doctor.name}</td>
+                  <td><span class="status ${doctor.status.toLowerCase()}">${doctor.status}</span></td>
+                  <td>${doctor.loginTime}</td>
+                  <td>${doctor.logoutTime}</td>
+                  <td>${doctor.department}</td>
+              `;
+              tableBody.appendChild(row);
+          });
+
+          // Populate schedule tables
+          const scheduleContainer = document.getElementById('scheduleContainer');
+          scheduleContainer.innerHTML = ''; // Clear previous data
+
+          doctors.forEach(doctor => {
+              if (doctor.schedule.length > 0) {
+                  const scheduleTable = document.createElement('table');
+                  scheduleTable.className = 'schedule-table';
+
+                  const scheduleHeader = document.createElement('thead');
+                  scheduleHeader.innerHTML = `
+                      <tr>
+                          <th colspan="2">${doctor.name} (${doctor.id}) - ${doctor.department}</th>
+                      </tr>
+                      <tr>
+                          <th>Time</th>
+                          <th>Task</th>
+                      </tr>
+                  `;
+                  scheduleTable.appendChild(scheduleHeader);
+
+                  const scheduleBody = document.createElement('tbody');
+                  doctor.schedule.forEach(item => {
+                      const scheduleRow = document.createElement('tr');
+                      scheduleRow.innerHTML = `
+                          <td>${item.time}</td>
+                          <td>${item.task}</td>
+                      `;
+                      scheduleBody.appendChild(scheduleRow);
+                  });
+                  scheduleTable.appendChild(scheduleBody);
+                  scheduleContainer.appendChild(scheduleTable);
+              }
+          });
+      }
+
+      // Search function to filter the doctors' attendance table by Doctor ID
+      function searchDoctor() {
+          const input = document.getElementById('searchInput').value.toLowerCase();
+          const rows = document.querySelectorAll('#doctorTable tbody tr');
+          rows.forEach(row => {
+              const doctorId = row.cells[0].textContent.toLowerCase();
+              row.style.display = doctorId.includes(input) ? '' : 'none';
+          });
+      }
+
+      // Schedule form functionality
+      const scheduleForm = document.getElementById('scheduleForm');
+      scheduleForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          const doctorIdInput = document.getElementById('doctorId').value.trim();
+          const scheduleTime = document.getElementById('scheduleTime').value;
+          const task = document.getElementById('task').value;
+
+          // Check if doctorId exists in our data
+          const doctor = doctors.find(doc => doc.id.toLowerCase() === doctorIdInput.toLowerCase());
+          if (!doctor) {
+              alert('Doctor ID not found.');
+              return;
+          }
+
+          // Create a new schedule item
+          const newTask = { time: scheduleTime, task: task };
+          doctor.schedule.push(newTask);
+          alert(`Scheduled task "${task}" for Doctor ${doctor.id} at ${scheduleTime}`);
+          // Refresh the data display
+          fetchDoctorData();
+          // Clear the form
+          scheduleForm.reset();
+      });
+
+      // Initial data load
+      window.onload = fetchDoctorData;
+  </script>
+</body>
+</html>
