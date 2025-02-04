@@ -14,6 +14,30 @@ body {
     left: 0;
     z-index: 1000;
   }
+
+/* Header Buttons Container */
+.header-buttons {
+  display: flex;
+  gap: 10px; /* Adds spacing between buttons */
+  align-items: center; /* Align buttons properly */
+}
+
+/* Ensure buttons don't overlap */
+@media (max-width: 768px) {
+  .header-buttons {
+    flex-direction: column; /* Stack buttons on small screens */
+    align-items: center;
+    width: 100%;
+    margin-top: 10px; /* Space below menu */
+  }
+
+  .login-btn,
+  .cta-btn {
+    width: 90%; /* Make buttons full-width for better spacing */
+    text-align: center;
+  }
+}
+
   
   nav {
     display: flex;
