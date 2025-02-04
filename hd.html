@@ -36,21 +36,35 @@
       background: #1abc9c;
       font-weight: bold;
     }
-    .sidebar ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
+    .dashboard-sidebar .sidebar-header {
+      padding: 20px;
+      text-align: center;
+      background: #1abc9c;
+      font-size: 22px;
+      font-weight: 700;
     }
-    .sidebar ul li {
-      padding: 15px 20px;
-      cursor: pointer;
+    .dashboard-sidebar nav {
+      padding: 20px 0;
+    }
+    .dashboard-sidebar nav a {
+      display: flex;
+      align-items: center;
+      padding: 12px 20px;
+      font-size: 16px;
+      color: #ecf0f1;
       transition: background 0.3s;
     }
-    .sidebar ul li:hover {
-      background: #34495e;
+    .dashboard-sidebar nav a:hover {
+      background: #34495e; /* Hover Color */
     }
-    .sidebar ul li.active {
-      background: #16a085;
+    .dashboard-sidebar nav a.active {
+      background: #16a085; /* Active Color */
+    }
+    .dashboard-sidebar nav a i {
+      width: 25px;
+      text-align: center;
+      margin-right: 10px;
+      font-size: 18px;
     }
     /* Main Content Styles */
     .main-content {
@@ -145,14 +159,13 @@
       <div class="logo">
         Hospital Dashboard
       </div>
-      <ul>
-        <li class="active" onclick="setActive(this)">Dashboard</li>
-        <li onclick="setActive(this)">Patients</li>
-        <li onclick="setActive(this)">Appointments</li>
-        <li onclick="setActive(this)">Doctors</li>
-        <li onclick="setActive(this)">Reports</li>
-        <li onclick="setActive(this)">Settings</li>
-      </ul>
+      <nav>
+          <a href="hd.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+          <a href="hdpatient.html"><i class="fas fa-user-md"></i> Patients</a>
+          <a href="hddoctors.html" class="active"><i class="fas fa-procedures"></i> Doctors</a>
+          <a href="#"><i class="fas fa-calendar-alt"></i> Staffs</a>
+          <a href="#"><i class="fas fa-cogs"></i> Settings</a>
+      </nav>
     </div>
 
     <!-- Main Content -->
