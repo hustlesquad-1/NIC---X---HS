@@ -23,7 +23,7 @@ body {
 }
 
 /* Ensure buttons don't overlap */
-@media (max-width: 768px) {
+@media (max-width: 360px) {
   .header-buttons {
     flex-direction: column; /* Stack buttons on small screens */
     align-items: center;
