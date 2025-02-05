@@ -29,6 +29,16 @@
                     <label for="patient-id">Patient ID:</label>
                     <input type="text" id="patient-id" name="patient-id" required>
                     
+                    <!-- Dropdown for Lab Test Report Type -->
+                    <label for="test-type">Lab Test Report Type:</label>
+                    <select id="test-type" name="test-type" required>
+                        <option value="">Select Test Type</option>
+                        <option value="blood-test">Blood Test</option>
+                        <option value="urine-test">Urine Test</option>
+                        <option value="x-ray">X-Ray</option>
+                        <option value="ultrasound">Ultrasound</option>
+                    </select>
+
                     <label for="file-upload">Upload File:</label>
                     <input type="file" id="file-upload" name="file-upload" required>
                     
