@@ -14,6 +14,101 @@
     <script src="form-submission.js" defer></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+    <style>
+        /* Modal styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Black with opacity */
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            text-align: center;
+        }
+
+        .close-btn {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* OTP Modal Styles */
+        .otp-modal .otp-box {
+            width: 40px;
+            height: 40px;
+            margin: 5px;
+            text-align: center;
+            font-size: 18px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .otp-modal .otp-box:focus {
+            outline: none;
+            border-color: #007BFF;
+        }
+
+        .otp-modal input {
+            width: 40px;
+            height: 40px;
+            margin: 0 5px;
+            text-align: center;
+            font-size: 18px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .otp-modal .button-group {
+            margin-top: 20px;
+        }
+
+        .otp-modal .button-group button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+        }
+
+        .otp-modal .resend-btn {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .otp-modal .confirm-btn {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .otp-modal .close-btn-otp {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -174,15 +269,45 @@
                 <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
             </div>
             <hr><br>
-            <p class="copyright">NIC X HS © 2024 - All Rights Reserved</p>
+            <p class="copyright">NIC X HS © 2025 - All Rights Reserved</p>
         </div>
-    </footer>   
+    </footer>
+    
+    <!-- OTP Modal -->
+    <div id="otp-modal" class="modal otp-modal">
+        <div class="modal-content">
+            <span id="close-otp-modal" class="close-btn close-btn-otp">&times;</span>
+            <h2>Enter OTP</h2>
+            <p>Please enter the 6-digit OTP sent to your phone number.</p>
+            <div class="otp-inputs">
+                <input type="text" id="otp1" maxlength="1" class="otp-box" autofocus>
+                <input type="text" id="otp2" maxlength="1" class="otp-box">
+                <input type="text" id="otp3" maxlength="1" class="otp-box">
+                <input type="text" id="otp4" maxlength="1" class="otp-box">
+                <input type="text" id="otp5" maxlength="1" class="otp-box">
+                <input type="text" id="otp6" maxlength="1" class="otp-box">
+            </div>
+            <div class="button-group">
+                <button class="confirm-btn" id="confirm-otp-btn">Confirm OTP</button>
+                <button class="resend-btn" id="resend-otp-btn">Resend OTP</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmation-modal" class="modal">
+        <div class="modal-content">
+            <span id="close-modal" class="close-btn">&times;</span>
+            <h2>Appointment Booked Successfully!</h2>
+            <p>Your appointment has been booked successfully. We will send you a confirmation soon.</p>
+        </div>
+    </div>
+
     <script type="module">
-        // Import the functions you need from the SDKs you need
+        // Import Firebase SDK
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
         import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
-        // Your web app's Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyBgtzx3R7WkQ05sprADf_iiiVrHhuUSIJs",
             authDomain: "hospital-a1bcc.firebaseapp.com",
@@ -193,39 +318,69 @@
             appId: "1:1011214120740:web:97c32f4885b59a665fe5b1"
         };
 
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app); // Initialize Realtime Database
+        const database = getDatabase(app);
 
         document.addEventListener('DOMContentLoaded', function() {
             const bookingForm = document.getElementById('booking-form');
+            const otpModal = document.getElementById('otp-modal');
+            const confirmationModal = document.getElementById('confirmation-modal');
+            const closeOtpModalBtn = document.getElementById('close-otp-modal');
+            const closeModalBtn = document.getElementById('close-modal');
+            const confirmOtpBtn = document.getElementById('confirm-otp-btn');
+            const resendOtpBtn = document.getElementById('resend-otp-btn');
+            const otpInputs = document.querySelectorAll('.otp-box');
             
-            bookingForm.addEventListener('submit', async function(event) {
-                event.preventDefault(); // Prevent the default form submission
+            // Close OTP Modal
+            closeOtpModalBtn.addEventListener('click', () => otpModal.style.display = 'none');
+            
+            // Close Confirmation Modal
+            closeModalBtn.addEventListener('click', () => confirmationModal.style.display = 'none');
+            
+            // Show OTP modal when booking form is submitted
+            bookingForm.addEventListener('submit', function(event) {
+                event.preventDefault();
                 
-                // Capture form data
-                const appointmentData = {
-                    name: document.getElementById('name').value,
-                    age: document.getElementById('age').value,
-                    gender: document.getElementById('gender-btn').innerText,
-                    phone: document.getElementById('phone-input').value,
-                    email: document.getElementById('email').value,
-                    city: document.getElementById('city-btn').innerText,
-                    hospital: document.getElementById('hospital-btn').innerText,
-                    department: document.getElementById('department-btn').innerText, // Capture department
-                    date: document.getElementById('appointment-date').value,
-                    time: document.getElementById('appointment-time').value,
-                    purpose: document.getElementById('purpose-btn').innerText
-                };
+                // Show OTP modal
+                otpModal.style.display = 'block';
+            });
 
-                // Save data to Realtime Database
-                try {
+            // Confirm OTP Button
+            confirmOtpBtn.addEventListener('click', function() {
+                let otp = "";
+                otpInputs.forEach(input => otp += input.value);
+                
+                if (otp.length === 6) {
+                    // If OTP is correct, save the appointment to the database
+                    const appointmentData = {
+                        name: document.getElementById('name').value,
+                        age: document.getElementById('age').value,
+                        gender: document.getElementById('gender-btn').innerText,
+                        phone: document.getElementById('phone-input').value,
+                        email: document.getElementById('email').value,
+                        city: document.getElementById('city-btn').innerText,
+                        hospital: document.getElementById('hospital-btn').innerText,
+                        department: document.getElementById('department-btn').innerText,
+                        date: document.getElementById('appointment-date').value,
+                        time: document.getElementById('appointment-time').value,
+                        purpose: document.getElementById('purpose-btn').innerText
+                    };
+
                     const newAppointmentRef = ref(database, 'appointments/' + Date.now());
-                    await set(newAppointmentRef, appointmentData);
-                    console.log("Appointment data saved successfully.");
-                } catch (error) {
-                    console.error("Error saving appointment data: ", error);
+                    set(newAppointmentRef, appointmentData)
+                        .then(() => {
+                            otpModal.style.display = 'none'; // Close OTP modal
+                            confirmationModal.style.display = 'block'; // Show confirmation modal
+                        })
+                        .catch(error => console.error('Error saving appointment data: ', error));
+                } else {
+                    alert("Please enter a valid 6-digit OTP.");
                 }
+            });
+
+            // Resend OTP Button (You can add logic to resend the OTP here)
+            resendOtpBtn.addEventListener('click', function() {
+                alert('OTP resent. Please check your phone.');
             });
         });
     </script>
