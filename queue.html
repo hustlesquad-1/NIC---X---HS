@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Queue Status</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        header h1 {
+            color: #4CAF50;
+            font-size: 2.8em;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        /* Queue info section */
+        .queue-info {
+            font-size: 1.1em;
+            margin-top: 10px;
+            color: #333;
+        }
+
+        /* Queue Details */
+        .queue-details {
+            background-color: #fafbfc;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .waiting-time {
+            font-weight: bold;
+            font-size: 1.4em;
+            color: #FF5722;
+        }
+
+        .doctor-status {
+            color: #607D8B;
+            font-size: 1.2em;
+            margin-top: 25px;
+            font-weight: 500;
+        }
+
+        /* Progress bar */
+        .progress-bar-container {
+            background-color: #ddd;
+            border-radius: 25px;
+            height: 20px;
+            margin: 25px 0;
+            position: relative;
+        }
+
+        .progress-bar {
+            background-color: #4CAF50;
+            height: 100%;
+            border-radius: 25px;
+            width: 0%;
+            transition: width 1s ease;
+        }
+
+        /* Buttons */
+        .button {
+            background-color: #4CAF50;
+            padding: 12px 30px;
+            color: white;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            margin: 15px 0;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+        }
+
+        input[type="number"] {
+            padding: 10px 15px;
+            font-size: 1.2em;
+            width: 60%;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-top: 20px;
+            text-align: center;
+            transition: border 0.3s ease;
+        }
+
+        input[type="number"]:focus {
+            border-color: #4CAF50;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 40px;
+            font-size: 0.9em;
+            color: #888;
+        }
+
+        .footer a {
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+
+            header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Patient Queue Status</h1>
+            <div class="queue-info" id="patient-info"></div>
+        </header>
+
+        <div class="queue-details">
+            <p id="total-patients">Total Patients in Queue: 0</p>
+            <p id="approx-time">Estimated Waiting Time: 0 minutes</p>
+
+            <div class="progress-bar-container">
+                <div id="waiting-time-progress" class="progress-bar"></div>
+            </div>
+
+            <div class="doctor-status">
+                <h3>Doctor Status</h3>
+                <p id="doctor-status">Doctor is ready to attend patients...</p>
+            </div>
+
+            <button class="button" id="refresh-btn">Check Status</button>
+            <div>
+                <input type="number" id="search-patient-id" placeholder="Enter Your Patient ID" />
+                <button class="button" id="search-btn">Search Queue</button>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2025 Hospital Queue System | <a href="#">Privacy Policy</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Example queue data (only patient ID for simplicity)
+        let queue = [
+            { id: 1, attended: false },
+            { id: 2, attended: false },
+            { id: 3, attended: false },
+            { id: 4, attended: false },
+            { id: 5, attended: false }
+        ];
+
+        const doctorConsultationTime = 10; // Minutes per patient
+        let currentPatientIndex = 0; // This simulates the current patient being attended by the doctor
+
+        // Function to update patient's position and details
+        function updatePatientInfo(patientID) {
+            const patientInfo = document.getElementById("patient-info");
+            const position = queue.findIndex(patient => patient.id === patientID) + 1;
+            const estimatedTime = calculateEstimatedTime(position);
+
+            const waitingTimeProgress = document.getElementById("waiting-time-progress");
+            const totalPatients = queue.filter(patient => !patient.attended).length;
+
+            patientInfo.innerHTML = `Your Patient ID: ${patientID}<br>Position: ${position} in the queue`;
+            document.getElementById("total-patients").innerHTML = `Total Patients in Queue: ${totalPatients}`;
+            document.getElementById("approx-time").innerHTML = `Estimated Waiting Time: ${estimatedTime} minutes`;
+
+            // Progress bar calculation
+            const progressPercentage = (position / totalPatients) * 100;
+            waitingTimeProgress.style.width = `${progressPercentage}%`;
+        }
+
+        // Function to calculate waiting time for a patient based on their position in the queue
+        function calculateEstimatedTime(position) {
+            return position * doctorConsultationTime;
+        }
+
+        // Function to simulate the doctor attending patients
+        setInterval(() => {
+            if (queue[currentPatientIndex]) {
+                queue[currentPatientIndex].attended = true;
+                currentPatientIndex++;
+                updateDoctorStatus();
+                updatePatientInfo(queue[0].id); // Show info for the first patient in queue
+            }
+        }, 10000); // Simulate doctor attending a patient every 10 seconds
+
+        // Function to update doctor's status
+        function updateDoctorStatus() {
+            const doctorStatus = document.getElementById("doctor-status");
+            if (currentPatientIndex < queue.length) {
+                doctorStatus.innerHTML = `Doctor is attending to Patient ID: ${queue[currentPatientIndex].id}.`;
+            } else {
+                doctorStatus.innerHTML = "Doctor is ready to attend patients.";
+            }
+        }
+
+        // Button click handler to check the status
+        document.getElementById("refresh-btn").addEventListener("click", function() {
+            updatePatientInfo(queue[0].id); // Refresh status for the first patient (can be modified based on login)
+        });
+
+        // Button click handler to search for the patient by ID
+        document.getElementById("search-btn").addEventListener("click", function() {
+            const patientID = parseInt(document.getElementById("search-patient-id").value);
+            if (patientID && queue.some(patient => patient.id === patientID)) {
+                updatePatientInfo(patientID);
+            } else {
+                alert("Invalid Patient ID. Please try again.");
+            }
+        });
+
+        // Initial call to set up patient info
+        updatePatientInfo(queue[0].id);  // Start by showing info for the first patient in queue
+    </script>
+</body>
+</html>
